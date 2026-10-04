@@ -79,9 +79,12 @@ export default function LandingVideoSection({ onNavigate }: {
               loop
               muted
               playsInline
+              preload="metadata"
+              poster="/images/operations-command.jpg"
               className="landing-video-element"
-              src="/videos/workplace-loop.mp4"
-            />
+            >
+              <source src="/videos/workplace-loop.mp4" type="video/mp4" />
+            </video>
             <div className="landing-video-overlay" />
 
             {/* Floating Top Telemetry Badge */}
