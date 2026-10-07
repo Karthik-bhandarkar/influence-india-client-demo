@@ -1,0 +1,212 @@
+/* ==========================================================================
+   INFLUENCE INDIA — COMPREHENSIVE TYPOGRAPHY ENGINE (ALL SECTIONS & PAGES)
+   Fully applies approved typography spec to:
+   - Home Page (Hero, Outcomes, Services, Reliability, Ecosystem, Pillars, FAQ)
+   - About Us Page (About Hero, Mission, Aims, Milestones, Values)
+   - GTP Page (GTP Hero, Footprints 01-21, Conscience, Momentum)
+   - Systems Page (Systems Hero, Benefits, Corporate Staffing, Smart Pillars)
+   - Careers Page (Careers Hero, Progression, Culture Stories, Job Openings)
+   - Resources Page (Resources Hero, Informative Blogs, Deep-Dive Article TOC)
+   ========================================================================== */
+
+/* 1. Global Headings Reset & Refinement (Playfair Display 600) */
+h1,
+h2,
+h3,
+h4,
+.hero h1,
+.about-hero-title,
+.editorial-page-title,
+.outcome-title,
+.mission-title,
+.aims-title,
+.section-heading h2,
+.section-heading-editorial h2,
+.featured-article-header h2,
+.ecosystem-header h2,
+.ecosystem-hub h3,
+.pricing-copy h2,
+.faq-aside h2,
+.corporate-case-box h3,
+.good-news-box h3,
+.article-display-card h3,
+.learn-left h2,
+.service-content h3,
+.reliability-card h3,
+.pillar-card h3,
+.benefit-card h3,
+.corporate-pillar-card h3,
+.smart-pillar-card h3,
+.footprint-card h3,
+.blog-card h3,
+.job-opening-card h3,
+.reason-row h3,
+.milestone-card h3 {
+  font-family: var(--font-display, 'Playfair Display', Georgia, 'Times New Roman', serif) !important;
+  text-transform: none !important;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+/* 2. All H1 Titles (Home, About, GTP, Systems, Careers, Resources) */
+h1,
+.hero h1,
+.about-hero-title,
+.editorial-page-title {
+  font-size: clamp(2.75rem, 5.5vw, 4.6rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.06 !important;
+}
+
+.hero-highlight,
+.editorial-page-title .text-lime,
+.about-hero-title .text-lime {
+  font-style: italic !important;
+  font-weight: 500 !important;
+}
+
+/* 3. All H2 Section Titles (All Pages) */
+h2,
+.outcome-title,
+.mission-title,
+.aims-title,
+.section-heading h2,
+.section-heading-editorial h2,
+.featured-article-header h2,
+.ecosystem-header h2,
+.pricing-copy h2,
+.faq-aside h2,
+.learn-left h2,
+.editorial-col-left h2 {
+  font-size: clamp(2rem, 3.8vw, 3.25rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.14 !important;
+}
+
+/* 4. All H3 & H4 Feature & Card Titles */
+h3,
+h4,
+.service-content h3,
+.reliability-card h3,
+.pillar-card h3,
+.benefit-card h3,
+.corporate-pillar-card h3,
+.smart-pillar-card h3,
+.footprint-card h3,
+.blog-card h3,
+.job-opening-card h3,
+.reason-row h3,
+.corporate-case-box h3,
+.good-news-box h3,
+.article-display-card h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+}
+
+/* 5. Monospace Precision Eyebrows, Badges & Numbers (All Pages) */
+.section-label,
+.section-label-text,
+.section-number,
+.page-header-badge,
+.tactile-stamp,
+.footprint-num,
+.benefit-num,
+.corporate-pillar-num,
+.smart-pillar-num,
+.gtp-meta-num,
+.gtp-meta-label,
+.blog-tag,
+.blog-read-time,
+.toc-num,
+.display-sec-num,
+.eyebrow,
+.tag,
+.badge,
+.net-lbl,
+.article-toc h4,
+.coming-soon-banner p,
+.milestone-year,
+.footer-brand-badge {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace) !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+.section-label,
+.section-label-text,
+.page-header-badge {
+  font-size: 0.72rem !important;
+}
+
+.section-number,
+.footprint-num,
+.benefit-num,
+.corporate-pillar-num,
+.smart-pillar-num {
+  font-size: 0.85rem !important;
+}
+
+/* 6. Body Text & Lead Paragraphs (Instrument Sans) */
+body,
+p,
+.hero-description,
+.about-hero-lead,
+.editorial-lead,
+.heading-sub,
+.outcome-copy p,
+.featured-lead,
+.service-content p,
+.reliability-card p,
+.pillar-card p,
+.benefit-card p,
+.corporate-pillar-card p,
+.smart-pillar-card p,
+.footprint-card p,
+.good-news-box p,
+.corporate-case-box p,
+.article-display-card p,
+.job-opening-card p {
+  font-family: var(--font-sans, 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif) !important;
+}
+
+.hero-description,
+.about-hero-lead,
+.editorial-lead,
+.heading-sub,
+.featured-lead,
+.outcome-copy p:first-of-type {
+  font-size: 1.08rem !important;
+  line-height: 1.68 !important;
+  color: var(--color-muted, #4B5B53) !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 7. Numbers & Stat Numerals (Playfair Display) */
+.net-val,
+.metric-value,
+.stat-number,
+.counter-value,
+.learn-stat-val,
+.hero-stat-value {
+  font-family: var(--font-display, 'Playfair Display', Georgia, serif) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+}
+
+/* 8. Action Links, Buttons & Navigation */
+.action,
+.action-link,
+.btn,
+.text-link,
+.desktop-nav a,
+.mobile-nav a,
+.header-contact,
+.footer-col a {
+  font-family: var(--font-sans, 'Instrument Sans', sans-serif) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+}
