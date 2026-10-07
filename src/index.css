@@ -1151,12 +1151,12 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 1.25rem;
-  padding: 1.1rem 1.75rem;
-  background: var(--color-paper);
-  border: 1px solid rgba(23, 29, 22, 0.1);
+  padding: 1rem 1.6rem;
+  background: #ffffff;
+  border: 1px solid rgba(23, 29, 22, 0.08);
   border-left: 4px solid var(--color-brand-strong);
   border-radius: 9999px;
-  box-shadow: 0 4px 14px rgba(23, 29, 22, 0.04);
+  box-shadow: 0 3px 12px rgba(23, 29, 22, 0.04);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
   cursor: default;
 }
@@ -1165,20 +1165,23 @@ h3 {
   transform: translateY(-3px) scale(1.02);
   background: #ffffff;
   border-left-color: var(--color-brand-vibrant);
-  box-shadow: 0 12px 28px rgba(23, 29, 22, 0.09), 0 0 0 1px rgba(63, 110, 20, 0.2);
+  box-shadow: 0 10px 24px rgba(23, 29, 22, 0.08), 0 0 0 1px rgba(63, 110, 20, 0.15);
 }
 
 .company-logo-inner {
   display: flex;
   align-items: center;
-  color: var(--color-ink);
-  transition: color 0.2s ease;
+  transition: transform 0.2s ease;
+}
+
+.company-card-pill:hover .company-logo-inner {
+  transform: scale(1.02);
 }
 
 .company-logo-svg {
-  height: 26px;
+  height: 28px;
   width: auto;
-  max-width: 140px;
+  max-width: 155px;
   display: block;
 }
 

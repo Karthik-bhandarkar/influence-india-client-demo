@@ -8,7 +8,6 @@ import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
 import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
-import InfluenceGlassNavbar from "./components/InfluenceGlassNavbar"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources"
 
@@ -574,16 +573,149 @@ function Header({
   onNavigate: (target: string) => void
   onOpenRoster?: () => void
 }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape" && menuOpen) {
+        setMenuOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+    document.addEventListener("keydown", handleKey)
+    return () => document.removeEventListener("keydown", handleKey)
+  }, [menuOpen])
+
   return (
-    <InfluenceGlassNavbar
-      items={navigation}
-      activeView={activeView}
-      onNavigate={onNavigate}
-      onOpenRoster={onOpenRoster}
-      whatsappUrl={contact.whatsapp}
-    />
+    <header className="site-header">
+      <div className="container header-inner">
+        <Brand onNavigateHome={() => onNavigate("home")} />
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {navigation.map((item) => {
+            const cleanHref = item.href.replace("#", "")
+            const isActive =
+              activeView === cleanHref ||
+              (cleanHref === "about" && activeView === "about")
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={isActive ? "is-active" : ""}
+                onClick={(e) => {
+                  e.preventDefault()
+                  onNavigate(item.href)
+                }}
+              >
+                {item.label}
+              </a>
+            )
+          })}
+        </nav>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          {onOpenRoster && (
+            <button
+              type="button"
+              onClick={onOpenRoster}
+              className="roster-desk-badge-btn"
+              title="Open Fast-Track Roster Desk"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.45rem",
+                padding: "0.5rem 0.95rem",
+                borderRadius: "9999px",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                background: "rgba(17, 19, 21, 0.05)",
+                border: "1px solid rgba(17, 19, 21, 0.12)",
+                color: "var(--color-ink)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              <span
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  backgroundColor: "#3f6e14",
+                  boxShadow: "0 0 6px #3f6e14",
+                }}
+              />
+              <span>Roster Desk</span>
+            </button>
+          )}
+          <ActionLink
+            href={contact.whatsapp}
+            variant="lime"
+            arrow="whatsapp"
+            className="header-contact"
+          >
+            WhatsApp
+          </ActionLink>
+        </div>
+        <button
+          ref={toggleRef}
+          type="button"
+          className="menu-toggle"
+          aria-controls="mobile-navigation"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <Icon name={menuOpen ? "close" : "menu"} />
+        </button>
+      </div>
+      <nav
+        id="mobile-navigation"
+        className="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden={!menuOpen}
+      >
+        {onOpenRoster && (
+          <button
+            type="button"
+            onClick={() => {
+              setMenuOpen(false)
+              onOpenRoster()
+            }}
+            className="mobile-roster-action"
+          >
+            <span className="halaska-dot" />
+            <span>Fast-Track Roster Desk</span>
+          </button>
+        )}
+        {navigation.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            onClick={(e) => {
+              e.preventDefault()
+              setMenuOpen(false)
+              onNavigate(item.href)
+            }}
+          >
+            {item.label}
+            <Icon name="arrow-up" />
+          </a>
+        ))}
+        <a
+          href={contact.whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
+        >
+          WhatsApp
+          <Icon name="whatsapp" />
+        </a>
+      </nav>
+    </header>
   )
 }
+
 
 
 function Hero() {
