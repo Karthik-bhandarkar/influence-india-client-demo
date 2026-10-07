@@ -7,6 +7,8 @@ import GtpPage from "./pages/GtpPage"
 import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
+import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
+import InfluenceGlassNavbar from "./components/InfluenceGlassNavbar"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources"
 
@@ -321,7 +323,7 @@ const policies = [
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
-function Icon({ name, className = "" }: { name: IconName className?: string }) {
+function Icon({ name, className = "" }: { name: IconName; className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M4 12h15M13 5l7 7-7 7" />,
     "arrow-up": <path d="M5 19 19 5M5 5h14v14" />,
@@ -566,102 +568,23 @@ function Brand({
 function Header({
   activeView,
   onNavigate,
+  onOpenRoster,
 }: {
   activeView: ActiveView
   onNavigate: (target: string) => void
+  onOpenRoster?: () => void
 }) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const toggleRef = useRef<HTMLButtonElement>(null)
-
-  useEffect(() => {
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape" && menuOpen) {
-        setMenuOpen(false)
-        toggleRef.current?.focus()
-      }
-    }
-    document.addEventListener("keydown", handleKey)
-    return () => document.removeEventListener("keydown", handleKey)
-  }, [menuOpen])
-
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <Brand onNavigateHome={() => onNavigate("home")} />
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {navigation.map((item) => {
-            const cleanHref = item.href.replace("#", "")
-            const isActive =
-              activeView === cleanHref ||
-              (cleanHref === "about" && activeView === "about")
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={isActive ? "is-active" : ""}
-                onClick={(e) => {
-                  e.preventDefault()
-                  onNavigate(item.href)
-                }}
-              >
-                {item.label}
-              </a>
-            )
-          })}
-        </nav>
-        <ActionLink
-          href={contact.whatsapp}
-          variant="lime"
-          arrow="whatsapp"
-          className="header-contact"
-        >
-          WhatsApp
-        </ActionLink>
-        <button
-          ref={toggleRef}
-          type="button"
-          className="menu-toggle"
-          aria-controls="mobile-navigation"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <Icon name={menuOpen ? "close" : "menu"} />
-        </button>
-      </div>
-      <nav
-        id="mobile-navigation"
-        className="mobile-nav"
-        aria-label="Mobile navigation"
-        hidden={!menuOpen}
-      >
-        {navigation.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault()
-              setMenuOpen(false)
-              onNavigate(item.href)
-            }}
-          >
-            {item.label}
-            <Icon name="arrow-up" />
-          </a>
-        ))}
-        <a
-          href={contact.whatsapp}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setMenuOpen(false)}
-        >
-          WhatsApp
-          <Icon name="whatsapp" />
-        </a>
-      </nav>
-    </header>
+    <InfluenceGlassNavbar
+      items={navigation}
+      activeView={activeView}
+      onNavigate={onNavigate}
+      onOpenRoster={onOpenRoster}
+      whatsappUrl={contact.whatsapp}
+    />
   )
 }
+
 
 function Hero() {
   const [highlightDrawn, setHighlightDrawn] = useState(false)
@@ -1961,7 +1884,7 @@ function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
   )
 }
 
-function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
+function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [autoPeek, setAutoPeek] = useState(false)
@@ -2037,6 +1960,7 @@ function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
 
 export default function App() {
   const { progress, showPill } = useScrollProgress()
+  const [rosterDrawerOpen, setRosterDrawerOpen] = useState(false)
   const [view, setView] = useState<ActiveView>(() => {
     if (typeof window !== "undefined") {
       const hash = window.location.hash.toLowerCase()
@@ -2134,7 +2058,7 @@ export default function App() {
       </a>
 
       <div id="home">
-        <Header activeView={view} onNavigate={handleNavigate} />
+        <Header activeView={view} onNavigate={handleNavigate} onOpenRoster={() => setRosterDrawerOpen(true)} />
         <main id="main">
           {view === "home" && (
             <>
@@ -2160,15 +2084,19 @@ export default function App() {
           {view === "about" && <AboutPage />}
           {view === "gtp" && <GtpPage onNavigate={handleNavigate} />}
           {view === "systems" && <SystemsPage onNavigate={handleNavigate} />}
-          {view === "careers" && <CareersPage onNavigate={handleNavigate} />}
-          {view === "resources" && (
-            <ResourcesPage onNavigate={handleNavigate} />
-          )}
+          {view === "careers" && <CareersPage />}
+          {view === "resources" && <ResourcesPage />}
 
           <GtpNotice />
         </main>
         <Footer onNavigate={handleNavigate} />
       </div>
+
+      {/* Halaska Tactile Fast-Track Roster Drawer */}
+      <QuickEnquiryDrawer
+        isOpen={rosterDrawerOpen}
+        onClose={() => setRosterDrawerOpen(false)}
+      />
 
       {/* Floating WhatsApp Action Button with Smooth Expandable Drawer */}
       <FloatingWhatsApp href={contact.whatsapp} show={showPill} />
