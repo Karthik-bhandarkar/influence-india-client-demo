@@ -8,6 +8,9 @@ import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
 import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
+import OrbitalWorkforceEngine from "./components/OrbitalWorkforceEngine"
+import ReliabilityEconomics from "./components/ReliabilityEconomics"
+import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources"
 
@@ -1024,6 +1027,7 @@ function Reliability() {
             </div>
           ))}
         </div>
+        <ReliabilityEconomics />
       </div>
     </section>
   )
@@ -1031,7 +1035,6 @@ function Reliability() {
 
 function Ecosystem() {
   const { ref, inView } = useInView()
-  const [activeNode, setActiveNode] = useState<number | null>(null)
 
   return (
     <section
@@ -1045,48 +1048,19 @@ function Ecosystem() {
       <div className="container">
         <div className="ecosystem-header">
           <SectionLabel number="04" light>
-            THE ECOSYSTEM
+            PROPRIETARY ARCHITECTURE
           </SectionLabel>
           <h2 id="ecosystem-title">
-            At the centre of the professional ecosystem, we lead the imagination
-            and creation of your career, today!
+            One closed-loop workforce orbital engine.
           </h2>
           <p>
-            Your workforce sits at the centre — sourced, skilled, certified,
-            deployed and monitored by one accountable team. Every service
-            radiates from it.
+            Every stage connected in an autonomous feedback cycle. Zero friction
+            between candidate discovery, ground skill training, statutory
+            compliance, and day-one onsite performance.
           </p>
         </div>
 
-        <div className="ecosystem-diagram">
-          <div className={`ecosystem-hub ${inView ? "is-pulsing" : ""}`}>
-            <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
-            <h3>Your Workforce</h3>
-            <p>Sourced · Skilled · Certified · Deployed · Monitored</p>
-          </div>
-          <div className="ecosystem-nodes">
-            {ecosystemNodes.map((node, idx) => {
-              const isSelected = activeNode === idx
-              return (
-                <div
-                  key={idx}
-                  className={`ecosystem-node ${inView ? "is-revealed" : ""} ${
-                    isSelected ? "is-active" : ""
-                  }`}
-                  style={{
-                    transitionDelay: inView ? `${idx * 80}ms` : "0ms",
-                  }}
-                  onMouseEnter={() => setActiveNode(idx)}
-                  onMouseLeave={() => setActiveNode(null)}
-                  onClick={() => setActiveNode(activeNode === idx ? null : idx)}
-                >
-                  <Icon name={node.icon} />
-                  <span>{node.label}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+        <OrbitalWorkforceEngine />
       </div>
     </section>
   )
@@ -1284,6 +1258,7 @@ function WhyUs() {
             operations never stall.
           </p>
         </div>
+        <WhyUsEditorialFlow />
         <div className="reasons-list">
           {reasons.map((reason) => (
             <div key={reason.number} className="reason-row">

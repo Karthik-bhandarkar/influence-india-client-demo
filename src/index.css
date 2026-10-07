@@ -5345,3 +5345,24 @@ p,
   font-weight: 600 !important;
   letter-spacing: 0.04em !important;
 }
+
+/* 9. Upgraded Template 1 & 2 Integrated Components Styling */
+.orbital-node-btn:hover {
+  transform: translate(-50%, -50%) scale(1.12) !important;
+  box-shadow: 0 0 24px var(--color-lime) !important;
+}
+
+.economics-row:hover {
+  background: rgba(196, 230, 80, 0.05);
+}
+
+@media (max-width: 860px) {
+  .economics-board {
+    overflow-x: auto;
+  }
+  .economics-board > div:first-child,
+  .economics-row {
+    min-width: 680px;
+  }
+}
+
