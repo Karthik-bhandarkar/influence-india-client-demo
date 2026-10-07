@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap');
+@import '../typography.css';
 @import 'tailwindcss';
 
 @font-face {
@@ -6,14 +8,6 @@
   font-weight: 400 700;
   font-display: swap;
   src: url('/fonts/inter-latin.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Manrope';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/fonts/manrope-latin.woff2') format('woff2');
 }
 
 @theme {
@@ -28,20 +22,48 @@
   --color-muted: #4e5a4a;
   --color-line: #dadcd0;
   --color-panel: #eff1e7;
-  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Space Grotesk', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Template 1: Emerald Editorial Luxury Typography */
+  --font-serif-editorial: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans-editorial: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono-editorial: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Template 2: Enterprise Tech & Career Orbit Typography */
+  --font-sans-tech: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif-tech: 'Cormorant Garamond', Georgia, serif;
+
+  /* Project Global Font Mappings */
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 :root {
   --content-width: 1320px;
   --gutter: clamp(1.25rem, 4.6vw, 5rem);
   --section-space: clamp(4rem, 7.5vw, 6.5rem);
+
+  /* Template 1: Emerald Editorial Luxury */
+  --font-editorial-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-editorial-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-editorial-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Template 2: Enterprise Tech & Career Orbit */
+  --font-tech-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-tech-serif: 'Cormorant Garamond', Georgia, serif;
+
+  /* Global Project Bindings (Fonts Only) */
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Original Colors Preserved Exactly */
   --color-brand-strong: #3f6e14;
   --color-brand-vibrant: #538c15;
   --color-brand-light: #eff7dc;
   --color-brand-border: #c4e28c;
-  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Space Grotesk', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --dark-line: #3b4237;
   --dark-muted: #b5bdac;
   --dark-panel: #2a3127;
@@ -128,10 +150,11 @@ summary {
 }
 
 .eyebrow {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1.6;
+  font-family: var(--font-editorial-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
@@ -557,16 +580,18 @@ summary {
 
 h2 {
   font-family: var(--font-display);
-  font-size: clamp(2.3rem, 4.4vw, 3.8rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
   line-height: 1.12;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.02em;
 }
 
 h3 {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .text-link {
@@ -760,10 +785,10 @@ h3 {
 
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 6.2vw, 5.8rem);
-  font-weight: 800;
-  letter-spacing: -0.055em;
-  line-height: 1.05;
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
   margin-top: 1.8rem;
   text-transform: uppercase;
 }
@@ -4171,7 +4196,7 @@ h3 {
 .story-quote-mark {
   font-size: 3rem;
   line-height: 1;
-  font-family: serif;
+  font-family: var(--font-editorial-serif);
   color: var(--color-brand-strong, #3f6e14);
   margin-bottom: 0.5rem;
 }

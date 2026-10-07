@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Influence India — Complete Typography & Font Specification
+   Unified typography engine covering both approved design systems:
+   - System 1: Emerald Editorial Luxury (Arena Style)
+   - System 2: Enterprise Tech & Career Orbit (Tech Style)
+   ========================================================================== */
+
+/* 1. Google Fonts Direct Imports */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap');
+
+/* 2. Core Tokens & CSS Variables */
+:root {
+  /* ========================================================
+     TEMPLATE 1: EMERALD EDITORIAL LUXURY
+     ======================================================== */
+  --font-editorial-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-editorial-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-editorial-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-emerald-primary: #123B30;
+  --color-emerald-dark: #061A14;
+  --color-emerald-neon: #00E575;
+  --color-emerald-mint: #A7F3D0;
+  --color-paper-warm: #FAF8F5;
+  --color-sand-border: #E8E2D8;
+
+  /* ========================================================
+     TEMPLATE 2: ENTERPRISE TECH & CAREER ORBIT
+     ======================================================== */
+  --font-tech-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-tech-serif: 'Cormorant Garamond', Georgia, serif;
+
+  --color-hirou-green: #005952;
+  --color-dark-green-ink: #003E38;
+  --color-honest-brown: #B06741;
+  --color-hirou-gray-canvas: #F3F5F3;
+  --color-hero-baseline: #E8F0EB;
+  --color-tech-border: rgba(0, 89, 82, 0.12);
+
+  /* ========================================================
+     PROJECT DEFAULTS (Mapped to Approved Systems)
+     ======================================================== */
+  --font-sans: var(--font-editorial-sans);
+  --font-display: var(--font-editorial-serif);
+  --font-serif: var(--font-editorial-serif);
+  --font-mono: var(--font-editorial-mono);
+}
+
+/* 3. Tailwind v4 Theme Tokens */
+@theme {
+  --font-serif-editorial: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans-editorial: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono-editorial: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --font-sans-tech: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif-tech: 'Cormorant Garamond', Georgia, serif;
+
+  /* Color Palette Mappings */
+  --color-emerald-950: #061A14;
+  --color-emerald-900: #123B30;
+  --color-emerald-800: #095C36;
+  --color-emerald-neon: #00E575;
+  --color-emerald-mint: #A7F3D0;
+
+  --color-paper-warm: #FAF8F5;
+  --color-paper-sand: #E8E2D8;
+
+  --color-hirou-green: #005952;
+  --color-hirou-dark: #003E38;
+  --color-hirou-gray: #F3F5F3;
+  --color-hirou-hero: #E8F0EB;
+  --color-hirou-slate: #E4E9E6;
+
+  --color-copper-accent: #B06741;
+}
+
+/* 4. Font Family Utility Classes */
+.font-serif-editorial {
+  font-family: var(--font-editorial-serif);
+}
+
+.font-sans-editorial {
+  font-family: var(--font-editorial-sans);
+}
+
+.font-mono-editorial {
+  font-family: var(--font-editorial-mono);
+}
+
+.font-sans-tech {
+  font-family: var(--font-tech-sans);
+}
+
+.font-serif-tech {
+  font-family: var(--font-tech-serif);
+}
+
+/* 5. Detailed Typography Scale — Template 1: Emerald & Editorial Luxury */
+
+/* Hero Display (H1): Playfair Display 600 SemiBold */
+.hero-display-editorial,
+.h1-editorial {
+  font-family: var(--font-editorial-serif);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+/* Section Title (H2): Playfair Display 500/600 Medium */
+.section-title-editorial,
+.h2-editorial {
+  font-family: var(--font-editorial-serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+/* Card / Feature Title (H3): Playfair Display 500 Medium */
+.card-title-editorial,
+.h3-editorial {
+  font-family: var(--font-editorial-serif);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Lead / Subheading: Instrument Sans 400 Regular */
+.lead-editorial {
+  font-family: var(--font-editorial-sans);
+  font-weight: 400;
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+/* Body Text: Instrument Sans 400 Regular */
+.body-editorial {
+  font-family: var(--font-editorial-sans);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Caption / Fine Print: Instrument Sans 400 Regular */
+.caption-editorial {
+  font-family: var(--font-editorial-sans);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* Eyebrow / Category Tag: Monospace 600 SemiBold */
+.eyebrow-editorial {
+  font-family: var(--font-editorial-mono);
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Brand Nameplate: Playfair Display 500 Medium */
+.nameplate-editorial {
+  font-family: var(--font-editorial-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* 6. Detailed Typography Scale — Template 2: Enterprise Tech & Career Orbit */
+
+/* Hero Title (H1): Inter 600 SemiBold */
+.hero-title-tech,
+.h1-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+/* Section Title (H2): Inter 600 SemiBold */
+.section-title-tech,
+.h2-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 600;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+/* Editorial H2 (Alternate): Cormorant Garamond 400 Light */
+.editorial-h2-tech {
+  font-family: var(--font-tech-serif);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+/* Subheading / Overview: Inter 400 Regular */
+.subheading-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* Body Text: Inter 400 Regular */
+.body-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Technical Metric Stat: Inter 700 Bold Tabular */
+.stat-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Technical Chip Eyebrow: Inter 600 SemiBold */
+.chip-tech {
+  font-family: var(--font-tech-sans);
+  font-weight: 600;
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
