@@ -1139,7 +1139,7 @@ h3 {
   align-items: center;
   gap: 3.75rem;
   width: max-content;
-  animation: company-marquee-scroll-left 42s linear infinite;
+  animation: company-marquee-scroll-left 58s linear infinite;
   will-change: transform;
 }
 
@@ -1148,7 +1148,7 @@ h3 {
   align-items: center;
   gap: 3.75rem;
   width: max-content;
-  animation: company-marquee-scroll-right 42s linear infinite;
+  animation: company-marquee-scroll-right 58s linear infinite;
   will-change: transform;
   margin-top: 1.5rem;
 }
