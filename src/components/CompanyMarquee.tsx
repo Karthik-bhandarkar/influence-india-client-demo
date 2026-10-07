@@ -2,7 +2,6 @@ export default function CompanyMarquee() {
   const companies = [
     {
       name: "Tata Group",
-      sector: "Enterprise & IT",
       logo: (
         <svg
           viewBox="0 0 130 32"
@@ -27,7 +26,6 @@ export default function CompanyMarquee() {
               strokeLinecap="round"
             />
           </g>
-          {/* Authentic TATA Wordmark */}
           <text
             x="38"
             y="21"
@@ -44,7 +42,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "HDFC Bank",
-      sector: "Financial Services",
       logo: (
         <svg
           viewBox="0 0 145 32"
@@ -88,7 +85,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Mahindra",
-      sector: "Logistics & Auto",
       logo: (
         <svg
           viewBox="0 0 145 32"
@@ -110,7 +106,7 @@ export default function CompanyMarquee() {
             y="21"
             fill="#e31837"
             fontFamily="system-ui, -apple-system, sans-serif"
-            fontSize="15"
+            fontSize="15.5"
             fontWeight="900"
             letterSpacing="0.04em"
           >
@@ -121,7 +117,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Wipro",
-      sector: "IT & Consulting",
       logo: (
         <svg
           viewBox="0 0 135 32"
@@ -155,7 +150,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Infosys",
-      sector: "Digital & Tech",
       logo: (
         <svg
           viewBox="0 0 130 32"
@@ -168,17 +162,17 @@ export default function CompanyMarquee() {
               y="18"
               fill="#007cc3"
               fontFamily="system-ui, -apple-system, sans-serif"
-              fontSize="18"
+              fontSize="18.5"
               fontWeight="700"
               letterSpacing="-0.03em"
             >
               Infosys
             </text>
             <path
-              d="M69 6.5 C71 4.5 74 5 76 7"
+              d="M71 6.5 C73 4.5 76 5 78 7"
               fill="none"
               stroke="#007cc3"
-              strokeWidth="2"
+              strokeWidth="2.2"
               strokeLinecap="round"
             />
           </g>
@@ -187,7 +181,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Larsen & Toubro",
-      sector: "Infrastructure & Heavy",
       logo: (
         <svg
           viewBox="0 0 145 32"
@@ -234,7 +227,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Reliance Industries",
-      sector: "Industries & Retail",
       logo: (
         <svg
           viewBox="0 0 150 32"
@@ -276,8 +268,46 @@ export default function CompanyMarquee() {
       ),
     },
     {
+      name: "State Bank of India",
+      logo: (
+        <svg
+          viewBox="0 0 145 32"
+          className="company-logo-svg"
+          aria-label="State Bank of India logo"
+        >
+          <g transform="translate(4, 3)">
+            {/* Iconic SBI Keyhole Circle */}
+            <circle cx="13" cy="13" r="12" fill="#280071" />
+            <circle cx="13" cy="13" r="4.2" fill="#ffffff" />
+            <rect x="11.2" y="13" width="3.6" height="12" fill="#ffffff" />
+          </g>
+          <text
+            x="36"
+            y="17"
+            fill="#280071"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="12.5"
+            fontWeight="900"
+            letterSpacing="0.06em"
+          >
+            STATE BANK OF INDIA
+          </text>
+          <text
+            x="36.5"
+            y="25"
+            fill="#00a8ca"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="6.8"
+            fontWeight="700"
+            letterSpacing="0.14em"
+          >
+            THE BANKER TO EVERY INDIAN
+          </text>
+        </svg>
+      ),
+    },
+    {
       name: "ICICI Bank",
-      sector: "Banking & Finance",
       logo: (
         <svg
           viewBox="0 0 140 32"
@@ -328,7 +358,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Bharti Airtel",
-      sector: "Telecom & Digital",
       logo: (
         <svg
           viewBox="0 0 130 32"
@@ -362,7 +391,6 @@ export default function CompanyMarquee() {
     },
     {
       name: "Flipkart",
-      sector: "E-Commerce Supply",
       logo: (
         <svg
           viewBox="0 0 135 32"
@@ -410,144 +438,7 @@ export default function CompanyMarquee() {
       ),
     },
     {
-      name: "Delhivery",
-      sector: "Supply Chain & Express",
-      logo: (
-        <svg
-          viewBox="0 0 145 32"
-          className="company-logo-svg"
-          aria-label="Delhivery logo"
-        >
-          <g transform="translate(4, 4)">
-            {/* Authentic Delhivery Red Geometric Cube/Chevron */}
-            <path d="M0 6 L12 0 L24 6 L24 18 L12 24 L0 18 Z" fill="#df2027" />
-            <path
-              d="M12 0 L12 24 M0 6 L12 12 L24 6"
-              stroke="#ffffff"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M6 15 L12 18 L18 15"
-              stroke="#ffffff"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </g>
-          <text
-            x="36"
-            y="21"
-            fill="#111315"
-            fontFamily="system-ui, -apple-system, sans-serif"
-            fontSize="13.5"
-            fontWeight="900"
-            letterSpacing="0.1em"
-          >
-            DELHIVERY
-          </text>
-        </svg>
-      ),
-    },
-    {
-      name: "Apollo Hospitals",
-      sector: "Healthcare Support",
-      logo: (
-        <svg
-          viewBox="0 0 135 32"
-          className="company-logo-svg"
-          aria-label="Apollo logo"
-        >
-          <g transform="translate(4, 2)">
-            {/* Authentic Apollo Red/Gold Caduceus Sunburst */}
-            <circle
-              cx="13"
-              cy="14"
-              r="12"
-              fill="#fff7e6"
-              stroke="#c92228"
-              strokeWidth="1.2"
-            />
-            <path
-              d="M13 5 C15 9 17 11 17 14 C17 17 15 19 13 22 C11 19 9 17 9 14 C9 11 11 9 13 5 Z"
-              fill="#c92228"
-            />
-            <path
-              d="M8 12 Q13 14 18 12 M7 16 Q13 18 19 16"
-              fill="none"
-              stroke="#d49b29"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </g>
-          <text
-            x="36"
-            y="17"
-            fill="#c92228"
-            fontFamily="system-ui, -apple-system, sans-serif"
-            fontSize="13"
-            fontWeight="800"
-            letterSpacing="0.04em"
-          >
-            Apollo
-          </text>
-          <text
-            x="36.5"
-            y="24"
-            fill="#555d50"
-            fontFamily="system-ui, -apple-system, sans-serif"
-            fontSize="6.8"
-            fontWeight="700"
-            letterSpacing="0.14em"
-          >
-            HOSPITALS
-          </text>
-        </svg>
-      ),
-    },
-    {
-      name: "Titan Company",
-      sector: "Retail & Manufacturing",
-      logo: (
-        <svg
-          viewBox="0 0 130 32"
-          className="company-logo-svg"
-          aria-label="Titan logo"
-        >
-          <g transform="translate(4, 3)">
-            {/* Authentic Titan Luxury Circle */}
-            <circle cx="13" cy="13" r="12" fill="#0f2240" />
-            <path
-              d="M7 9 h12 M13 9 v11"
-              stroke="#c8a051"
-              strokeWidth="2.2"
-              strokeLinecap="square"
-            />
-            <circle
-              cx="13"
-              cy="13"
-              r="7.5"
-              fill="none"
-              stroke="#c8a051"
-              strokeWidth="0.9"
-              strokeDasharray="1.5 2"
-            />
-          </g>
-          <text
-            x="35"
-            y="20.5"
-            fill="#0f2240"
-            fontFamily="system-ui, -apple-system, sans-serif"
-            fontSize="13.5"
-            fontWeight="800"
-            letterSpacing="0.2em"
-          >
-            TITAN
-          </text>
-        </svg>
-      ),
-    },
-    {
       name: "Amazon India",
-      sector: "Fulfillment & Operations",
       logo: (
         <svg
           viewBox="0 0 135 32"
@@ -585,6 +476,74 @@ export default function CompanyMarquee() {
         </svg>
       ),
     },
+    {
+      name: "ITC Limited",
+      logo: (
+        <svg
+          viewBox="0 0 135 32"
+          className="company-logo-svg"
+          aria-label="ITC logo"
+        >
+          <g transform="translate(4, 3)">
+            {/* Iconic Triangular ITC Monogram */}
+            <path
+              d="M13 2 L25 24 L1 24 Z"
+              fill="none"
+              stroke="#003366"
+              strokeWidth="2.4"
+              strokeLinejoin="round"
+            />
+            <text
+              x="13"
+              y="21"
+              textAnchor="middle"
+              fill="#003366"
+              fontFamily="Georgia, serif"
+              fontSize="9.5"
+              fontWeight="900"
+            >
+              ITC
+            </text>
+          </g>
+          <text
+            x="35"
+            y="20.5"
+            fill="#003366"
+            fontFamily="system-ui, -apple-system, sans-serif"
+            fontSize="14.5"
+            fontWeight="900"
+            letterSpacing="0.1em"
+          >
+            ITC LIMITED
+          </text>
+        </svg>
+      ),
+    },
+    {
+      name: "Zomato",
+      logo: (
+        <svg
+          viewBox="0 0 130 32"
+          className="company-logo-svg"
+          aria-label="Zomato logo"
+        >
+          <g transform="translate(4, 4)">
+            <text
+              x="2"
+              y="18.5"
+              fill="#cb202d"
+              fontFamily="system-ui, -apple-system, sans-serif"
+              fontSize="20"
+              fontWeight="900"
+              fontStyle="italic"
+              letterSpacing="-0.04em"
+            >
+              zomato
+            </text>
+          </g>
+        </svg>
+      ),
+    },
   ]
 
   return (
@@ -598,9 +557,11 @@ export default function CompanyMarquee() {
             <span className="marquee-dot" />
             <span>TRUSTED WORKFORCE DEPLOYMENT PARTNER</span>
           </span>
+          <h2 className="marquee-heading">
+            Trusted by India’s leading enterprise &amp; industry teams.
+          </h2>
           <p className="marquee-sub">
-            Empowering 250+ enterprise workplaces across India with managed
-            staffing &amp; verified operations
+            Deploying managed, certified staffing operations across 250+ enterprise workplaces nationwide
           </p>
         </div>
       </div>
@@ -619,11 +580,11 @@ export default function CompanyMarquee() {
           {companies.concat(companies).map((c, idx) => (
             <div
               key={idx}
-              className="company-card-pill"
-              title={`${c.name} — ${c.sector}`}
+              className="company-logo-item"
+              title={c.name}
+              aria-label={c.name}
             >
-              <div className="company-logo-inner">{c.logo}</div>
-              <span className="company-sector-tag">{c.sector}</span>
+              {c.logo}
             </div>
           ))}
         </div>

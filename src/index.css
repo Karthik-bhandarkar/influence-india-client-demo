@@ -1091,10 +1091,20 @@ h3 {
   }
 }
 
+.marquee-heading {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-top: 0.95rem;
+  line-height: 1.25;
+}
+
 .marquee-sub {
   font-size: 0.92rem;
   color: #555d50;
-  margin-top: 0.85rem;
+  margin-top: 0.65rem;
   line-height: 1.6;
 }
 
@@ -1102,34 +1112,34 @@ h3 {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding-block: 0.5rem 1rem;
+  padding-block: 1rem 1.5rem;
 }
 
 .company-marquee-fade {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 120px;
+  width: 140px;
   z-index: 2;
   pointer-events: none;
 }
 
 .company-marquee-fade--left {
   left: 0;
-  background: linear-gradient(to right, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
 }
 
 .company-marquee-fade--right {
   right: 0;
-  background: linear-gradient(to left, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to left, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
 }
 
 .company-marquee-track {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 3.75rem;
   width: max-content;
-  animation: company-marquee-scroll 45s linear infinite;
+  animation: company-marquee-scroll 36s linear infinite;
   will-change: transform;
 }
 
@@ -1146,42 +1156,28 @@ h3 {
   }
 }
 
-.company-card-pill {
+.company-logo-item {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 1.25rem;
-  padding: 1rem 1.6rem;
-  background: #ffffff;
-  border: 1px solid rgba(23, 29, 22, 0.08);
-  border-left: 4px solid var(--color-brand-strong);
-  border-radius: 9999px;
-  box-shadow: 0 3px 12px rgba(23, 29, 22, 0.04);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  opacity: 0.82;
+  filter: grayscale(0.12);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, filter 0.25s ease;
   cursor: default;
 }
 
-.company-card-pill:hover {
-  transform: translateY(-3px) scale(1.02);
-  background: #ffffff;
-  border-left-color: var(--color-brand-vibrant);
-  box-shadow: 0 10px 24px rgba(23, 29, 22, 0.08), 0 0 0 1px rgba(63, 110, 20, 0.15);
-}
-
-.company-logo-inner {
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.company-card-pill:hover .company-logo-inner {
-  transform: scale(1.02);
+.company-logo-item:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: translateY(-2px) scale(1.08);
 }
 
 .company-logo-svg {
-  height: 28px;
+  height: 32px;
   width: auto;
-  max-width: 155px;
+  max-width: 170px;
   display: block;
 }
 
