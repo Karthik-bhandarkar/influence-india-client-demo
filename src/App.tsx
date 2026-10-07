@@ -563,34 +563,6 @@ function Brand({
   )
 }
 
-function TopTicker() {
-  const tickerItems = [
-    "RIGHT STAFFING",
-    "ELEVATE ENTITY GROWTH",
-    "PAN-INDIA SOURCING",
-    "STAFFING SERVICES",
-    "MANAGED SERVICES",
-    "SKILL ADOPTION",
-    "OSTP — ONSITE SKILL TRAINING PROGRAMS NOW LIVE",
-    "GROW TOGETHER POLICY: 21 FOOTPRINTS PUBLISHED",
-  ]
-
-  return (
-    <div className="top-ticker" aria-label="Announcements and live updates">
-      <div className="top-ticker__track">
-        {tickerItems.concat(tickerItems).map((item, idx) => (
-          <span key={idx}>
-            {item}
-            <span className="top-ticker__dot" aria-hidden="true">
-              ✦
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function Header({
   activeView,
   onNavigate,
@@ -2162,7 +2134,6 @@ export default function App() {
       </a>
 
       <div id="home">
-        <TopTicker />
         <Header activeView={view} onNavigate={handleNavigate} />
         <main id="main">
           {view === "home" && (
