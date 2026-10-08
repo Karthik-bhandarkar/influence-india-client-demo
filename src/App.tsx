@@ -42,61 +42,49 @@ const navigation = [
 const services = [
   {
     number: "01",
-    title: "Right Staffing",
-    description:
-      "Empower your corporate and non-corporate staffing needs with certified aspirants, matched to the roles you actually run.",
-    icon: "people" as const,
-    action: "Enquire now",
+    title: "Right staffing",
+    tag: "The right people. Matched to the role.",
+    body: "Staffing plans tailored to your corporate and non-corporate needs, drawing on a pool of certified aspirants who are trained before they ever reach your floor.",
     enquiryText:
       "Hello Influence India Services, I would like to enquire about Right Staffing solutions.",
   },
   {
     number: "02",
-    title: "Elevate Entity Growth",
-    description:
-      "Elevate your entity's growth by embracing a sustainable recruiting solution built on premium, well-mannered, skilled aspirants.",
-    icon: "growth" as const,
-    action: "Discuss growth",
+    title: "Elevate entity growth",
+    tag: "Growth, without the hiring drag.",
+    body: "A sustainable recruiting solution built on premium, well-mannered and knowledgeable people, supported by trainers who keep skills sharp as you scale.",
     enquiryText:
       "Hello Influence India Services, I would like to discuss Elevate Entity Growth staffing.",
   },
   {
     number: "03",
-    title: "Pan-India Sourcing & Recruiting",
-    description:
-      "A seamless opportunity experience, anytime and from anywhere, powered by extensive infrastructure across the country.",
-    icon: "globe" as const,
-    action: "Source talent",
+    title: "PAN-India sourcing",
+    tag: "Sourced anywhere. Managed everywhere.",
+    body: "A seamless opportunity experience, anytime and anywhere, backed by extensive infrastructure to manage staffing, recruiting and onboarding in every corridor.",
     enquiryText:
       "Hello Influence India Services, I need Pan-India sourcing and recruiting assistance.",
   },
   {
     number: "04",
-    title: "Staffing Services",
-    description:
-      "Sustainable, efficient and replacement staffing service for your entity, delivered through a tech-driven system.",
-    icon: "work" as const,
-    action: "Request staffing",
+    title: "Staffing services",
+    tag: "Cover that never leaves a gap.",
+    body: "Sustainable, efficient and replacement staffing for your entity, delivered through a tech-driven system — so an absence never becomes an outage.",
     enquiryText:
       "Hello Influence India Services, I would like to request staffing services.",
   },
   {
     number: "05",
-    title: "Managed Services",
-    description:
-      "Sustainable staffing for end-to-end recruitment needs, provided to PAN-India locations under one operating centre.",
-    icon: "building" as const,
-    action: "Explore managed",
+    title: "Managed services",
+    tag: "End to end. One operating centre.",
+    body: "Sustainable staffing for end-to-end recruitment needs, provided across PAN-India locations through our proprietary staffing management system.",
     enquiryText:
       "Hello Influence India Services, I am interested in Managed Services for our workforce.",
   },
   {
     number: "06",
-    title: "Skill Adoption",
-    description:
-      "Accelerating your work efficiency and quality — future-proofing your recognition through onsite skill training programs.",
-    icon: "compass" as const,
-    action: "Learn skill programs",
+    title: "Skill adoption",
+    tag: "Skills that arrive job-ready.",
+    body: "Tailored end-to-end staffing management for corporate and hospitality industries, with staff deployed to a work structure built around your goals.",
     enquiryText:
       "Hello Influence India Services, I want to learn more about your Skill Adoption and OSTP programs.",
   },
@@ -913,65 +901,89 @@ function Metrics() {
   )
 }
 
-function Services() {
+function Services({
+  onNavigate,
+}: {
+  onNavigate?: (target: string) => void
+}) {
   const { ref, inView } = useInView()
 
   return (
     <section
       id="what-we-do"
       ref={ref}
-      className={`section services-section editorial-reveal ${
+      className={`services-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="services-title"
     >
+      <span id="services" className="sr-only" aria-hidden="true" />
       <div className="container">
-        <div className="section-heading">
+        <div className="services-header-row">
           <div>
-            <SectionLabel number="02" light>OUR SERVICES</SectionLabel>
-            <h2 id="services-title">
-              Everything your workforce needs.
+            <div className="services-eyebrow">
+              <span className="services-eyebrow-line" />
+              <span>WHAT WE DO</span>
+            </div>
+            <h2 id="services-title" className="services-main-title">
+              Everything your workforce
               <br />
-              <span className="muted-heading">Under one system.</span>
+              needs. <em>Under one system.</em>
             </h2>
           </div>
-          <p className="heading-aside">
-            From sourcing to skilling, from certification to onsite management,
-            we bring an integrated system across every staffing discipline. Our
-            integrated service network means one partner, one point of contact,
-            and total visibility from enrolment to deployment.
-          </p>
+          <a
+            href="#systems"
+            className="services-pill-cta"
+            onClick={(e) => {
+              e.preventDefault()
+              if (onNavigate) {
+                onNavigate("systems")
+              } else {
+                window.location.hash = "#systems"
+              }
+            }}
+          >
+            <span>ALL TWELVE SERVICES</span>
+            <span className="cta-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
-        <div className="services-grid">
+
+        <div className="services-glossy-grid">
           {services.map((service, idx) => (
-            <article
+            <a
               key={service.number}
-              className="service-card"
+              className="services-glossy-card"
+              href={`${contact.whatsapp}?text=${encodeURIComponent(
+                service.enquiryText,
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 transitionDelay: inView ? `${idx * 60}ms` : "0ms",
               }}
             >
-              <div className="service-card-top">
-                <span>{service.number}</span>
-                <Icon name={service.icon} />
-              </div>
-              <div className="service-content">
-                <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-              </div>
-              <a
-                className="service-link"
-                href={`${contact.whatsapp}?text=${encodeURIComponent(service.enquiryText)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>{service.action}</span>
-                <span className="service-arrow">
-                  <Icon name="arrow-up" />
+              <div className="services-card-header">
+                <span className="services-card-num">{service.number}</span>
+                <span className="services-card-arrow-circle" aria-hidden="true">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
                 </span>
-              </a>
-            </article>
+              </div>
+              <h3 className="services-card-title">{service.title}</h3>
+              <p className="services-card-tag">{service.tag}</p>
+              <p className="services-card-body">{service.body}</p>
+            </a>
           ))}
         </div>
       </div>
@@ -2176,7 +2188,7 @@ export default function App() {
               />
               <Metrics />
               <LandingVideoSection onNavigate={handleNavigate} />
-              <Services />
+              <Services onNavigate={handleNavigate} />
               <Reliability />
               <Ecosystem />
               <PillarsOfInnovation />

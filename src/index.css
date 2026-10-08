@@ -1342,125 +1342,247 @@ h3 {
   margin-top: 1.2rem;
 }
 
-/* Services Section */
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 3rem;
-  align-items: flex-end;
-  margin-bottom: 3rem;
-}
-
-.section-heading h2 {
-  margin-top: 1.4rem;
-  text-transform: uppercase;
-}
-
-.heading-aside {
-  color: var(--color-muted);
-  font-size: 0.88rem;
-  line-height: 1.75;
-  max-width: 520px;
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.6rem;
-  background: transparent;
-  border: none;
-}
-
-.service-card {
-  background: #ffffff;
-  padding: 2.4rem 2.1rem;
-  display: flex;
-  flex-direction: column;
-  min-height: 340px;
-  border: 1px solid rgba(23, 29, 22, 0.1);
-  border-left: 5px solid var(--color-brand-strong);
-  border-radius: 1.15rem;
-  box-shadow: 0 4px 18px rgba(23, 29, 22, 0.05);
+/* Services Section — Glossy Emerald Green Atmospheric Architecture */
+.services-section {
   position: relative;
   overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  padding: clamp(5.5rem, 8.5vw, 8rem) 0;
+  background:
+    radial-gradient(circle 900px at 15% 25%, rgba(14, 96, 56, 0.55), transparent 70%),
+    radial-gradient(circle 750px at 88% 80%, rgba(8, 70, 42, 0.4), transparent 70%),
+    radial-gradient(ellipse 1000px 500px at 50% 0%, rgba(20, 115, 68, 0.28), transparent 75%),
+    linear-gradient(175deg, #01160c 0%, #032416 35%, #021a10 70%, #01130a 100%);
+  color: #ffffff;
 }
 
-.service-card:hover {
-  background: #ffffff;
-  border-left-color: var(--color-brand-vibrant);
-  box-shadow: 0 16px 36px rgba(23, 29, 22, 0.1), 0 0 0 1px rgba(63, 110, 20, 0.15);
+.services-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 1400px 600px at 35% 0%, rgba(52, 211, 153, 0.08), transparent 70%);
+  pointer-events: none;
 }
 
-.service-card-top {
+.services-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: clamp(3rem, 5vw, 4.25rem);
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .services-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+.services-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #34d399;
+  margin-bottom: 1.25rem;
+}
+
+.services-eyebrow-line {
+  display: inline-block;
+  width: 18px;
+  height: 1.5px;
+  background: #34d399;
+}
+
+.services-main-title {
+  font-family: var(--font-editorial-serif), 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 4.8vw, 4.4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.services-main-title em {
+  font-style: italic;
+  font-family: inherit;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.services-pill-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.72rem 1.45rem;
+  border-radius: 9999px;
+  background: rgba(3, 35, 23, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #e6f7ee;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.services-pill-cta .cta-arrow {
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.services-pill-cta:hover {
+  background: rgba(16, 75, 48, 0.85);
+  border-color: rgba(74, 222, 128, 0.6);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(52, 211, 153, 0.35);
+}
+
+.services-pill-cta:hover .cta-arrow {
+  transform: translateX(3px);
+}
+
+.services-glossy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .services-glossy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-glossy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.services-glossy-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2.2rem 2rem 2.2rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(165deg, rgba(3, 32, 21, 0.72) 0%, rgba(2, 22, 14, 0.84) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(52, 211, 153, 0.16);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 24px rgba(52, 211, 153, 0.02);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 290px;
+}
+
+.services-glossy-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 320px at 0% 0%, rgba(52, 211, 153, 0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.services-glossy-card:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(165deg, rgba(5, 45, 30, 0.82) 0%, rgba(3, 28, 18, 0.92) 100%);
+  border-color: rgba(52, 211, 153, 0.42);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(16, 185, 129, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.services-glossy-card:hover::before {
+  opacity: 1;
+}
+
+.services-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
-.service-card-top>span {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
+.services-card-num {
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  color: #34d399;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-.service-card-top .icon {
-  width: 28px;
-  height: 28px;
-  color: var(--color-ink);
-}
-
-.service-content {
-  margin-block: 2rem 1.5rem;
-}
-
-.service-content h3 {
-  font-size: 1.25rem;
-  line-height: 1.25;
-  text-transform: uppercase;
-  margin-bottom: 0.85rem;
-}
-
-.service-content p {
-  font-size: 0.8rem;
-  line-height: 1.7;
-  color: #555d50;
-}
-
-.service-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--color-line);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.service-arrow {
+.services-card-arrow-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  background: rgba(3, 35, 23, 0.5);
   display: grid;
   place-items: center;
-  border: 1px solid var(--color-line);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  color: rgba(220, 240, 230, 0.75);
+  transition: all 0.25s ease;
 }
 
-.service-arrow .icon {
-  width: 16px;
-  height: 16px;
-}
-
-.service-card:hover .service-arrow {
-  background: var(--color-lime);
-  border-color: var(--color-lime);
+.services-glossy-card:hover .services-card-arrow-circle {
+  border-color: #34d399;
+  background: rgba(52, 211, 153, 0.22);
+  color: #ffffff;
   transform: translate(2px, -2px);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.35);
+}
+
+.services-card-title {
+  font-family: var(--font-editorial-serif), 'Playfair Display', Georgia, serif;
+  font-size: 1.48rem;
+  font-weight: 500;
+  line-height: 1.22;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.01em;
+}
+
+.services-card-tag {
+  font-family: var(--font-editorial-serif), 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #4ade80;
+  margin: 0 0 1.25rem 0;
+  font-weight: 400;
+}
+
+.services-card-body {
+  font-family: var(--font-sans), 'Instrument Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #9cb8a8;
+  margin: 0;
+  font-weight: 400;
 }
 
 /* Reliability Section */
