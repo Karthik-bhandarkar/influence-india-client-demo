@@ -7,7 +7,7 @@ export interface FolderCardItem {
   title: string
   description: string
   bgImage?: string
-  characterImage: string
+  characterImage?: string
   folderColor: string
   borderColor: string
   textColor?: string
@@ -15,9 +15,6 @@ export interface FolderCardItem {
   href?: string
   stamp?: string
 }
-
-const OBJECT =
-  "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis"
 
 export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
   {
@@ -30,7 +27,6 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     textColor: "#1F4D38",
     subTextColor: "rgba(31, 77, 56, 0.75)",
     bgImage: "/images/reliability-dos-telemetry.jpg",
-    characterImage: "/images/icon-3d-telemetry.png",
     stamp: "✦ DOS ACTIVE · 0 OUTAGES",
   },
   {
@@ -43,7 +39,6 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     textColor: "#5C3D2E",
     subTextColor: "rgba(92, 61, 46, 0.75)",
     bgImage: "/images/reliability-pan-india.jpg",
-    characterImage: "/images/icon-3d-globe.png",
     stamp: "✦ PAN-INDIA · 30+ CITIES",
   },
   {
@@ -56,7 +51,6 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     textColor: "#3B2F63",
     subTextColor: "rgba(59, 47, 99, 0.75)",
     bgImage: "/images/reliability-support-247.jpg",
-    characterImage: "/images/icon-3d-support.png",
     stamp: "✦ 365 DAYS · REAL PEOPLE",
   },
 ]
@@ -111,47 +105,49 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           ) : null}
         </motion.div>
 
-        {/* Floating pop-out character / 3D object */}
-        <motion.div
-          className="pointer-events-none absolute left-1/2 top-[120px] z-10 flex w-[230px] -translate-x-1/2 justify-center transform-gpu will-change-[transform]"
-          variants={{
-            initial: { y: 0, scale: 0.96 },
-            hover: { y: -72, scale: 1.08 },
-          }}
-          transition={gpuSpringTransition}
-        >
+        {/* Optional floating pop-out character / 3D object */}
+        {card.characterImage ? (
           <motion.div
-            animate={{ y: [0, -6, 0], rotate: [0, 1.5, -1.5, 0] }}
-            transition={{
-              duration: 4.8,
-              repeat: Infinity,
-              ease: "easeInOut",
+            className="pointer-events-none absolute left-1/2 top-[120px] z-10 flex w-[230px] -translate-x-1/2 justify-center transform-gpu will-change-[transform]"
+            variants={{
+              initial: { y: 0, scale: 0.96 },
+              hover: { y: -72, scale: 1.08 },
             }}
-            className="flex items-center justify-center"
+            transition={gpuSpringTransition}
           >
-            {!imgFailed ? (
-              <img
-                src={card.characterImage}
-                alt=""
-                onError={() => setImgFailed(true)}
-                decoding="async"
-                loading="eager"
-                className="pointer-events-none h-44 w-auto max-w-[180px] transform-gpu select-none object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.25)]"
-              />
-            ) : (
-              <div
-                className="flex h-36 w-36 items-center justify-center rounded-3xl"
-                style={{
-                  background: card.folderColor,
-                  color: card.textColor,
-                  boxShadow: "0 18px 24px rgba(0,0,0,0.2)",
-                }}
-              >
-                <span style={{ fontSize: "2.5rem" }}>✦</span>
-              </div>
-            )}
+            <motion.div
+              animate={{ y: [0, -6, 0], rotate: [0, 1.5, -1.5, 0] }}
+              transition={{
+                duration: 4.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="flex items-center justify-center"
+            >
+              {!imgFailed ? (
+                <img
+                  src={card.characterImage}
+                  alt=""
+                  onError={() => setImgFailed(true)}
+                  decoding="async"
+                  loading="eager"
+                  className="pointer-events-none h-44 w-auto max-w-[180px] transform-gpu select-none object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.25)]"
+                />
+              ) : (
+                <div
+                  className="flex h-36 w-36 items-center justify-center rounded-3xl"
+                  style={{
+                    background: card.folderColor,
+                    color: card.textColor,
+                    boxShadow: "0 18px 24px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  <span style={{ fontSize: "2.5rem" }}>✦</span>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        ) : null}
 
         {/* Sliding Folder Flap */}
         <motion.div
