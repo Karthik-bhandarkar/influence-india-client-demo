@@ -8,6 +8,13 @@ import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
 import ContactPage from "./pages/ContactPage"
+import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
+import ReliabilityEconomics from "./components/ReliabilityEconomics"
+import FolderCards from "./components/FolderCards"
+import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
+import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
+import FooterWordmark from "./components/FooterWordmark"
+import FooterEnterprise from "./components/FooterEnterprise"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
@@ -39,61 +46,49 @@ const navigation = [
 const services = [
   {
     number: "01",
-    title: "Right Staffing",
-    description:
-      "Empower your corporate and non-corporate staffing needs with certified aspirants, matched to the roles you actually run.",
-    icon: "people" as const,
-    action: "Enquire now",
+    title: "Right staffing",
+    tag: "The right people. Matched to the role.",
+    body: "Staffing plans tailored to your corporate and non-corporate needs, drawing on a pool of certified aspirants who are trained before they ever reach your floor.",
     enquiryText:
       "Hello Influence India Services, I would like to enquire about Right Staffing solutions.",
   },
   {
     number: "02",
-    title: "Elevate Entity Growth",
-    description:
-      "Elevate your entity's growth by embracing a sustainable recruiting solution built on premium, well-mannered, skilled aspirants.",
-    icon: "growth" as const,
-    action: "Discuss growth",
+    title: "Elevate entity growth",
+    tag: "Growth, without the hiring drag.",
+    body: "A sustainable recruiting solution built on premium, well-mannered and knowledgeable people, supported by trainers who keep skills sharp as you scale.",
     enquiryText:
       "Hello Influence India Services, I would like to discuss Elevate Entity Growth staffing.",
   },
   {
     number: "03",
-    title: "Pan-India Sourcing & Recruiting",
-    description:
-      "A seamless opportunity experience, anytime and from anywhere, powered by extensive infrastructure across the country.",
-    icon: "globe" as const,
-    action: "Source talent",
+    title: "PAN-India sourcing",
+    tag: "Sourced anywhere. Managed everywhere.",
+    body: "A seamless opportunity experience, anytime and anywhere, backed by extensive infrastructure to manage staffing, recruiting and onboarding in every corridor.",
     enquiryText:
       "Hello Influence India Services, I need Pan-India sourcing and recruiting assistance.",
   },
   {
     number: "04",
-    title: "Staffing Services",
-    description:
-      "Sustainable, efficient and replacement staffing service for your entity, delivered through a tech-driven system.",
-    icon: "work" as const,
-    action: "Request staffing",
+    title: "Staffing services",
+    tag: "Cover that never leaves a gap.",
+    body: "Sustainable, efficient and replacement staffing for your entity, delivered through a tech-driven system — so an absence never becomes an outage.",
     enquiryText:
       "Hello Influence India Services, I would like to request staffing services.",
   },
   {
     number: "05",
-    title: "Managed Services",
-    description:
-      "Sustainable staffing for end-to-end recruitment needs, provided to PAN-India locations under one operating centre.",
-    icon: "building" as const,
-    action: "Explore managed",
+    title: "Managed services",
+    tag: "End to end. One operating centre.",
+    body: "Sustainable staffing for end-to-end recruitment needs, provided across PAN-India locations through our proprietary staffing management system.",
     enquiryText:
       "Hello Influence India Services, I am interested in Managed Services for our workforce.",
   },
   {
     number: "06",
-    title: "Skill Adoption",
-    description:
-      "Accelerating your work efficiency and quality — future-proofing your recognition through onsite skill training programs.",
-    icon: "compass" as const,
-    action: "Learn skill programs",
+    title: "Skill adoption",
+    tag: "Skills that arrive job-ready.",
+    body: "Tailored end-to-end staffing management for corporate and hospitality industries, with staff deployed to a work structure built around your goals.",
     enquiryText:
       "Hello Influence India Services, I want to learn more about your Skill Adoption and OSTP programs.",
   },
@@ -322,7 +317,7 @@ const policies = [
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
-function Icon({ name, className = "" }: { name: IconName className?: string }) {
+function Icon({ name, className = "" }: { name: IconName; className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M4 12h15M13 5l7 7-7 7" />,
     "arrow-up": <path d="M5 19 19 5M5 5h14v14" />,
@@ -564,40 +559,14 @@ function Brand({
   )
 }
 
-function TopTicker() {
-  const tickerItems = [
-    "RIGHT STAFFING",
-    "ELEVATE ENTITY GROWTH",
-    "PAN-INDIA SOURCING",
-    "STAFFING SERVICES",
-    "MANAGED SERVICES",
-    "SKILL ADOPTION",
-    "OSTP — ONSITE SKILL TRAINING PROGRAMS NOW LIVE",
-    "GROW TOGETHER POLICY: 21 FOOTPRINTS PUBLISHED",
-  ]
-
-  return (
-    <div className="top-ticker" aria-label="Announcements and live updates">
-      <div className="top-ticker__track">
-        {tickerItems.concat(tickerItems).map((item, idx) => (
-          <span key={idx}>
-            {item}
-            <span className="top-ticker__dot" aria-hidden="true">
-              ✦
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function Header({
   activeView,
   onNavigate,
+  onOpenRoster,
 }: {
   activeView: ActiveView
   onNavigate: (target: string) => void
+  onOpenRoster?: () => void
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
@@ -638,14 +607,51 @@ function Header({
             )
           })}
         </nav>
-        <ActionLink
-          href={contact.whatsapp}
-          variant="lime"
-          arrow="whatsapp"
-          className="header-contact"
-        >
-          WhatsApp
-        </ActionLink>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          {onOpenRoster && (
+            <button
+              type="button"
+              onClick={onOpenRoster}
+              className="roster-desk-badge-btn"
+              title="Open Fast-Track Roster Desk"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.45rem",
+                padding: "0.5rem 0.95rem",
+                borderRadius: "9999px",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                background: "rgba(17, 19, 21, 0.05)",
+                border: "1px solid rgba(17, 19, 21, 0.12)",
+                color: "var(--color-ink)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              <span
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  backgroundColor: "#3f6e14",
+                  boxShadow: "0 0 6px #3f6e14",
+                }}
+              />
+              <span>Roster Desk</span>
+            </button>
+          )}
+          <ActionLink
+            href={contact.whatsapp}
+            variant="lime"
+            arrow="whatsapp"
+            className="header-contact"
+          >
+            WhatsApp
+          </ActionLink>
+        </div>
         <button
           ref={toggleRef}
           type="button"
@@ -664,6 +670,19 @@ function Header({
         aria-label="Mobile navigation"
         hidden={!menuOpen}
       >
+        {onOpenRoster && (
+          <button
+            type="button"
+            onClick={() => {
+              setMenuOpen(false)
+              onOpenRoster()
+            }}
+            className="mobile-roster-action"
+          >
+            <span className="halaska-dot" />
+            <span>Fast-Track Roster Desk</span>
+          </button>
+        )}
         {navigation.map((item) => (
           <a
             key={item.href}
@@ -691,6 +710,8 @@ function Header({
     </header>
   )
 }
+
+
 
 function Hero() {
   const [highlightDrawn, setHighlightDrawn] = useState(false)
@@ -884,65 +905,89 @@ function Metrics() {
   )
 }
 
-function Services() {
+function Services({
+  onNavigate,
+}: {
+  onNavigate?: (target: string) => void
+}) {
   const { ref, inView } = useInView()
 
   return (
     <section
       id="what-we-do"
       ref={ref}
-      className={`section services-section editorial-reveal ${
+      className={`services-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="services-title"
     >
+      <span id="services" className="sr-only" aria-hidden="true" />
       <div className="container">
-        <div className="section-heading">
+        <div className="services-header-row">
           <div>
-            <SectionLabel number="02">OUR SERVICES</SectionLabel>
-            <h2 id="services-title">
-              Everything your workforce needs.
+            <div className="services-eyebrow">
+              <span className="services-eyebrow-line" />
+              <span>WHAT WE DO</span>
+            </div>
+            <h2 id="services-title" className="services-main-title">
+              Everything your workforce
               <br />
-              <span className="muted-heading">Under one system.</span>
+              needs. <em>Under one system.</em>
             </h2>
           </div>
-          <p className="heading-aside">
-            From sourcing to skilling, from certification to onsite management,
-            we bring an integrated system across every staffing discipline. Our
-            integrated service network means one partner, one point of contact,
-            and total visibility from enrolment to deployment.
-          </p>
+          <a
+            href="#systems"
+            className="services-pill-cta"
+            onClick={(e) => {
+              e.preventDefault()
+              if (onNavigate) {
+                onNavigate("systems")
+              } else {
+                window.location.hash = "#systems"
+              }
+            }}
+          >
+            <span>ALL TWELVE SERVICES</span>
+            <span className="cta-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
-        <div className="services-grid">
+
+        <div className="services-glossy-grid">
           {services.map((service, idx) => (
-            <article
+            <a
               key={service.number}
-              className="service-card"
+              className="services-glossy-card"
+              href={`${contact.whatsapp}?text=${encodeURIComponent(
+                service.enquiryText,
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 transitionDelay: inView ? `${idx * 60}ms` : "0ms",
               }}
             >
-              <div className="service-card-top">
-                <span>{service.number}</span>
-                <Icon name={service.icon} />
-              </div>
-              <div className="service-content">
-                <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-              </div>
-              <a
-                className="service-link"
-                href={`${contact.whatsapp}?text=${encodeURIComponent(service.enquiryText)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>{service.action}</span>
-                <span className="service-arrow">
-                  <Icon name="arrow-up" />
+              <div className="services-card-header">
+                <span className="services-card-num">{service.number}</span>
+                <span className="services-card-arrow-circle" aria-hidden="true">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
                 </span>
-              </a>
-            </article>
+              </div>
+              <h3 className="services-card-title">{service.title}</h3>
+              <p className="services-card-tag">{service.tag}</p>
+              <p className="services-card-body">{service.body}</p>
+            </a>
           ))}
         </div>
       </div>
@@ -977,94 +1022,14 @@ function Reliability() {
             performance.
           </p>
         </div>
-        <div className="reliability-grid">
-          {reliabilityPillars.map((pillar) => (
-            <div key={pillar.number} className="reliability-card">
-              <div className="reliability-top">
-                <span className="reliability-number">{pillar.number}</span>
-                <Icon name={pillar.icon} />
-              </div>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.description}</p>
-              {pillar.stamp && (
-                <div style={{ marginTop: "1.5rem" }}>
-                  <span
-                    className={`tactile-stamp ${inView ? "is-stamped" : ""}`}
-                  >
-                    ✦ {pillar.stamp}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <FolderCards />
+        <ReliabilityEconomics />
       </div>
     </section>
   )
 }
 
-function Ecosystem() {
-  const { ref, inView } = useInView()
-  const [activeNode, setActiveNode] = useState<number | null>(null)
 
-  return (
-    <section
-      id="ecosystem"
-      ref={ref}
-      className={`section ecosystem-section editorial-reveal ${
-        inView ? "is-revealed" : ""
-      }`}
-      aria-labelledby="ecosystem-title"
-    >
-      <div className="container">
-        <div className="ecosystem-header">
-          <SectionLabel number="04" light>
-            THE ECOSYSTEM
-          </SectionLabel>
-          <h2 id="ecosystem-title">
-            At the centre of the professional ecosystem, we lead the imagination
-            and creation of your career, today!
-          </h2>
-          <p>
-            Your workforce sits at the centre — sourced, skilled, certified,
-            deployed and monitored by one accountable team. Every service
-            radiates from it.
-          </p>
-        </div>
-
-        <div className="ecosystem-diagram">
-          <div className={`ecosystem-hub ${inView ? "is-pulsing" : ""}`}>
-            <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
-            <h3>Your Workforce</h3>
-            <p>Sourced · Skilled · Certified · Deployed · Monitored</p>
-          </div>
-          <div className="ecosystem-nodes">
-            {ecosystemNodes.map((node, idx) => {
-              const isSelected = activeNode === idx
-              return (
-                <div
-                  key={idx}
-                  className={`ecosystem-node ${inView ? "is-revealed" : ""} ${
-                    isSelected ? "is-active" : ""
-                  }`}
-                  style={{
-                    transitionDelay: inView ? `${idx * 80}ms` : "0ms",
-                  }}
-                  onMouseEnter={() => setActiveNode(idx)}
-                  onMouseLeave={() => setActiveNode(null)}
-                  onClick={() => setActiveNode(activeNode === idx ? null : idx)}
-                >
-                  <Icon name={node.icon} />
-                  <span>{node.label}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function PillarsOfInnovation() {
   const { ref, inView } = useInView()
@@ -1258,27 +1223,8 @@ function WhyUs() {
             operations never stall.
           </p>
         </div>
-        <div className="reasons-list">
-          {reasons.map((reason) => (
-            <div key={reason.number} className="reason-row">
-              <span className="reason-number">{reason.number}</span>
-              <div>
-                <h3>{reason.title}</h3>
-                {reason.stamp && (
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <span
-                      className={`tactile-stamp ${inView ? "is-stamped" : ""}`}
-                    >
-                      ✦ {reason.stamp}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <p>{reason.description}</p>
-              <Icon name="check" />
-            </div>
-          ))}
-        </div>
+        <WhyUsEditorialFlow />
+        <WhyUsTactileAccordion />
       </div>
     </section>
   )
@@ -1831,166 +1777,10 @@ function AboutPage() {
 }
 
 function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
-  const companyLinks = [
-    { label: "Home", nav: "home" },
-    { label: "About us", nav: "about" },
-    { label: "Grow Together Policy", nav: "#gtp" },
-    { label: "Job eco-system", nav: "#systems" },
-    { label: "Driving the future", nav: "#systems" },
-    { label: "Charging forward", nav: "#resources" },
-    { label: "Careers", nav: "#careers" },
-    { label: "Resources", nav: "#resources" },
-    { label: "Contact us", nav: "#contact" },
-  ]
-
-  const serviceLinks = [
-    { label: "Right staffing", nav: "#what-we-do" },
-    { label: "Elevate entity growth", nav: "#what-we-do" },
-    { label: "PAN-India sourcing & recruiting", nav: "#what-we-do" },
-    { label: "Staffing services", nav: "#what-we-do" },
-    { label: "Managed services", nav: "#what-we-do" },
-    { label: "Skill adoption", nav: "#what-we-do" },
-    { label: "Onsite skill training (OSTP)", nav: "#resources" },
-    { label: "Unique platform", nav: "#systems" },
-  ]
-
-  return (
-    <footer className="site-footer">
-      <div className="container">
-        <div className="footer-columns">
-          <div className="footer-brand">
-            <Brand onNavigateHome={() => onNavigate("home")} footer />
-            <p>
-              One system. Every step of the career. Sourcing, skill training,
-              certification and onsite management unified across India under one
-              accountable team.
-            </p>
-            <div className="footer-brand-badge">
-              <span className="footer-brand-dot" aria-hidden="true" />
-              <span>30+ Cities · Live Operations</span>
-            </div>
-          </div>
-
-          <div className="footer-col">
-            <h4>Company</h4>
-            <ul>
-              {companyLinks.map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={`#${item.nav.replace("#", "")}`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate(item.nav)
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>Services</h4>
-            <ul>
-              {serviceLinks.map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={`#${item.nav.replace("#", "")}`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      onNavigate(item.nav)
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>Sectors</h4>
-            <ul>
-              {sectors.map((sector, idx) => (
-                <li key={idx}>
-                  <span>{sector}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="footer-col footer-col--contact">
-            <h4>Corporate Office</h4>
-            <address className="footer-address">
-              {contact.address.line1}, {contact.address.line2}
-              <br />
-              {contact.address.city}
-            </address>
-            <a
-              href={contact.address.directionsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-address-link"
-            >
-              Get Directions
-              <Icon name="arrow-up" />
-            </a>
-
-            <div className="footer-contact-info">
-              <a href={contact.employers} className="footer-contact-link">
-                contact@influenceindiaservices.com
-              </a>
-              <a href={contact.careers} className="footer-contact-link">
-                careers@influenceindiaservices.com
-              </a>
-              <a href={contact.whatsapp} className="footer-contact-link">
-                +91 96063 29992 (WhatsApp)
-              </a>
-              <span className="footer-contact-hours">{contact.hours}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-locations-strip">
-          <strong>Locations:</strong>
-          <span>
-            Bengaluru · Mumbai & Pune · Chennai · Hyderabad · Gujarat · Uttar
-            Pradesh · Bhubaneswar
-          </span>
-        </div>
-
-        <div className="footer-bottom-bar">
-          <span className="footer-copy">
-            © {new Date().getFullYear()} Influence India Services. All rights
-            reserved.
-          </span>
-          <div className="footer-policy-links">
-            {policies.map((policy, idx) => (
-              <span key={idx}>{policy}</span>
-            ))}
-          </div>
-          <div className="footer-bottom-right">
-            <span className="footer-tagline">PEOPLE. WORK. ACROSS INDIA.</span>
-            <a
-              href="#home"
-              className="back-to-top"
-              onClick={(e) => {
-                e.preventDefault()
-                window.scrollTo({ top: 0, behavior: "smooth" })
-              }}
-            >
-              Back to top
-              <Icon name="arrow-up" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  )
+  return <FooterEnterprise onNavigate={onNavigate} />
 }
 
-function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
+function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [autoPeek, setAutoPeek] = useState(false)
@@ -2066,6 +1856,7 @@ function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
 
 export default function App() {
   const { progress, showPill } = useScrollProgress()
+  const [rosterDrawerOpen, setRosterDrawerOpen] = useState(false)
   const [view, setView] = useState<ActiveView>(() => {
     if (typeof window !== "undefined") {
       const hash = window.location.hash.toLowerCase()
@@ -2171,8 +1962,7 @@ export default function App() {
       </a>
 
       <div id="home">
-        <TopTicker />
-        <Header activeView={view} onNavigate={handleNavigate} />
+        <Header activeView={view} onNavigate={handleNavigate} onOpenRoster={() => setRosterDrawerOpen(true)} />
         <main id="main">
           {view === "home" && (
             <>
@@ -2183,9 +1973,8 @@ export default function App() {
               />
               <Metrics />
               <LandingVideoSection onNavigate={handleNavigate} />
-              <Services />
+              <Services onNavigate={handleNavigate} />
               <Reliability />
-              <Ecosystem />
               <PillarsOfInnovation />
               <PricingDisruption />
               <SkillTraining />
@@ -2198,16 +1987,20 @@ export default function App() {
           {view === "about" && <AboutPage />}
           {view === "gtp" && <GtpPage onNavigate={handleNavigate} />}
           {view === "systems" && <SystemsPage onNavigate={handleNavigate} />}
-          {view === "careers" && <CareersPage onNavigate={handleNavigate} />}
-          {view === "resources" && (
-            <ResourcesPage onNavigate={handleNavigate} />
-          )}
+          {view === "careers" && <CareersPage />}
+          {view === "resources" && <ResourcesPage />}
           {view === "contact" && <ContactPage onNavigate={handleNavigate} />}
 
           <GtpNotice />
         </main>
         <Footer onNavigate={handleNavigate} />
       </div>
+
+      {/* Halaska Tactile Fast-Track Roster Drawer */}
+      <QuickEnquiryDrawer
+        isOpen={rosterDrawerOpen}
+        onClose={() => setRosterDrawerOpen(false)}
+      />
 
       {/* Floating WhatsApp Action Button with Smooth Expandable Drawer */}
       <FloatingWhatsApp href={contact.whatsapp} show={showPill} />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import OrbitalWorkforceEngine from "../components/OrbitalWorkforceEngine"
 
 const benefits = [
   {
@@ -210,6 +211,24 @@ export default function SystemsPage({
               <span>LIVE TELEMETRY · 250+ CLIENT COMPANIES CONNECTED</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Proprietary Architecture: Closed-Loop Orbital Engine */}
+      <section className="section systems-orbital-section" style={{ background: "#06130b", color: "#ffffff", padding: "5.5rem 0" }}>
+        <div className="container">
+          <div className="section-heading-editorial" style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <span className="section-label-text" style={{ color: "#34d399" }}>• 04 / PROPRIETARY ARCHITECTURE</span>
+            <h2 style={{ color: "#ffffff", marginTop: "0.75rem" }}>
+              ONE CLOSED-LOOP WORKFORCE
+              <br />
+              <span className="text-lime" style={{ color: "#34d399" }}>ORBITAL ENGINE</span>
+            </h2>
+            <p className="heading-sub" style={{ color: "#9cb8a8", maxWidth: "680px", margin: "1rem auto 0" }}>
+              Every stage connected in an autonomous feedback cycle. Zero friction between candidate discovery, ground skill training, statutory compliance, and day-one onsite performance.
+            </p>
+          </div>
+          <OrbitalWorkforceEngine />
         </div>
       </section>
 

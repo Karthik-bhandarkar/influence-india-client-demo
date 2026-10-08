@@ -22,6 +22,9 @@ export default function CompanyMarquee() {
             <span className="marquee-dot" />
             <span>TRUSTED WORKFORCE DEPLOYMENT PARTNER</span>
           </span>
+          <h2 className="marquee-heading">
+            Trusted by India’s leading enterprise &amp; industry teams.
+          </h2>
           <p className="marquee-sub">
             Empowering 250+ enterprise workplaces &amp; institutions across India with managed
             staffing &amp; verified operations
@@ -40,7 +43,7 @@ export default function CompanyMarquee() {
         />
 
         {/* Row 1: Scrolling Left */}
-        <div className="company-marquee-track company-marquee-track--row1">
+        <div className="company-marquee-track company-marquee-track--left company-marquee-track--row1">
           {row1.concat(row1).map((item, idx) => (
             <div
               key={`r1-${idx}`}
@@ -59,7 +62,7 @@ export default function CompanyMarquee() {
         </div>
 
         {/* Row 2: Scrolling Right */}
-        <div className="company-marquee-track company-marquee-track--row2 company-marquee-track--reverse">
+        <div className="company-marquee-track company-marquee-track--right company-marquee-track--row2 company-marquee-track--reverse">
           {row2.concat(row2).map((item, idx) => (
             <div
               key={`r2-${idx}`}
