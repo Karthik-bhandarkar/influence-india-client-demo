@@ -9,6 +9,7 @@ import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
 import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
 import ReliabilityEconomics from "./components/ReliabilityEconomics"
+import FolderCards from "./components/FolderCards"
 import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
 import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
 
@@ -1018,27 +1019,7 @@ function Reliability() {
             performance.
           </p>
         </div>
-        <div className="reliability-grid">
-          {reliabilityPillars.map((pillar) => (
-            <div key={pillar.number} className="reliability-card">
-              <div className="reliability-top">
-                <span className="reliability-number">{pillar.number}</span>
-                <Icon name={pillar.icon} />
-              </div>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.description}</p>
-              {pillar.stamp && (
-                <div style={{ marginTop: "1.5rem" }}>
-                  <span
-                    className={`tactile-stamp ${inView ? "is-stamped" : ""}`}
-                  >
-                    ✦ {pillar.stamp}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <FolderCards />
         <ReliabilityEconomics />
       </div>
     </section>
