@@ -291,15 +291,18 @@ export default function ResourcesPage() {
 
             {/* Final CTA in Article */}
             <div className="resources-cta-box">
-              <h3>READY TO GET CHARGED UP ABOUT THE FUTURE?</h3>
-              <p>
-                Contact Influence India Services today at{" "}
-                <a href="mailto:connect@project-influenceindiaservices.com">
-                  connect@project-influenceindiaservices.com
-                </a>{" "}
-                to discuss your Skilled Staffing needs and explore how we can
-                help you make the switch to SAAS (Staffing as a Service).
-              </p>
+              <div className="resources-cta-header">
+                <span className="section-label-text">WORKFORCE PARTNERSHIP</span>
+                <h3>READY TO GET CHARGED UP ABOUT THE FUTURE?</h3>
+                <p>
+                  Contact Influence India Services today at{" "}
+                  <a href="mailto:connect@project-influenceindiaservices.com">
+                    connect@project-influenceindiaservices.com
+                  </a>{" "}
+                  to discuss your Skilled Staffing needs and explore how we can
+                  help you make the switch to SAAS (Staffing as a Service).
+                </p>
+              </div>
               <div className="resources-cta-action">
                 <span className="tagline-bold">
                   TOGETHER, LET'S GROW INDIA.

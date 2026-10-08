@@ -321,14 +321,25 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
             </div>
 
             {onNavigate && (
-              <div className="mission-cta-wrap">
+              <div className="mission-policy-action-card">
+                <div className="policy-action-info">
+                  <span className="policy-action-eyebrow">
+                    <span className="pulse-dot" />
+                    OPERATIONAL COVENANT
+                  </span>
+                  <h4 className="policy-action-title">Grow Together Policy (GTP)</h4>
+                  <p className="policy-action-desc">
+                    Explore our 21 published footprints driving 100% gender diversity,
+                    zero aspirant fees, and lifelong career progression.
+                  </p>
+                </div>
                 <button
                   type="button"
                   onClick={() => onNavigate("gtp")}
-                  className="action-btn-styled action-btn-styled--lime"
+                  className="about-btn about-btn--primary"
                 >
                   <span>READ GROW TOGETHER POLICY</span>
-                  <span>→</span>
+                  <span className="btn-icon">→</span>
                 </button>
               </div>
             )}
