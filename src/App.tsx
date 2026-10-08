@@ -11,6 +11,7 @@ import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicr
 import OrbitalWorkforceEngine from "./components/OrbitalWorkforceEngine"
 import ReliabilityEconomics from "./components/ReliabilityEconomics"
 import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
+import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources"
 
@@ -1271,27 +1272,7 @@ function WhyUs() {
           </p>
         </div>
         <WhyUsEditorialFlow />
-        <div className="reasons-list">
-          {reasons.map((reason) => (
-            <div key={reason.number} className="reason-row">
-              <span className="reason-number">{reason.number}</span>
-              <div>
-                <h3>{reason.title}</h3>
-                {reason.stamp && (
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <span
-                      className={`tactile-stamp ${inView ? "is-stamped" : ""}`}
-                    >
-                      ✦ {reason.stamp}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <p>{reason.description}</p>
-              <Icon name="check" />
-            </div>
-          ))}
-        </div>
+        <WhyUsTactileAccordion />
       </div>
     </section>
   )
