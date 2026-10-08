@@ -92,7 +92,7 @@ export function AccordionOS({
   containerHeight = 520,
   containerWidth = "100%",
   autoPlay = true,
-  autoPlayInterval = 2000, // 2-second order-wise cycle as requested
+  autoPlayInterval = 5000, // 5-second order-wise cycle as requested
   pauseOnHover = true,
   onItemChange,
 }: AccordionOSProps) {
