@@ -154,7 +154,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           className="pointer-events-none absolute inset-x-0 top-[80px] z-20 h-[380px] transform-gpu will-change-[transform]"
           variants={{
             initial: { y: 0 },
-            hover: { y: 105 },
+            hover: { y: 48 },
           }}
           transition={gpuSpringTransition}
         >
@@ -172,7 +172,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
 
           {/* Large Folder Number */}
           <div
-            className="absolute left-6 top-4 font-mono text-[3.5rem] font-bold tabular-nums leading-none tracking-tighter select-none"
+            className="absolute left-6 top-4 font-mono text-[2.75rem] font-bold tabular-nums leading-none tracking-tighter select-none"
             style={{ color: textColor }}
           >
             {card.number}
@@ -180,10 +180,10 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
 
           {/* Top Arrow Icon */}
           <motion.div
-            className="absolute right-6 top-[46px] flex h-6 w-6 transform-gpu items-center justify-center will-change-[transform]"
+            className="absolute right-6 top-[38px] flex h-6 w-6 transform-gpu items-center justify-center will-change-[transform]"
             variants={{
               initial: { x: 0, scale: 1 },
-              hover: { x: 4, scale: 1.15 },
+              hover: { x: 5, scale: 1.15 },
             }}
             transition={gpuSpringTransition}
           >
@@ -204,11 +204,11 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
 
         {/* Bottom Title & Description */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-col gap-2 p-5 pb-[22px]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-col gap-1.5 p-5 pb-5"
           style={{ color: textColor }}
         >
           <h3
-            className="select-none font-sans text-base font-semibold leading-snug tracking-tight"
+            className="select-none font-sans text-[15px] font-bold leading-snug tracking-tight"
             style={{ color: textColor }}
           >
             {card.title}
@@ -220,7 +220,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
             {card.description}
           </p>
           {card.stamp && (
-            <div style={{ marginTop: "0.25rem" }}>
+            <div className="pt-0.5">
               <span
                 style={{
                   display: "inline-block",
@@ -231,7 +231,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
                   textTransform: "uppercase",
                   padding: "2px 8px",
                   borderRadius: "9999px",
-                  background: "rgba(255, 255, 255, 0.65)",
+                  background: "rgba(255, 255, 255, 0.7)",
                   border: `1px solid ${card.borderColor}`,
                   color: textColor,
                 }}
