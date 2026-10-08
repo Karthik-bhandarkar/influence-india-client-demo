@@ -9,9 +9,15 @@ export interface FolderCardItem {
   bgImage?: string
   characterImage?: string
   folderColor: string
+  gradientTop?: string
+  gradientBottom?: string
   borderColor: string
-  textColor?: string
-  subTextColor?: string
+  textColor: string
+  subTextColor: string
+  badgeBg: string
+  badgeBorder: string
+  badgeText: string
+  badgeDotColor: string
   href?: string
   stamp?: string
 }
@@ -22,36 +28,54 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     number: "01",
     title: "Real-Time Workforce Monitoring",
     description: "A central Dedicated Operation System (DOS) tracks attendance, rosters and performance at every milestone.",
-    folderColor: "#D8F5E4",
-    borderColor: "#B8EBCE",
-    textColor: "#1F4D38",
-    subTextColor: "rgba(31, 77, 56, 0.75)",
+    folderColor: "#F4FBF7",
+    gradientTop: "#FFFFFF",
+    gradientBottom: "#E5F6ED",
+    borderColor: "rgba(16, 185, 129, 0.28)",
+    textColor: "#0F291E",
+    subTextColor: "rgba(15, 41, 30, 0.72)",
+    badgeBg: "rgba(255, 255, 255, 0.85)",
+    badgeBorder: "rgba(16, 185, 129, 0.3)",
+    badgeText: "#065F46",
+    badgeDotColor: "#10B981",
     bgImage: "/images/reliability-dos-telemetry.jpg",
-    stamp: "✦ DOS ACTIVE · 0 OUTAGES",
+    stamp: "DOS ACTIVE · 0 OUTAGES",
   },
   {
     id: "02",
     number: "02",
     title: "Pan-India Network Coverage",
     description: "From Bengaluru to every major corridor, our sourcing and training network spans 30+ regional hubs.",
-    folderColor: "#FFE8D6",
-    borderColor: "#FFD4B8",
-    textColor: "#5C3D2E",
-    subTextColor: "rgba(92, 61, 46, 0.75)",
+    folderColor: "#FCFAF6",
+    gradientTop: "#FFFFFF",
+    gradientBottom: "#F4EDE1",
+    borderColor: "rgba(217, 119, 6, 0.24)",
+    textColor: "#2A1E14",
+    subTextColor: "rgba(42, 30, 20, 0.72)",
+    badgeBg: "rgba(255, 255, 255, 0.85)",
+    badgeBorder: "rgba(217, 119, 6, 0.28)",
+    badgeText: "#854D0E",
+    badgeDotColor: "#F59E0B",
     bgImage: "/images/reliability-pan-india.jpg",
-    stamp: "✦ PAN-INDIA · 30+ CITIES",
+    stamp: "PAN-INDIA · 30+ CITIES",
   },
   {
     id: "03",
     number: "03",
     title: "24/7 Client Support",
     description: "Real people, 365 days a year. Whether routine roster updates or urgent replacement, we own the outcome.",
-    folderColor: "#E8DFFB",
-    borderColor: "#D4C4F5",
-    textColor: "#3B2F63",
-    subTextColor: "rgba(59, 47, 99, 0.75)",
+    folderColor: "#F8FAFC",
+    gradientTop: "#FFFFFF",
+    gradientBottom: "#EDF2F7",
+    borderColor: "rgba(99, 102, 241, 0.24)",
+    textColor: "#141A29",
+    subTextColor: "rgba(20, 26, 41, 0.72)",
+    badgeBg: "rgba(255, 255, 255, 0.85)",
+    badgeBorder: "rgba(99, 102, 241, 0.28)",
+    badgeText: "#3730A3",
+    badgeDotColor: "#6366F1",
     bgImage: "/images/reliability-support-247.jpg",
-    stamp: "✦ 365 DAYS · REAL PEOPLE",
+    stamp: "365 DAYS · REAL PEOPLE",
   },
 ]
 
@@ -65,20 +89,24 @@ const gpuSpringTransition: Transition = {
 }
 
 export function FolderPeek({ card }: { card: FolderCardItem }) {
-  const textColor = card.textColor ?? "#09090b"
-  const subTextColor = card.subTextColor ?? "rgba(9, 9, 11, 0.65)"
   const Component = card.href ? motion.a : motion.div
-  const [imgFailed, setImgFailed] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="folder-card-wrapper relative isolate h-[420px] w-full max-w-[340px] shrink-0">
+    <div className="folder-card-wrapper relative isolate h-[430px] w-full max-w-[348px] shrink-0">
       <Component
         {...(card.href
           ? { href: card.href, target: "_blank", rel: "noopener noreferrer" }
           : {})}
-        className="group relative block h-[420px] w-full cursor-pointer select-none overflow-hidden rounded-[32px] shadow-lg transform-gpu [backface-visibility:hidden] [contain:paint] [perspective:1000px]"
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        className="group relative block h-[430px] w-full cursor-pointer select-none overflow-hidden rounded-[28px] transform-gpu [backface-visibility:hidden] [contain:paint] [perspective:1000px] transition-shadow duration-300"
         style={{
-          border: `10px solid ${card.borderColor}`,
+          border: `1.5px solid ${card.borderColor}`,
+          background: "#181D20",
+          boxShadow: isHovered
+            ? "0 22px 48px -10px rgba(15, 23, 42, 0.16), 0 38px 72px -16px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
+            : "0 1px 3px rgba(0, 0, 0, 0.04), 0 12px 28px -6px rgba(15, 23, 42, 0.09), 0 24px 48px -12px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
           boxSizing: "border-box",
         }}
         initial="initial"
@@ -90,7 +118,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           className="absolute inset-0 z-0 overflow-hidden transform-gpu will-change-[transform]"
           variants={{
             initial: { scale: 1 },
-            hover: { scale: 1.09 },
+            hover: { scale: 1.08 },
           }}
           transition={gpuSpringTransition}
         >
@@ -103,58 +131,16 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
               className="pointer-events-none h-full w-full select-none object-cover"
             />
           ) : null}
+          {/* Subtle photographic vignette overlay for visual depth */}
+          <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/25 via-transparent to-black/35" />
         </motion.div>
 
-        {/* Optional floating pop-out character / 3D object */}
-        {card.characterImage ? (
-          <motion.div
-            className="pointer-events-none absolute left-1/2 top-[120px] z-10 flex w-[230px] -translate-x-1/2 justify-center transform-gpu will-change-[transform]"
-            variants={{
-              initial: { y: 0, scale: 0.96 },
-              hover: { y: -72, scale: 1.08 },
-            }}
-            transition={gpuSpringTransition}
-          >
-            <motion.div
-              animate={{ y: [0, -6, 0], rotate: [0, 1.5, -1.5, 0] }}
-              transition={{
-                duration: 4.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="flex items-center justify-center"
-            >
-              {!imgFailed ? (
-                <img
-                  src={card.characterImage}
-                  alt=""
-                  onError={() => setImgFailed(true)}
-                  decoding="async"
-                  loading="eager"
-                  className="pointer-events-none h-44 w-auto max-w-[180px] transform-gpu select-none object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.25)]"
-                />
-              ) : (
-                <div
-                  className="flex h-36 w-36 items-center justify-center rounded-3xl"
-                  style={{
-                    background: card.folderColor,
-                    color: card.textColor,
-                    boxShadow: "0 18px 24px rgba(0,0,0,0.2)",
-                  }}
-                >
-                  <span style={{ fontSize: "2.5rem" }}>✦</span>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        ) : null}
-
-        {/* Sliding Folder Flap */}
+        {/* Sliding Folder Flap with Realistic Gradients and Directional Shadows */}
         <motion.div
-          className="pointer-events-none absolute inset-x-0 top-[80px] z-20 h-[380px] transform-gpu will-change-[transform]"
+          className="pointer-events-none absolute inset-x-0 top-[78px] z-20 h-[380px] transform-gpu will-change-[transform]"
           variants={{
             initial: { y: 0 },
-            hover: { y: 48 },
+            hover: { y: 46 },
           }}
           transition={gpuSpringTransition}
         >
@@ -162,39 +148,63 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
             viewBox="0 0 280 380"
             fill="none"
             preserveAspectRatio="none"
-            className="absolute inset-0 h-full w-full drop-shadow-[0_-10px_20px_rgba(0,0,0,0.15)]"
+            className="absolute inset-0 h-full w-full drop-shadow-[0_-8px_16px_rgba(15,23,42,0.12)] drop-shadow-[0_-2px_4px_rgba(15,23,42,0.06)]"
           >
+            <defs>
+              <linearGradient
+                id={`folder-gradient-${card.number}`}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop offset="0%" stopColor={card.gradientTop ?? "#FFFFFF"} />
+                <stop offset="30%" stopColor={card.folderColor} />
+                <stop
+                  offset="100%"
+                  stopColor={card.gradientBottom ?? card.folderColor}
+                />
+              </linearGradient>
+            </defs>
             <path
               d="M 0,20 C 0,9 9,0 20,0 L 122,0 C 133,0 140,5.5 143.5,15 C 147,24.5 154,30 164,30 L 262,30 C 272,30 280,38 280,48 L 280,380 L 0,380 Z"
-              fill={card.folderColor}
+              fill={`url(#folder-gradient-${card.number})`}
+              stroke="rgba(255, 255, 255, 0.95)"
+              strokeWidth="1.2"
             />
           </svg>
 
-          {/* Large Folder Number */}
-          <div
-            className="absolute left-6 top-4 font-mono text-[2.75rem] font-bold tabular-nums leading-none tracking-tighter select-none"
-            style={{ color: textColor }}
-          >
-            {card.number}
+          {/* Refined Architectural Folder Number */}
+          <div className="absolute left-6 top-3.5 flex items-baseline gap-1 select-none">
+            <span
+              className="font-serif italic text-[2.75rem] font-normal leading-none tracking-tight"
+              style={{ color: card.textColor }}
+            >
+              {card.number}
+            </span>
           </div>
 
-          {/* Top Arrow Icon */}
+          {/* Top Arrow Micro-Action Button */}
           <motion.div
-            className="absolute right-6 top-[38px] flex h-6 w-6 transform-gpu items-center justify-center will-change-[transform]"
+            className="absolute right-6 top-[38px] flex h-7 w-7 transform-gpu items-center justify-center rounded-full will-change-[transform]"
+            style={{
+              background: "rgba(0, 0, 0, 0.04)",
+              border: "1px solid rgba(0, 0, 0, 0.08)",
+            }}
             variants={{
               initial: { x: 0, scale: 1 },
-              hover: { x: 5, scale: 1.15 },
+              hover: { x: 4, scale: 1.1 },
             }}
             transition={gpuSpringTransition}
           >
             <svg
               viewBox="0 0 24 24"
               fill="none"
-              stroke={textColor}
-              strokeWidth="2.2"
+              stroke={card.textColor}
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="pointer-events-none h-5 w-5"
+              className="pointer-events-none h-3.5 w-3.5 opacity-80"
             >
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
@@ -202,40 +212,49 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           </motion.div>
         </motion.div>
 
-        {/* Bottom Title & Description */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-col gap-1.5 p-5 pb-5"
-          style={{ color: textColor }}
-        >
+        {/* Bottom Title, Description & Luxury Stamp Pill */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-col gap-2 p-6 pb-6">
           <h3
-            className="select-none font-sans text-[15px] font-bold leading-snug tracking-tight"
-            style={{ color: textColor }}
+            className="select-none font-serif text-[1.15rem] font-semibold leading-[1.3] tracking-tight"
+            style={{ color: card.textColor }}
           >
             {card.title}
           </h3>
           <p
-            className="select-none font-sans text-xs font-normal leading-relaxed opacity-85"
-            style={{ color: subTextColor }}
+            className="select-none font-sans text-[12.5px] font-normal leading-relaxed"
+            style={{ color: card.subTextColor }}
           >
             {card.description}
           </p>
           {card.stamp && (
-            <div className="pt-0.5">
+            <div className="pt-1">
               <span
                 style={{
-                  display: "inline-block",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
                   fontFamily: "var(--font-mono)",
                   fontSize: "9px",
-                  fontWeight: 800,
-                  letterSpacing: "0.06em",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  padding: "2px 8px",
+                  padding: "3px 9px",
                   borderRadius: "9999px",
-                  background: "rgba(255, 255, 255, 0.7)",
-                  border: `1px solid ${card.borderColor}`,
-                  color: textColor,
+                  background: card.badgeBg,
+                  border: `1px solid ${card.badgeBorder}`,
+                  color: card.badgeText,
+                  boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
                 }}
               >
+                <span
+                  style={{
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "9999px",
+                    backgroundColor: card.badgeDotColor,
+                    boxShadow: `0 0 6px ${card.badgeDotColor}`,
+                  }}
+                />
                 {card.stamp}
               </span>
             </div>
