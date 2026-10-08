@@ -8,7 +8,6 @@ import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
 import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
-import OrbitalWorkforceEngine from "./components/OrbitalWorkforceEngine"
 import ReliabilityEconomics from "./components/ReliabilityEconomics"
 import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
 import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
@@ -1046,38 +1045,7 @@ function Reliability() {
   )
 }
 
-function Ecosystem() {
-  const { ref, inView } = useInView()
 
-  return (
-    <section
-      id="ecosystem"
-      ref={ref}
-      className={`section ecosystem-section editorial-reveal ${
-        inView ? "is-revealed" : ""
-      }`}
-      aria-labelledby="ecosystem-title"
-    >
-      <div className="container">
-        <div className="ecosystem-header">
-          <SectionLabel number="04" light>
-            PROPRIETARY ARCHITECTURE
-          </SectionLabel>
-          <h2 id="ecosystem-title">
-            One closed-loop workforce orbital engine.
-          </h2>
-          <p>
-            Every stage connected in an autonomous feedback cycle. Zero friction
-            between candidate discovery, ground skill training, statutory
-            compliance, and day-one onsite performance.
-          </p>
-        </div>
-
-        <OrbitalWorkforceEngine />
-      </div>
-    </section>
-  )
-}
 
 function PillarsOfInnovation() {
   const { ref, inView } = useInView()
@@ -2171,7 +2139,6 @@ export default function App() {
               <LandingVideoSection onNavigate={handleNavigate} />
               <Services onNavigate={handleNavigate} />
               <Reliability />
-              <Ecosystem />
               <PillarsOfInnovation />
               <PricingDisruption />
               <SkillTraining />
