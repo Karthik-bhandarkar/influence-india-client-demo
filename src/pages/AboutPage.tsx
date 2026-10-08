@@ -254,74 +254,162 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
 }
 
 /* =========================================================================
-   2. OUR MISSION: REFINED TWO-COLUMN WITH INTERACTIVE PILLARS
+   2. OUR MISSION: REFINED TWO-COLUMN WITH FAQ-STYLE ACCORDION & OFFSET VISUAL
    ========================================================================= */
 function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
-  const [activePillar, setActivePillar] = useState(0)
+  // FAQ-style accordion state (toggles open/close, default first item open)
+  const [openPillar, setOpenPillar] = useState<number | null>(0)
 
   const pillars = [
     {
       num: "01",
       title: "Reliable & Equivalent Jobs",
+      badge: "MERIT-BASED ACCESS",
       lead: "Matching educated aspirants to verified roles that respect their academic training and life goals.",
       body: "We provide reliable, affordable and structured job solutions that mirror educated youth's qualifications, creating genuine pathways into the formal corporate and institutional sectors.",
+      tag: "QUALIFICATION RECOGNITION",
+      tagline: "Bridging degrees with dignity in India’s premier corporate corridors.",
+      metric: "100%",
+      metricLabel: "Academic-to-role qualification alignment rate",
     },
     {
       num: "02",
       title: "Unemployment Impact Eradication",
-      lead: "Direct conversion from degree to professional offer letter with zero fees.",
+      badge: "ZERO ASPIRANT FEES",
+      lead: "Direct conversion from degree to professional offer letter with zero hidden charges.",
       body: "We strive to reduce unemployment impact among Indian youth by offering education-equivalent jobs, elevating workplace dignity, and improving the overall quality of life for families nationwide.",
+      tag: "ZERO FINANCIAL FRICTION",
+      tagline: "Equal opportunity for every educated aspirant across India.",
+      metric: "75%",
+      metricLabel: "Unemployment impact reduction in serviced sectors",
     },
     {
       num: "03",
       title: "Corporate Skills with Education",
+      badge: "OSTP PRACTICAL DRILLS",
       lead: "Hands-on pre-deployment orientation ensuring Day-1 productivity.",
       body: "Our proprietary OSTP (Onsite Skill Training Program) prepares candidates in soft skills, digital tools, workplace ethics, and safety protocols before they ever step onto the client floor.",
+      tag: "DAY-1 READINESS",
+      tagline: "Groomed, certified, and ready for high-compliance enterprise environments.",
+      metric: "Day-1",
+      metricLabel: "Immediate deployment standard across partner enterprises",
     },
   ]
+
+  const activeIndex = openPillar ?? 0
+  const currentPillar = pillars[activeIndex]
+
+  const togglePillar = (idx: number) => {
+    setOpenPillar(openPillar === idx ? null : idx)
+  }
 
   return (
     <section id="mission" className="about-mission-section" aria-labelledby="mission-title">
       <div className="container">
         <div className="mission-grid">
-          {/* Copy Column */}
+          {/* Copy Column with FAQ-style animated accordion */}
           <div className="mission-copy">
-            <div className="section-label-chip">
-              <span className="chip-num">01</span>
-              <span>OUR MISSION</span>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="section-label-chip">
+                <span className="chip-num">01</span>
+                <span>OUR MISSION</span>
+              </div>
 
-            <h2 id="mission-title" className="mission-heading">
-              Leading the transition towards a{" "}
-              <span className="text-lime-contrast">sustainable workspace</span> in India.
-            </h2>
+              <h2 id="mission-title" className="mission-heading">
+                Leading the transition towards a{" "}
+                <span className="text-lime-contrast">sustainable workspace</span> in India.
+              </h2>
 
-            <p className="mission-lead-text">
-              Influence India Services was founded on the fundamental principle that India’s educated
-              youth deserve direct, transparent, and merit-based access to the modern economy.
-              We provide the entire operational infrastructure bridging ambitious candidates and
-              India’s premier enterprises.
-            </p>
+              <p className="mission-lead-text">
+                Influence India Services was founded on the fundamental principle that India’s educated
+                youth deserve direct, transparent, and merit-based access to the modern economy.
+                We provide the entire operational infrastructure bridging ambitious candidates and
+                India’s premier enterprises.
+              </p>
+            </motion.div>
 
-            {/* Interactive Pillar Selector Cards */}
-            <div className="mission-pillars-stack">
-              {pillars.map((p, idx) => (
-                <div
-                  key={idx}
-                  className={`mission-pillar-card ${activePillar === idx ? "is-active" : ""}`}
-                  onClick={() => setActivePillar(idx)}
-                >
-                  <div className="pillar-top-row">
-                    <span className="pillar-num-badge">{p.num}</span>
-                    <h3 className="pillar-title">{p.title}</h3>
-                  </div>
-                  <p className="pillar-body">{p.body}</p>
-                </div>
-              ))}
+            {/* Interactive Pillar Selector Cards styled & animated like FAQ items */}
+            <div className="mission-pillars-stack" role="region" aria-label="Our Mission Pillars">
+              {pillars.map((p, idx) => {
+                const isOpen = openPillar === idx
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: idx * 0.08 }}
+                    className={`mission-pillar-card ${isOpen ? "is-active is-open" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="pillar-accordion-trigger"
+                      onClick={() => togglePillar(idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={`mission-pillar-panel-${idx}`}
+                    >
+                      <div className="pillar-header-left">
+                        <span className="pillar-num-badge">{p.num}</span>
+                        <div className="pillar-title-wrap">
+                          <h3 className="pillar-title">{p.title}</h3>
+                          <span className="pillar-badge-sub">{p.badge}</span>
+                        </div>
+                      </div>
+                      <span className={`pillar-toggle-indicator ${isOpen ? "is-open" : ""}`} aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path
+                            d="M7 1V13M1 7H13"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={`mission-pillar-panel-${idx}`}
+                          key={`panel-${idx}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          className="pillar-collapsible-wrapper"
+                        >
+                          <div className="pillar-expanded-body">
+                            <p className="pillar-lead-highlight">{p.lead}</p>
+                            <p className="pillar-body">{p.body}</p>
+                            <div className="pillar-metric-tag">
+                              <span className="pillar-tag-chip">{p.tag}</span>
+                              <span className="pillar-metric-summary">
+                                <strong>{p.metric}</strong> · {p.metricLabel}
+                              </span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )
+              })}
             </div>
 
             {onNavigate && (
-              <div className="mission-policy-action-card">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="mission-policy-action-card"
+              >
                 <div className="policy-action-info">
                   <span className="policy-action-eyebrow">
                     <span className="pulse-dot" />
@@ -341,12 +429,18 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                   <span>READ GROW TOGETHER POLICY</span>
                   <span className="btn-icon">→</span>
                 </button>
-              </div>
+              </motion.div>
             )}
           </div>
 
-          {/* Visual Column */}
-          <div className="mission-visual">
+          {/* Visual Column: Positioned lower down with downward entrance animation */}
+          <motion.div
+            className="mission-visual"
+            initial={{ opacity: 0, y: -45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="mission-showcase-frame">
               <img
                 src="/images/workplace-team.jpg"
@@ -358,27 +452,42 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
               />
               <div className="mission-photo-overlay-glass">
                 <div className="overlay-badge-row">
-                  <span className="overlay-pill">SUSTAINABLE WORKSPACE INITIATIVE</span>
-                  <span className="overlay-city">BENGALURU</span>
+                  <span className="overlay-pill">
+                    PILLAR {currentPillar.num} · {currentPillar.tag}
+                  </span>
+                  <span className="overlay-city">BENGALURU HQ</span>
                 </div>
                 <h4 className="overlay-tagline">
-                  "Equal opportunity for every educated aspirant across India."
+                  "{currentPillar.tagline}"
                 </h4>
               </div>
             </div>
 
-            {/* Supporting Micro-Stats */}
+            {/* Supporting Micro-Stats with dynamic active pillar indicators */}
             <div className="mission-micro-stats">
-              <div className="micro-stat-box">
-                <span className="micro-stat-val">75%</span>
-                <span className="micro-stat-lbl">Unemployment impact reduction in serviced sectors</span>
-              </div>
-              <div className="micro-stat-box">
-                <span className="micro-stat-val">100%</span>
+              <div className={`micro-stat-box ${openPillar === 0 ? "is-highlighted" : ""}`}>
+                <div className="micro-stat-top">
+                  <span className="micro-stat-val">100%</span>
+                  <span className="micro-stat-dot" />
+                </div>
                 <span className="micro-stat-lbl">Equal gender opportunity in placement rosters</span>
               </div>
+              <div className={`micro-stat-box ${openPillar === 1 ? "is-highlighted" : ""}`}>
+                <div className="micro-stat-top">
+                  <span className="micro-stat-val">75%</span>
+                  <span className="micro-stat-dot" />
+                </div>
+                <span className="micro-stat-lbl">Unemployment impact reduction in serviced sectors</span>
+              </div>
+              <div className={`micro-stat-box ${openPillar === 2 ? "is-highlighted" : ""}`}>
+                <div className="micro-stat-top">
+                  <span className="micro-stat-val">Day-1</span>
+                  <span className="micro-stat-dot" />
+                </div>
+                <span className="micro-stat-lbl">Immediate productivity readiness via OSTP drills</span>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
