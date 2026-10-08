@@ -29,8 +29,8 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     borderColor: "#B8EBCE",
     textColor: "#1F4D38",
     subTextColor: "rgba(31, 77, 56, 0.75)",
-    bgImage: "/images/operations-command.jpg",
-    characterImage: `${OBJECT}/Objects/Chart%20Increasing.png`,
+    bgImage: "/images/reliability-dos-telemetry.jpg",
+    characterImage: "/images/icon-3d-telemetry.png",
     stamp: "✦ DOS ACTIVE · 0 OUTAGES",
   },
   {
@@ -42,8 +42,8 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     borderColor: "#FFD4B8",
     textColor: "#5C3D2E",
     subTextColor: "rgba(92, 61, 46, 0.75)",
-    bgImage: "/images/workplace-team.jpg",
-    characterImage: `${OBJECT}/Travel%20and%20places/Globe%20Showing%20Asia-Australia.png`,
+    bgImage: "/images/reliability-pan-india.jpg",
+    characterImage: "/images/icon-3d-globe.png",
     stamp: "✦ PAN-INDIA · 30+ CITIES",
   },
   {
@@ -55,8 +55,8 @@ export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
     borderColor: "#D4C4F5",
     textColor: "#3B2F63",
     subTextColor: "rgba(59, 47, 99, 0.75)",
-    bgImage: "/images/team-training.jpg",
-    characterImage: `${OBJECT}/Objects/Telephone%20Receiver.png`,
+    bgImage: "/images/reliability-support-247.jpg",
+    characterImage: "/images/icon-3d-support.png",
     stamp: "✦ 365 DAYS · REAL PEOPLE",
   },
 ]
