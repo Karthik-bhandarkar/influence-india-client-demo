@@ -1342,25 +1342,53 @@ h3 {
   margin-top: 1.2rem;
 }
 
-/* Services Section — Glossy Emerald Green Atmospheric Architecture */
+/* Services Section — 6-Layer Glossy Emerald Green Atmospheric Architecture (#032215) */
 .services-section {
   position: relative;
   overflow: hidden;
   padding: clamp(5.5rem, 8.5vw, 8rem) 0;
-  background:
-    radial-gradient(circle 900px at 15% 25%, rgba(14, 96, 56, 0.55), transparent 70%),
-    radial-gradient(circle 750px at 88% 80%, rgba(8, 70, 42, 0.4), transparent 70%),
-    radial-gradient(ellipse 1000px 500px at 50% 0%, rgba(20, 115, 68, 0.28), transparent 75%),
-    linear-gradient(175deg, #01160c 0%, #032416 35%, #021a10 70%, #01130a 100%);
+  /* Layer 1: Base dark green #032215 */
+  background-color: #032215;
   color: #ffffff;
+  /* Layer 2: Deep smooth green gradient & Layer 3: Soft ambient glow & Layer 4: Secondary glow */
+  background-image:
+    /* Layer 3: Soft radial light / ambient glow (center/content area illumination) */
+    radial-gradient(ellipse 80% 65% at 50% 45%, rgba(20, 102, 62, 0.52) 0%, rgba(8, 52, 32, 0.22) 55%, transparent 78%),
+    /* Layer 4: Subtle secondary glow / ambient depth accent */
+    radial-gradient(ellipse 65% 42% at 30% 22%, rgba(52, 211, 153, 0.14) 0%, transparent 65%),
+    /* Layer 2: Large smooth green gradient */
+    linear-gradient(180deg, #032215 0%, #042e1d 42%, #032215 78%, #021a10 100%);
+  isolation: isolate;
 }
 
+/* Layer 4b: Subtle light reflection & satin gloss sheen */
 .services-section::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 1400px 600px at 35% 0%, rgba(52, 211, 153, 0.08), transparent 70%);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045) 0%, transparent 35%, rgba(52, 211, 153, 0.03) 70%, transparent 100%),
+    radial-gradient(ellipse 1100px 480px at 45% 0%, rgba(52, 211, 153, 0.1), transparent 75%);
   pointer-events: none;
+  z-index: 1;
+}
+
+/* Layer 5: Dark vignette around edges (outer edges darker, center lighter) */
+.services-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 95% 85% at 50% 50%, transparent 50%, rgba(1, 15, 9, 0.72) 100%),
+    linear-gradient(180deg, rgba(1, 15, 9, 0.45) 0%, transparent 12%, transparent 88%, rgba(1, 15, 9, 0.65) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Layer 6: Existing Services content — stays cleanly above all background layers */
+.services-section .container {
+  position: relative;
+  z-index: 2;
 }
 
 .services-header-row {
