@@ -1342,45 +1342,54 @@ h3 {
   margin-top: 1.2rem;
 }
 
-/* Services Section — 6-Layer Glossy Emerald Green Atmospheric Architecture (#032215) */
+/* Services Section — Luminous Glossy Studio Atmosphere (Emerald Green Architecture) */
 .services-section {
   position: relative;
   overflow: hidden;
-  padding: clamp(5.5rem, 8.5vw, 8rem) 0;
-  /* Layer 1: Base dark green #032215 */
+  padding: clamp(6rem, 9vw, 8.5rem) 0;
   background-color: #032215;
   color: #ffffff;
-  /* Layer 2: Deep smooth green gradient & Layer 3: Soft ambient glow & Layer 4: Secondary glow */
+  /* 
+    Multi-pass Studio Lighting Matrix matching the Blue Reference:
+    1. Intense luminous emerald ambient core (vibrant spotlight like the cyan/blue in reference)
+    2. Wide radiant emerald fill light across the cards
+    3. Horizontal studio infinity curve / luminous horizon light band
+    4. Smooth deep emerald studio base gradient
+  */
   background-image:
-    /* Layer 3: Soft radial light / ambient glow (center/content area illumination) */
-    radial-gradient(ellipse 80% 65% at 50% 45%, rgba(20, 102, 62, 0.52) 0%, rgba(8, 52, 32, 0.22) 55%, transparent 78%),
-    /* Layer 4: Subtle secondary glow / ambient depth accent */
-    radial-gradient(ellipse 65% 42% at 30% 22%, rgba(52, 211, 153, 0.14) 0%, transparent 65%),
-    /* Layer 2: Large smooth green gradient */
-    linear-gradient(180deg, #032215 0%, #042e1d 42%, #032215 78%, #021a10 100%);
+    /* Layer 3a: Intense radiant emerald ambient core */
+    radial-gradient(circle 850px at 72% 28%, rgba(16, 185, 129, 0.44) 0%, rgba(5, 150, 105, 0.28) 38%, transparent 72%),
+    /* Layer 3b: Wide luminous fill light directly behind the services cards */
+    radial-gradient(ellipse 92% 68% at 42% 52%, rgba(13, 148, 86, 0.38) 0%, rgba(4, 120, 87, 0.2) 50%, transparent 80%),
+    /* Layer 3c: Horizontal studio infinity curve / luminous horizon light band */
+    radial-gradient(ellipse 130% 48% at 50% 50%, rgba(52, 211, 153, 0.2) 0%, rgba(16, 185, 129, 0.08) 55%, transparent 85%),
+    /* Layer 2: Deep rich emerald-to-obsidian gradient */
+    linear-gradient(180deg, #021a10 0%, #033220 36%, #043a25 55%, #022215 80%, #01140b 100%);
   isolation: isolate;
 }
 
-/* Layer 4b: Subtle light reflection & satin gloss sheen */
+/* Layer 4: Glossy specular satin reflections & top light streak */
 .services-section::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.045) 0%, transparent 35%, rgba(52, 211, 153, 0.03) 70%, transparent 100%),
-    radial-gradient(ellipse 1100px 480px at 45% 0%, rgba(52, 211, 153, 0.1), transparent 75%);
+    /* Diagonal glossy sheen sweep */
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, transparent 32%, rgba(52, 211, 153, 0.07) 58%, transparent 82%),
+    /* Top luminous specular highlight */
+    radial-gradient(ellipse 1200px 520px at 50% 0%, rgba(110, 231, 183, 0.24) 0%, rgba(16, 185, 129, 0.08) 50%, transparent 75%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* Layer 5: Dark vignette around edges (outer edges darker, center lighter) */
+/* Layer 5: Studio dark vignette around outer edges (creates punchy contrast like the blue image) */
 .services-section::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 95% 85% at 50% 50%, transparent 50%, rgba(1, 15, 9, 0.72) 100%),
-    linear-gradient(180deg, rgba(1, 15, 9, 0.45) 0%, transparent 12%, transparent 88%, rgba(1, 15, 9, 0.65) 100%);
+    radial-gradient(ellipse 90% 80% at 50% 50%, transparent 45%, rgba(1, 14, 8, 0.78) 100%),
+    linear-gradient(180deg, rgba(1, 14, 8, 0.5) 0%, transparent 12%, transparent 88%, rgba(1, 14, 8, 0.7) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -1509,14 +1518,14 @@ h3 {
   flex-direction: column;
   padding: 2.2rem 2rem 2.2rem;
   border-radius: 1.25rem;
-  background: linear-gradient(165deg, rgba(3, 32, 21, 0.72) 0%, rgba(2, 22, 14, 0.84) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(52, 211, 153, 0.16);
+  background: linear-gradient(165deg, rgba(3, 36, 23, 0.65) 0%, rgba(2, 22, 14, 0.82) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(52, 211, 153, 0.24);
   box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 0 24px rgba(52, 211, 153, 0.02);
+    0 16px 36px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 20px rgba(52, 211, 153, 0.04);
   text-decoration: none;
   color: inherit;
   position: relative;
@@ -1529,7 +1538,7 @@ h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle 320px at 0% 0%, rgba(52, 211, 153, 0.12), transparent 70%);
+  background: radial-gradient(circle 320px at 0% 0%, rgba(52, 211, 153, 0.14), transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -1537,12 +1546,12 @@ h3 {
 
 .services-glossy-card:hover {
   transform: translateY(-4px);
-  background: linear-gradient(165deg, rgba(5, 45, 30, 0.82) 0%, rgba(3, 28, 18, 0.92) 100%);
-  border-color: rgba(52, 211, 153, 0.42);
+  background: linear-gradient(165deg, rgba(5, 48, 32, 0.8) 0%, rgba(3, 28, 18, 0.92) 100%);
+  border-color: rgba(52, 211, 153, 0.48);
   box-shadow:
     0 22px 50px rgba(0, 0, 0, 0.45),
-    0 0 28px rgba(16, 185, 129, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 0 28px rgba(16, 185, 129, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .services-glossy-card:hover::before {
