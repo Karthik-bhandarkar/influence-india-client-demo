@@ -41,7 +41,12 @@ h4,
 .blog-card h3,
 .job-opening-card h3,
 .reason-row h3,
-.milestone-card h3 {
+.milestone-card h3,
+.contact-channel-title,
+.contact-form-title,
+.contact-success-title,
+.contact-faq-title,
+.contact-info-heading {
   font-family: var(--font-display, 'Playfair Display', Georgia, 'Times New Roman', serif) !important;
   text-transform: none !important;
   font-feature-settings: 'kern' 1, 'liga' 1;

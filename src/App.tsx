@@ -7,8 +7,9 @@ import GtpPage from "./pages/GtpPage"
 import SystemsPage from "./pages/SystemsPage"
 import CareersPage from "./pages/CareersPage"
 import ResourcesPage from "./pages/ResourcesPage"
+import ContactPage from "./pages/ContactPage"
 
-export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources"
+export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
 const contact = {
   whatsapp: "https://wa.me/919606329992",
@@ -2073,6 +2074,7 @@ export default function App() {
       if (hash === "#systems" || hash === "#ecosystem") return "systems"
       if (hash === "#careers" || hash === "#jobs") return "careers"
       if (hash === "#resources" || hash === "#insights") return "resources"
+      if (hash === "#contact" || hash === "#contact-us") return "contact"
     }
     return "home"
   })
@@ -2097,6 +2099,9 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#resources" || hash === "#insights") {
         setView("resources")
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      } else if (hash === "#contact" || hash === "#contact-us") {
+        setView("contact")
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#home" || hash === "") {
         setView("home")
@@ -2128,12 +2133,16 @@ export default function App() {
       setView("resources")
       window.location.hash = "#resources"
       window.scrollTo({ top: 0, behavior: "smooth" })
+    } else if (clean === "contact" || clean === "contact-us") {
+      setView("contact")
+      window.location.hash = "#contact"
+      window.scrollTo({ top: 0, behavior: "smooth" })
     } else if (clean === "home" || clean === "") {
       setView("home")
       window.location.hash = "#home"
       window.scrollTo({ top: 0, behavior: "smooth" })
     } else {
-      // It's a section on the home page like #contact, #what-we-do, etc.
+      // It's a section on the home page like #what-we-do, #reliability, etc.
       if (view !== "home") {
         setView("home")
       }
@@ -2193,6 +2202,7 @@ export default function App() {
           {view === "resources" && (
             <ResourcesPage onNavigate={handleNavigate} />
           )}
+          {view === "contact" && <ContactPage onNavigate={handleNavigate} />}
 
           <GtpNotice />
         </main>
