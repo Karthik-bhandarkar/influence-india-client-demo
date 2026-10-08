@@ -928,7 +928,7 @@ function Services() {
       <div className="container">
         <div className="section-heading">
           <div>
-            <SectionLabel number="02">OUR SERVICES</SectionLabel>
+            <SectionLabel number="02" light>OUR SERVICES</SectionLabel>
             <h2 id="services-title">
               Everything your workforce needs.
               <br />

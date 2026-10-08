@@ -209,7 +209,7 @@ summary {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -432,7 +432,9 @@ summary {
     transform: scale(0.95);
     opacity: 0.8;
   }
-  70%, 100% {
+
+  70%,
+  100% {
     transform: scale(2.3);
     opacity: 0;
   }
@@ -660,6 +662,7 @@ h3 {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -863,7 +866,7 @@ h3 {
   height: 17px;
 }
 
-.hero-bottom > a {
+.hero-bottom>a {
   margin-left: auto;
   display: flex;
   gap: 0.6rem;
@@ -872,7 +875,7 @@ h3 {
   color: var(--color-ink);
 }
 
-.hero-bottom > a .icon {
+.hero-bottom>a .icon {
   transform: rotate(90deg);
   width: 15px;
   height: 15px;
@@ -963,7 +966,7 @@ h3 {
   margin-top: 0.2rem;
 }
 
-.hero-image-note > .icon {
+.hero-image-note>.icon {
   margin-left: auto;
   width: 28px;
   height: 28px;
@@ -1033,6 +1036,7 @@ h3 {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -1083,9 +1087,11 @@ h3 {
   0% {
     box-shadow: 0 0 0 0 rgba(63, 110, 20, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 6px rgba(63, 110, 20, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(63, 110, 20, 0);
   }
@@ -1139,7 +1145,7 @@ h3 {
   align-items: center;
   gap: 3.75rem;
   width: max-content;
-  animation: company-marquee-scroll-left 58s linear infinite;
+  animation: company-marquee-scroll-left 42s linear infinite;
   will-change: transform;
 }
 
@@ -1148,7 +1154,7 @@ h3 {
   align-items: center;
   gap: 3.75rem;
   width: max-content;
-  animation: company-marquee-scroll-right 58s linear infinite;
+  animation: company-marquee-scroll-right 42s linear infinite;
   will-change: transform;
   margin-top: 1.5rem;
 }
@@ -1162,6 +1168,7 @@ h3 {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -1171,6 +1178,7 @@ h3 {
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -1244,7 +1252,7 @@ h3 {
   color: #454d40;
 }
 
-.outcome-copy p + p {
+.outcome-copy p+p {
   margin-top: 1.4rem;
 }
 
@@ -1390,7 +1398,7 @@ h3 {
   align-items: center;
 }
 
-.service-card-top > span {
+.service-card-top>span {
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 700;
@@ -1567,9 +1575,12 @@ h3 {
 }
 
 @keyframes hub-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0 6px rgba(196, 230, 80, 0.1);
   }
+
   50% {
     box-shadow: 0 0 0 14px rgba(196, 230, 80, 0.28);
   }
@@ -1812,7 +1823,7 @@ h3 {
   min-height: 480px;
 }
 
-.careers-photo > img {
+.careers-photo>img {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -2154,6 +2165,7 @@ h3 {
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2469,9 +2481,11 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2.5rem;
   }
+
   .footer-brand {
     grid-column: 1 / -1;
   }
+
   .pillars-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2481,24 +2495,30 @@ h3 {
   .desktop-nav {
     display: none;
   }
+
   .menu-toggle {
     display: grid;
     place-items: center;
   }
+
   .header-contact {
     margin-left: auto;
   }
+
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+
   .hero-photo {
     min-height: 440px;
   }
+
   .hero-image-note {
     left: -1rem;
     width: 90%;
   }
+
   .outcome-grid,
   .pricing-grid,
   .careers-grid,
@@ -2506,26 +2526,32 @@ h3 {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+
   .services-grid,
   .reliability-grid,
   .testimonials-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .ecosystem-nodes {
     grid-template-columns: 1fr 1fr;
   }
+
   .reason-row {
     grid-template-columns: 60px 1fr auto;
     gap: 1.2rem;
   }
+
   .reason-row p {
     grid-column: 2 / -1;
   }
+
   .ready-heading {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
   }
+
   .ready-email-strip {
     flex-direction: column;
     align-items: flex-start;
@@ -2538,9 +2564,11 @@ h3 {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .metrics-grid {
     grid-template-columns: 1fr;
   }
+
   .services-grid,
   .reliability-grid,
   .testimonials-grid,
@@ -2548,22 +2576,27 @@ h3 {
   .pillars-grid {
     grid-template-columns: 1fr;
   }
+
   .pricing-stat-card {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
   .careers-photo {
     min-height: 320px;
   }
+
   .footer-columns {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+
   .footer-locations-strip {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.6rem;
   }
+
   .footer-bottom-bar {
     flex-direction: column-reverse;
     align-items: flex-start;
@@ -2602,12 +2635,10 @@ h3 {
 .about-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(33, 37, 31, 0.95) 0%,
-    rgba(33, 37, 31, 0.75) 50%,
-    rgba(33, 37, 31, 0.9) 100%
-  );
+  background: linear-gradient(to right,
+      rgba(33, 37, 31, 0.95) 0%,
+      rgba(33, 37, 31, 0.75) 50%,
+      rgba(33, 37, 31, 0.9) 100%);
 }
 
 .about-hero-content {
@@ -2887,11 +2918,13 @@ h3 {
 }
 
 @keyframes infinity-glow {
+
   0%,
   100% {
     opacity: 0.85;
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.04);
@@ -2994,7 +3027,7 @@ h3 {
   margin-top: 1rem;
 }
 
-.expansion-corridors > .eyebrow {
+.expansion-corridors>.eyebrow {
   display: block;
   margin-bottom: 1rem;
 }
@@ -3078,21 +3111,25 @@ h3 {
 }
 
 @media (max-width: 992px) {
+
   .mission-grid,
   .infinity-grid,
   .locations-deep-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+
   .aims-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .commitments-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
+
   .aims-grid,
   .commitments-grid,
   .corridor-pills {
@@ -3104,6 +3141,7 @@ h3 {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
@@ -3253,13 +3291,11 @@ h3 {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(13, 18, 12, 0.55) 0%,
-    rgba(13, 18, 12, 0.05) 30%,
-    rgba(13, 18, 12, 0.1) 70%,
-    rgba(13, 18, 12, 0.75) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(13, 18, 12, 0.55) 0%,
+      rgba(13, 18, 12, 0.05) 30%,
+      rgba(13, 18, 12, 0.1) 70%,
+      rgba(13, 18, 12, 0.75) 100%);
 }
 
 .landing-video-badge-top {
@@ -4949,6 +4985,7 @@ h3 {
   .benefits-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .smart-pillars-grid,
   .corporate-pillars-grid,
   .integrated-grid,
@@ -4958,6 +4995,7 @@ h3 {
 }
 
 @media (max-width: 900px) {
+
   .editorial-split-grid,
   .smart-solution-breakdown,
   .learn-box,
@@ -4965,6 +5003,7 @@ h3 {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+
   .footprints-grid,
   .gtc-grid,
   .stories-grid,
@@ -4973,13 +5012,16 @@ h3 {
   .gtp-hero-meta-grid {
     grid-template-columns: 1fr;
   }
+
   .footprint-card--goal {
     grid-column: span 1;
   }
+
   .job-opening-card {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .job-opening-cta {
     width: 100%;
     justify-content: space-between;
@@ -4987,6 +5029,7 @@ h3 {
 }
 
 @media (max-width: 600px) {
+
   .benefits-grid,
   .smart-pillars-grid,
   .corporate-pillars-grid,
@@ -4994,6 +5037,7 @@ h3 {
   .process-steps-grid {
     grid-template-columns: 1fr;
   }
+
   .featured-article-card,
   .learn-box,
   .systems-about-box,
@@ -5133,6 +5177,7 @@ p,
   font-weight: 600 !important;
   letter-spacing: 0.04em !important;
 }
+
 /* ==========================================================================
    INFLUENCE INDIA — COMPREHENSIVE TYPOGRAPHY ENGINE (ALL SECTIONS & PAGES)
    Fully applies approved typography spec to:
@@ -5345,24 +5390,3 @@ p,
   font-weight: 600 !important;
   letter-spacing: 0.04em !important;
 }
-
-/* 9. Upgraded Template 1 & 2 Integrated Components Styling */
-.orbital-node-btn:hover {
-  transform: translate(-50%, -50%) scale(1.12) !important;
-  box-shadow: 0 0 24px var(--color-lime) !important;
-}
-
-.economics-row:hover {
-  background: rgba(196, 230, 80, 0.05);
-}
-
-@media (max-width: 860px) {
-  .economics-board {
-    overflow-x: auto;
-  }
-  .economics-board > div:first-child,
-  .economics-row {
-    min-width: 680px;
-  }
-}
-
