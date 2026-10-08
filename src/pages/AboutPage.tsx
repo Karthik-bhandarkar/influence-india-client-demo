@@ -254,11 +254,16 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
 }
 
 /* =========================================================================
-   2. OUR MISSION: REFINED TWO-COLUMN WITH FAQ-STYLE ACCORDION & OFFSET VISUAL
+   2. OUR MISSION: REFINED TWO-COLUMN WITH FAQ-STYLE ACCORDION & SCROLL-SYNCED VISUAL
    ========================================================================= */
 function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
   // FAQ-style accordion state (toggles open/close, default first item open)
   const [openPillar, setOpenPillar] = useState<number | null>(0)
+  const [isDesktop, setIsDesktop] = useState(true)
+  const isManualClickRef = useRef(false)
+  const pillarRef0 = useRef<HTMLDivElement>(null)
+  const pillarRef1 = useRef<HTMLDivElement>(null)
+  const pillarRef2 = useRef<HTMLDivElement>(null)
 
   const pillars = [
     {
@@ -271,6 +276,7 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
       tagline: "Bridging degrees with dignity in India’s premier corporate corridors.",
       metric: "100%",
       metricLabel: "Academic-to-role qualification alignment rate",
+      image: "/images/workplace-team.jpg",
     },
     {
       num: "02",
@@ -282,6 +288,7 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
       tagline: "Equal opportunity for every educated aspirant across India.",
       metric: "75%",
       metricLabel: "Unemployment impact reduction in serviced sectors",
+      image: "/images/corporate-interview.jpg",
     },
     {
       num: "03",
@@ -293,15 +300,68 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
       tagline: "Groomed, certified, and ready for high-compliance enterprise environments.",
       metric: "Day-1",
       metricLabel: "Immediate deployment standard across partner enterprises",
+      image: "/images/skill-certification.jpg",
     },
   ]
 
+  const pillarRefs = [pillarRef0, pillarRef1, pillarRef2]
   const activeIndex = openPillar ?? 0
   const currentPillar = pillars[activeIndex]
 
+  // Track viewport width for responsive motion
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  // Scroll effect: while reading through the left side, the right side image shifts down accordingly
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isManualClickRef.current) return
+      const refs = [pillarRef0, pillarRef1, pillarRef2]
+      const targetLine = window.innerHeight * 0.42
+
+      let bestIdx = 0
+      let bestDist = Infinity
+
+      refs.forEach((ref, idx) => {
+        if (!ref.current) return
+        const rect = ref.current.getBoundingClientRect()
+        const mid = rect.top + rect.height / 2
+        const dist = Math.abs(mid - targetLine)
+
+        // Only evaluate if card is visible in the viewport
+        if (rect.bottom > 120 && rect.top < window.innerHeight - 100) {
+          if (dist < bestDist) {
+            bestDist = dist
+            bestIdx = idx
+          }
+        }
+      })
+
+      if (bestDist < window.innerHeight * 0.45) {
+        setOpenPillar((prev) => (prev !== bestIdx ? bestIdx : prev))
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const togglePillar = (idx: number) => {
+    isManualClickRef.current = true
     setOpenPillar(openPillar === idx ? null : idx)
+    setTimeout(() => {
+      isManualClickRef.current = false
+    }, 900)
   }
+
+  // Calculate downward offset for the right side image to follow what is being read on the left
+  const yOffset = activeIndex === 0 ? 0 : activeIndex === 1 ? 110 : 215
 
   return (
     <section id="mission" className="about-mission-section" aria-labelledby="mission-title">
@@ -340,6 +400,7 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                 return (
                   <motion.div
                     key={idx}
+                    ref={pillarRefs[idx]}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -433,61 +494,90 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
             )}
           </div>
 
-          {/* Visual Column: Positioned lower down with downward entrance animation */}
-          <motion.div
-            className="mission-visual"
-            initial={{ opacity: 0, y: -45 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="mission-showcase-frame">
-              <img
-                src="/images/workplace-team.jpg"
-                alt="Influence India workplace team collaborating around a conference table"
-                className="mission-photo"
-                loading="lazy"
-                width="1800"
-                height="1012"
-              />
-              <div className="mission-photo-overlay-glass">
-                <div className="overlay-badge-row">
-                  <span className="overlay-pill">
-                    PILLAR {currentPillar.num} · {currentPillar.tag}
-                  </span>
-                  <span className="overlay-city">BENGALURU HQ</span>
+          {/* Sticky Visual Column: Glides down smoothly according to the active reading position */}
+          <div className="mission-visual-sticky-col">
+            <motion.div
+              className="mission-visual"
+              animate={{
+                y: isDesktop ? yOffset : 0,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 230,
+                damping: 27,
+                mass: 0.85,
+              }}
+            >
+              <div className="mission-showcase-frame">
+                <div className="mission-reading-tracker">
+                  <span className="tracker-pulse-dot" />
+                  <span className="tracker-text">SCROLL SYNC · PILLAR 0{activeIndex + 1}</span>
                 </div>
-                <h4 className="overlay-tagline">
-                  "{currentPillar.tagline}"
-                </h4>
-              </div>
-            </div>
 
-            {/* Supporting Micro-Stats with dynamic active pillar indicators */}
-            <div className="mission-micro-stats">
-              <div className={`micro-stat-box ${openPillar === 0 ? "is-highlighted" : ""}`}>
-                <div className="micro-stat-top">
-                  <span className="micro-stat-val">100%</span>
-                  <span className="micro-stat-dot" />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentPillar.image}
+                    src={currentPillar.image}
+                    alt={currentPillar.title}
+                    className="mission-photo"
+                    loading="eager"
+                    width="1800"
+                    height="1012"
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                </AnimatePresence>
+
+                <div className="mission-photo-overlay-glass">
+                  <div className="overlay-badge-row">
+                    <span className="overlay-pill">
+                      PILLAR {currentPillar.num} · {currentPillar.tag}
+                    </span>
+                    <span className="overlay-city">BENGALURU HQ</span>
+                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.h4
+                      key={currentPillar.tagline}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.28 }}
+                      className="overlay-tagline"
+                    >
+                      "{currentPillar.tagline}"
+                    </motion.h4>
+                  </AnimatePresence>
                 </div>
-                <span className="micro-stat-lbl">Equal gender opportunity in placement rosters</span>
               </div>
-              <div className={`micro-stat-box ${openPillar === 1 ? "is-highlighted" : ""}`}>
-                <div className="micro-stat-top">
-                  <span className="micro-stat-val">75%</span>
-                  <span className="micro-stat-dot" />
+
+              {/* Supporting Micro-Stats with dynamic active pillar indicators */}
+              <div className="mission-micro-stats">
+                <div className={`micro-stat-box ${activeIndex === 0 ? "is-highlighted" : ""}`}>
+                  <div className="micro-stat-top">
+                    <span className="micro-stat-val">100%</span>
+                    <span className="micro-stat-dot" />
+                  </div>
+                  <span className="micro-stat-lbl">Equal gender opportunity in placement rosters</span>
                 </div>
-                <span className="micro-stat-lbl">Unemployment impact reduction in serviced sectors</span>
-              </div>
-              <div className={`micro-stat-box ${openPillar === 2 ? "is-highlighted" : ""}`}>
-                <div className="micro-stat-top">
-                  <span className="micro-stat-val">Day-1</span>
-                  <span className="micro-stat-dot" />
+                <div className={`micro-stat-box ${activeIndex === 1 ? "is-highlighted" : ""}`}>
+                  <div className="micro-stat-top">
+                    <span className="micro-stat-val">75%</span>
+                    <span className="micro-stat-dot" />
+                  </div>
+                  <span className="micro-stat-lbl">Unemployment impact reduction in serviced sectors</span>
                 </div>
-                <span className="micro-stat-lbl">Immediate productivity readiness via OSTP drills</span>
+                <div className={`micro-stat-box ${activeIndex === 2 ? "is-highlighted" : ""}`}>
+                  <div className="micro-stat-top">
+                    <span className="micro-stat-val">Day-1</span>
+                    <span className="micro-stat-dot" />
+                  </div>
+                  <span className="micro-stat-lbl">Immediate productivity readiness via OSTP drills</span>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
