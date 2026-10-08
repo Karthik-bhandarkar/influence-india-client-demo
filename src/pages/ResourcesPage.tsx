@@ -115,6 +115,23 @@ export default function ResourcesPage() {
             Empower yourself with information to make choices that have a
             lasting impact on unemployment and on your career growth.
           </p>
+
+          {/* Hero Foreground Knowledge Hub Image */}
+          <div className="resources-hero-image-wrap" style={{ marginTop: "3rem", position: "relative", borderRadius: "1.25rem", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 24px 60px -12px rgba(0,0,0,0.5)" }}>
+            <img
+              src="/images/resources-knowledge-hub.jpg"
+              alt="Influence India knowledge hub and workforce research center in Bengaluru"
+              width="1800"
+              height="1000"
+              className="resources-hero-image"
+              style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", maxHeight: "540px" }}
+              loading="eager"
+            />
+            <div className="resources-hero-image-badge" style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", background: "rgba(13,15,17,0.85)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "9999px", padding: "0.6rem 1.4rem", display: "inline-flex", alignItems: "center", gap: "0.75rem", color: "#f8f9fa", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em" }}>
+              <span className="live-status-dot" style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#a3e635", boxShadow: "0 0 10px #a3e635" }} />
+              <span>BENGALURU RESEARCH HUB · WORKFORCE ANALYTICS &amp; INDUSTRY INSIGHTS</span>
+            </div>
+          </div>
         </div>
       </section>
 

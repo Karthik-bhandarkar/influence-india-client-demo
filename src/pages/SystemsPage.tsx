@@ -200,8 +200,8 @@ export default function SystemsPage({
 
           <div className="systems-hero-image-wrap">
             <img
-              src="/images/operations-command.jpg"
-              alt="Operations Command Center at Influence India Services"
+              src="/images/systems-telemetry-hub.jpg"
+              alt="Operations Command Center and India live telemetry at Influence India Services"
               width="1800"
               height="1000"
               className="systems-hero-image"
