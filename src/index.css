@@ -1103,34 +1103,41 @@ h3 {
   width: 100%;
   overflow: hidden;
   padding-block: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
 }
 
 .company-marquee-fade {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 120px;
+  width: 140px;
   z-index: 2;
   pointer-events: none;
 }
 
 .company-marquee-fade--left {
   left: 0;
-  background: linear-gradient(to right, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
 }
 
 .company-marquee-fade--right {
   right: 0;
-  background: linear-gradient(to left, #ffffff 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to left, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
 }
 
 .company-marquee-track {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.25rem;
   width: max-content;
-  animation: company-marquee-scroll 45s linear infinite;
+  animation: company-marquee-scroll 90s linear infinite;
   will-change: transform;
+}
+
+.company-marquee-track--reverse {
+  animation: company-marquee-scroll-reverse 95s linear infinite;
 }
 
 .company-marquee-wrap:hover .company-marquee-track {
@@ -1144,6 +1151,46 @@ h3 {
   100% {
     transform: translateX(-50%);
   }
+}
+
+@keyframes company-marquee-scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.partner-logo-card {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 4px 10px;
+  background: #ffffff;
+  border: 1px solid rgba(23, 29, 22, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(23, 29, 22, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: default;
+}
+
+.partner-logo-card:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(23, 29, 22, 0.09);
+  border-color: rgba(63, 110, 20, 0.28);
+}
+
+.partner-logo-img {
+  height: 46px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .company-card-pill {
