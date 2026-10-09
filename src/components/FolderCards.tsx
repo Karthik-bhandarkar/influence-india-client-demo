@@ -167,7 +167,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="folder-card-wrapper relative isolate h-[430px] w-full max-w-[348px] shrink-0">
+    <div className="folder-card-wrapper relative isolate h-[430px] w-full max-w-[348px] sm:shrink-0">
       <Component
         {...(card.href
           ? { href: card.href, target: "_blank", rel: "noopener noreferrer" }

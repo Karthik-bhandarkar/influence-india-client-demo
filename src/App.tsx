@@ -422,53 +422,35 @@ function Header({
             )
           })}
         </nav>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <div className="header-actions-group" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           {onOpenRoster && (
             <button
               type="button"
               onClick={onOpenRoster}
-              className="roster-desk-badge-btn"
+              className="roster-desk-badge-btn hidden md:inline-flex"
               title="Open Fast-Track Roster Desk"
               style={{
-                display: "inline-flex",
-
                 alignItems: "center",
-
                 gap: "0.45rem",
-
                 padding: "0.5rem 0.95rem",
-
                 borderRadius: "9999px",
-
                 fontSize: "0.72rem",
-
                 fontWeight: 600,
-
                 letterSpacing: "0.04em",
-
                 textTransform: "uppercase",
-
                 background: "rgba(17, 19, 21, 0.05)",
-
                 border: "1px solid rgba(17, 19, 21, 0.12)",
-
                 color: "var(--color-ink)",
-
                 cursor: "pointer",
-
                 transition: "all 0.2s",
               }}
             >
               <span
                 style={{
                   width: "7px",
-
                   height: "7px",
-
                   borderRadius: "50%",
-
                   backgroundColor: "#3f6e14",
-
                   boxShadow: "0 0 6px #3f6e14",
                 }}
               />
@@ -479,7 +461,7 @@ function Header({
             href={contact.whatsapp}
             variant="lime"
             arrow="whatsapp"
-            className="header-contact"
+            className="header-contact hidden sm:inline-flex"
           >
             WhatsApp
           </ActionLink>
@@ -1584,6 +1566,11 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
     if (show && !hasPeekedRef.current) {
       hasPeekedRef.current = true
 
+      // On mobile screens keep floating widget compact to prevent covering cards/buttons
+      if (typeof window !== "undefined" && window.innerWidth < 640) {
+        return
+      }
+
       const startTimer = setTimeout(() => {
         setAutoPeek(true)
       }, 400)
@@ -1594,7 +1581,6 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
 
       return () => {
         clearTimeout(startTimer)
-
         clearTimeout(endTimer)
       }
     }

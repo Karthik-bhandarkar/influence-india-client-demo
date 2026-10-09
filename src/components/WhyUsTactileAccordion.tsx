@@ -775,7 +775,7 @@ export function AccordionOS({
           border-radius: 36px;
         }
 
-        @container (max-width: 680px) {
+        @media (max-width: 768px), @container (max-width: 680px) {
           .accordion-os-card {
             flex-direction: column;
             justify-content: flex-start;
@@ -786,19 +786,20 @@ export function AccordionOS({
           }
 
           .accordion-os-sidebar {
-            width: 100%;
+            width: 100% !important;
             height: auto;
           }
 
           .accordion-os-pill {
-            max-width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
             padding: 11px 16px;
             border-radius: 20px;
           }
 
           .accordion-os-pill-open {
-            width: 100%;
-            max-width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
           }
 
           .accordion-os-title-text {

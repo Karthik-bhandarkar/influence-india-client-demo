@@ -97,6 +97,8 @@ html.lenis, html.lenis body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6.5rem;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -105,6 +107,9 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 button,
@@ -1099,6 +1104,12 @@ h3 {
   letter-spacing: 0.14em;
   font-weight: 700;
   color: var(--color-muted);
+}
+
+@media (max-width: 1024px) {
+  .hero-side-text {
+    display: none !important;
+  }
 }
 
 /* Brand Banner Strip Moving Marquee */

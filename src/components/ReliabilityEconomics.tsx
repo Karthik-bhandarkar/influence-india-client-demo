@@ -142,29 +142,18 @@ export default function ReliabilityEconomics() {
           boxShadow: "0 10px 30px rgba(23, 29, 22, 0.04)",
         }}
       >
-        {/* Table Header */}
+        {/* Table Header (Desktop / Tablet) */}
         <div
+          className="economics-header-row"
           style={{
-            display: "grid",
-
-            gridTemplateColumns: "1.2fr 1.6fr 1.8fr",
-
             background: "var(--color-panel)",
-
             borderBottom: "1px solid var(--color-line)",
-
             padding: "1rem 1.5rem",
-
             fontFamily: "var(--font-mono)",
-
             fontSize: "0.72rem",
-
             fontWeight: 700,
-
             letterSpacing: "0.12em",
-
             textTransform: "uppercase",
-
             color: "var(--color-ink)",
           }}
         >
@@ -178,42 +167,30 @@ export default function ReliabilityEconomics() {
         </div>
 
         {/* Rows */}
-        <div>
+        <div className="economics-rows-wrap">
           {COMPARISON.map((row, idx) => (
             <div
               key={idx}
               className="economics-row"
               style={{
-                display: "grid",
-
-                gridTemplateColumns: "1.2fr 1.6fr 1.8fr",
-
                 padding: "1.35rem 1.5rem",
-
                 borderBottom:
                   idx < COMPARISON.length - 1
                     ? "1px solid var(--color-line)"
                     : "none",
-
                 alignItems: "flex-start",
-
                 gap: "1rem",
-
                 transition: "background 0.2s ease",
               }}
             >
               {/* Aspect */}
-              <div>
+              <div className="economics-aspect-cell">
                 <span
                   style={{
                     fontFamily: "var(--font-sans)",
-
                     fontSize: "0.95rem",
-
                     fontWeight: 700,
-
                     color: "var(--color-ink)",
-
                     display: "block",
                   }}
                 >
@@ -222,21 +199,13 @@ export default function ReliabilityEconomics() {
                 <span
                   style={{
                     display: "inline-block",
-
                     marginTop: "0.35rem",
-
                     fontFamily: "var(--font-mono)",
-
                     fontSize: "0.68rem",
-
                     fontWeight: 600,
-
                     padding: "0.15rem 0.45rem",
-
                     borderRadius: "4px",
-
                     background: "rgba(63, 110, 20, 0.08)",
-
                     color: "var(--color-brand-strong)",
                   }}
                 >
@@ -246,22 +215,19 @@ export default function ReliabilityEconomics() {
 
               {/* Traditional Agency */}
               <div
+                className="economics-legacy-cell"
                 style={{
                   fontFamily: "var(--font-sans)",
-
                   fontSize: "0.88rem",
-
                   lineHeight: 1.6,
-
                   color: "#6c786a",
                 }}
               >
+                <span className="economics-mobile-label">TRADITIONAL AGENCIES: </span>
                 <span
                   style={{
                     color: "#dc2626",
-
                     fontWeight: 800,
-
                     marginRight: "0.4rem",
                   }}
                 >
@@ -272,42 +238,29 @@ export default function ReliabilityEconomics() {
 
               {/* Influence India Unified */}
               <div
+                className="economics-unified-cell"
                 style={{
                   fontFamily: "var(--font-sans)",
-
                   fontSize: "0.9rem",
-
                   lineHeight: 1.6,
-
                   color: "var(--color-ink)",
-
                   fontWeight: 500,
                 }}
               >
+                <span className="economics-mobile-label">INFLUENCE INDIA MODEL: </span>
                 <span
                   style={{
                     display: "inline-flex",
-
                     alignItems: "center",
-
                     justifyContent: "center",
-
                     width: "18px",
-
                     height: "18px",
-
                     borderRadius: "50%",
-
                     background: "var(--color-lime)",
-
                     color: "var(--color-ink)",
-
                     fontWeight: 900,
-
                     fontSize: "0.72rem",
-
                     marginRight: "0.5rem",
-
                     verticalAlign: "middle",
                   }}
                 >
@@ -318,6 +271,57 @@ export default function ReliabilityEconomics() {
             </div>
           ))}
         </div>
+        <style dangerouslySetInnerHTML={{ __html: `
+          .economics-header-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.6fr 1.8fr;
+          }
+          .economics-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.6fr 1.8fr;
+          }
+          .economics-mobile-label {
+            display: none;
+          }
+          @media (max-width: 768px) {
+            .economics-header-row {
+              display: none !important;
+            }
+            .economics-row {
+              display: flex !important;
+              flex-direction: column !important;
+              padding: 1.25rem 1.15rem !important;
+              gap: 0.85rem !important;
+            }
+            .economics-mobile-label {
+              display: block;
+              font-family: var(--font-mono);
+              font-size: 0.65rem;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              margin-bottom: 0.35rem;
+              text-transform: uppercase;
+            }
+            .economics-legacy-cell {
+              background: rgba(239, 68, 68, 0.04);
+              border: 1px solid rgba(239, 68, 68, 0.15);
+              border-radius: 8px;
+              padding: 0.75rem 0.85rem;
+            }
+            .economics-legacy-cell .economics-mobile-label {
+              color: #dc2626;
+            }
+            .economics-unified-cell {
+              background: rgba(83, 140, 21, 0.06);
+              border: 1px solid rgba(83, 140, 21, 0.22);
+              border-radius: 8px;
+              padding: 0.75rem 0.85rem;
+            }
+            .economics-unified-cell .economics-mobile-label {
+              color: var(--color-brand-strong);
+            }
+          }
+        ` }} />
       </div>
 
       {/* 3 Metric Cards Under Comparison Board */}
