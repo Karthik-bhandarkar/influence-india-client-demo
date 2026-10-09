@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import InfinitySvg from "./components/InfinitySvg"
 import LandingVideoSection from "./components/LandingVideoSection"
 import CompanyMarquee from "./components/CompanyMarquee"
@@ -716,49 +717,182 @@ function Header({
 
 function Hero() {
   const [highlightDrawn, setHighlightDrawn] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+
+  // Interactive mouse tilt & parallax physics to eliminate the flat feel
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springConfig = { stiffness: 85, damping: 20 }
+  const smoothX = useSpring(mouseX, springConfig)
+  const smoothY = useSpring(mouseY, springConfig)
+
+  // 3D Parallax & Tilt transformations
+  const leftPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.5, 2.5])
+  const leftPageRotateX = useTransform(smoothY, [-0.5, 0.5], [2, -2])
+
+  const rightPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-3.5, 3.5])
+  const rightPageRotateX = useTransform(smoothY, [-0.5, 0.5], [3, -3])
+  const rightPageX = useTransform(smoothX, [-0.5, 0.5], [-8, 8])
+  const rightPageY = useTransform(smoothY, [-0.5, 0.5], [-6, 6])
+
+  // Floating Lime Card has deeper parallax for tactile multi-layered depth
+  const noteX = useTransform(smoothX, [-0.5, 0.5], [-16, 16])
+  const noteY = useTransform(smoothY, [-0.5, 0.5], [-12, 12])
 
   useEffect(() => {
-    const timer = setTimeout(() => setHighlightDrawn(true), 150)
+    // Trigger marker brush stroke right after the book unfolds and lands
+    const timer = setTimeout(() => setHighlightDrawn(true), 750)
     return () => clearTimeout(timer)
   }, [])
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!heroRef.current) return
+    const rect = heroRef.current.getBoundingClientRect()
+    const normX = (e.clientX - rect.left) / rect.width - 0.5
+    const normY = (e.clientY - rect.top) / rect.height - 0.5
+    mouseX.set(normX)
+    mouseY.set(normY)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+  }
+
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section
+      ref={heroRef}
+      className="hero"
+      aria-labelledby="hero-title"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="container hero-grid">
-        <div className="hero-copy">
-          <SectionLabel>ONE SYSTEM · EVERY STEP OF THE CAREER</SectionLabel>
+        {/* Animated Central Book Spine Crease & Depth Divider */}
+        <motion.div
+          className="hero-book-spine"
+          initial={{ scaleY: 0, opacity: 0 }}
+          animate={{ scaleY: 1, opacity: 1 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+        />
+
+        {/* Left Page (Verso Spread): Editorial Content Unfolding & Landing */}
+        <motion.div
+          className="hero-copy"
+          initial={{
+            opacity: 0,
+            rotateY: -22,
+            rotateX: 4,
+            scale: 0.94,
+            z: -40,
+          }}
+          animate={{
+            opacity: 1,
+            rotateY: 0,
+            rotateX: 0,
+            scale: 1,
+            z: 0,
+          }}
+          style={{
+            transformOrigin: "right center",
+            rotateY: leftPageRotateY,
+            rotateX: leftPageRotateX,
+          }}
+          transition={{
+            duration: 1.25,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        >
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <SectionLabel>ONE SYSTEM · EVERY STEP OF THE CAREER</SectionLabel>
+          </motion.div>
+
+          {/* Staggered Kinetic Headline */}
           <h1 id="hero-title">
-            One system.
-            <br />
-            <span
-              className={`hero-highlight ${highlightDrawn ? "is-drawn" : ""}`}
-            >
-              Every step
-              <svg
-                viewBox="0 0 600 24"
-                preserveAspectRatio="none"
-                aria-hidden="true"
+            <span style={{ display: "block", overflow: "hidden" }}>
+              <motion.span
+                style={{ display: "block" }}
+                initial={{ y: 45, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
-                <path d="M2 16C135 1 399 0 597 9" />
-              </svg>
+                One system.
+              </motion.span>
             </span>
-            <br />
-            of the career.
+
+            <span style={{ display: "block", overflow: "visible" }}>
+              <motion.span
+                style={{ display: "inline-block" }}
+                initial={{ y: 45, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.44, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span
+                  className={`hero-highlight ${highlightDrawn ? "is-drawn" : ""}`}
+                >
+                  Every step
+                  <svg
+                    viewBox="0 0 600 24"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M2 16C135 1 399 0 597 9" />
+                  </svg>
+                </span>
+              </motion.span>
+            </span>
+
+            <span style={{ display: "block", overflow: "hidden" }}>
+              <motion.span
+                style={{ display: "block" }}
+                initial={{ y: 45, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.58, ease: [0.16, 1, 0.3, 1] }}
+              >
+                of the career.
+              </motion.span>
+            </span>
           </h1>
-          <p className="hero-description">
+
+          {/* Description */}
+          <motion.p
+            className="hero-description"
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.72, ease: [0.16, 1, 0.3, 1] }}
+          >
             Sourcing, skill training, certification and onsite management —
             unified across India under one accountable team. We are emerging the
             opportunities to the un-sourced world.
-          </p>
-          <div className="hero-actions">
+          </motion.p>
+
+          {/* Action CTAs */}
+          <motion.div
+            className="hero-actions"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.65, delay: 0.86, ease: [0.16, 1, 0.3, 1] }}
+          >
             <ActionLink href={contact.whatsapp} variant="lime" arrow="whatsapp">
               Talk with us
             </ActionLink>
             <ActionLink href="#what-we-do" variant="outline">
               What we do
             </ActionLink>
-          </div>
-          <div className="hero-bottom">
+          </motion.div>
+
+          {/* Bottom Bar */}
+          <motion.div
+            className="hero-bottom"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.98, ease: [0.16, 1, 0.3, 1] }}
+          >
             <span className="small-orbit">
               <Icon name="globe" />
             </span>
@@ -767,9 +901,40 @@ function Hero() {
               <span>Explore</span>
               <Icon name="arrow" />
             </a>
-          </div>
-        </div>
-        <div className="hero-visual">
+          </motion.div>
+        </motion.div>
+
+        {/* Right Page (Recto Spread): Visual Plate Opening & Dimensional Landing */}
+        <motion.div
+          className="hero-visual"
+          initial={{
+            opacity: 0,
+            rotateY: 26,
+            rotateX: 5,
+            scale: 0.92,
+            z: -70,
+          }}
+          animate={{
+            opacity: 1,
+            rotateY: 0,
+            rotateX: 0,
+            scale: 1,
+            z: 0,
+          }}
+          style={{
+            transformOrigin: "left center",
+            rotateY: rightPageRotateY,
+            rotateX: rightPageRotateX,
+            x: rightPageX,
+            y: rightPageY,
+          }}
+          transition={{
+            duration: 1.35,
+            ease: [0.16, 1, 0.3, 1],
+            delay: 0.1,
+          }}
+        >
+          {/* Photograph Plate */}
           <div className="hero-photo">
             <img
               src="/images/workplace-team.jpg"
@@ -778,12 +943,43 @@ function Hero() {
               height="1012"
               fetchPriority="high"
             />
-            <span className="photo-index">01 — PEOPLE AT WORK</span>
+            {/* Top-Right Index Badge */}
+            <motion.span
+              className="photo-index"
+              initial={{ opacity: 0, y: -18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            >
+              01 — PEOPLE AT WORK
+            </motion.span>
           </div>
-          <div className="hero-image-note">
-            <span className="note-orbit" aria-hidden="true">
+
+          {/* Floating Lime Card ("People & workplaces."): Springs in like a tipped-in chapter bookmark */}
+          <motion.div
+            className="hero-image-note"
+            initial={{ opacity: 0, y: 55, x: -28, rotate: -6, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, x: 0, rotate: 0, scale: 1 }}
+            style={{
+              x: noteX,
+              y: noteY,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 15,
+              delay: 0.85,
+            }}
+            whileHover={{ scale: 1.03, y: -4 }}
+          >
+            <motion.span
+              className="note-orbit"
+              aria-hidden="true"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 45 }}
+              transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            >
               <Icon name="plus" />
-            </span>
+            </motion.span>
             <div>
               <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
               <span className="image-note-title">
@@ -792,11 +988,18 @@ function Hero() {
               </span>
             </div>
             <Icon name="arrow-up" />
-          </div>
-          <span className="hero-side-text">
+          </motion.div>
+
+          {/* Vertical Edge Margin Text */}
+          <motion.span
+            className="hero-side-text"
+            initial={{ opacity: 0, x: 15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
+          >
             STAFFING · WORKFORCE MANAGEMENT · SKILL TRAINING
-          </span>
-        </div>
+          </motion.span>
+        </motion.div>
       </div>
     </section>
   )

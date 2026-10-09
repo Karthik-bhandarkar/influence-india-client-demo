@@ -792,19 +792,54 @@ h3 {
   text-transform: uppercase;
 }
 
-/* Editorial Hero */
+/* Editorial Hero - 3D Book Opening & Dimensional Landing Architecture */
 .hero {
   padding-block: 3.5rem 3rem;
+  perspective: 1600px;
+  perspective-origin: 50% 45%;
+  position: relative;
+  overflow: visible;
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 3rem;
+  gap: 3.5rem;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Central Book Spine Crease & Depth Divider */
+.hero-book-spine {
+  position: absolute;
+  top: 3%;
+  bottom: 3%;
+  left: calc((1.1 / 2.1) * 100% - 1.75rem);
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(23, 29, 22, 0.08) 12%,
+    rgba(23, 29, 22, 0.18) 50%,
+    rgba(23, 29, 22, 0.08) 88%,
+    transparent 100%
+  );
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.04), 3px 0 10px rgba(0, 0, 0, 0.03);
+  pointer-events: none;
+  z-index: 2;
+  transform-origin: top center;
+}
+
+@media (max-width: 991px) {
+  .hero-book-spine {
+    display: none;
+  }
 }
 
 .hero-copy {
   padding-block: 0.5rem;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .hero h1 {
@@ -906,6 +941,8 @@ h3 {
   position: relative;
   margin-left: 0.5rem;
   padding-bottom: 2.5rem;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .hero-photo {
@@ -913,6 +950,44 @@ h3 {
   height: 100%;
   min-height: 520px;
   background: var(--color-panel);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: -15px 25px 50px -12px rgba(23, 29, 22, 0.16), 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-photo:hover {
+  box-shadow: -20px 35px 65px -12px rgba(23, 29, 22, 0.22), 0 15px 40px -5px rgba(63, 110, 20, 0.12);
+}
+
+/* Book Page Light Sheen Sweep on Open */
+.hero-photo::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.2) 55%,
+    transparent 70%
+  );
+  transform: translateX(-150%) rotate(15deg);
+  animation: hero-sheen-sweep 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes hero-sheen-sweep {
+  0% {
+    transform: translateX(-150%) rotate(15deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(200%) rotate(15deg);
+    opacity: 0;
+  }
 }
 
 .hero-photo::after {
@@ -920,6 +995,7 @@ h3 {
   position: absolute;
   inset: 50% 0 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.4));
+  z-index: 2;
 }
 
 .hero-photo img {
@@ -941,6 +1017,8 @@ h3 {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   z-index: 10;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .hero-image-note {
@@ -954,6 +1032,15 @@ h3 {
   gap: 1.2rem;
   background: var(--color-lime);
   z-index: 10;
+  border-radius: 4px;
+  box-shadow: 0 18px 40px -8px rgba(23, 29, 22, 0.25);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  cursor: pointer;
+}
+
+.hero-image-note:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 24px 50px -6px rgba(23, 29, 22, 0.32), 0 0 20px rgba(163, 230, 53, 0.4);
 }
 
 .note-orbit {
@@ -963,6 +1050,11 @@ h3 {
   place-items: center;
   border: 1px solid rgba(33, 37, 31, 0.35);
   border-radius: 50%;
+  transition: transform 0.4s ease;
+}
+
+.hero-image-note:hover .note-orbit {
+  transform: rotate(90deg);
 }
 
 .note-orbit .icon {
@@ -991,6 +1083,11 @@ h3 {
   margin-left: auto;
   width: 28px;
   height: 28px;
+  transition: transform 0.3s ease;
+}
+
+.hero-image-note:hover>.icon {
+  transform: translate(3px, -3px);
 }
 
 .hero-side-text {
