@@ -371,7 +371,7 @@ export default function ResourcesPage() {
               justifyContent: "space-between",
               marginBottom: "2.5rem",
               paddingBottom: "1.5rem",
-              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              borderBottom: "1px solid #dadcd0",
             }}
           >
             {/* Category Pills */}
@@ -383,18 +383,21 @@ export default function ResourcesPage() {
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     style={{
-                      padding: "0.5rem 1.1rem",
+                      padding: "0.55rem 1.2rem",
                       borderRadius: "9999px",
                       fontSize: "0.75rem",
                       fontWeight: 700,
                       letterSpacing: "0.06em",
                       border: isActive
-                        ? "1px solid #a3e635"
-                        : "1px solid rgba(255,255,255,0.12)",
-                      background: isActive ? "#a3e635" : "rgba(255,255,255,0.03)",
-                      color: isActive ? "#06130b" : "#cbd5e1",
+                        ? "1px solid #3f6e14"
+                        : "1px solid #dadcd0",
+                      background: isActive ? "#3f6e14" : "#ffffff",
+                      color: isActive ? "#ffffff" : "#3f6e14",
                       cursor: "pointer",
-                      transition: "all 0.2s ease",
+                      transition: "all 0.25s ease",
+                      boxShadow: isActive
+                        ? "0 4px 14px rgba(63, 110, 20, 0.28)"
+                        : "0 2px 6px rgba(0,0,0,0.03)",
                     }}
                   >
                     {cat}
@@ -412,26 +415,27 @@ export default function ResourcesPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "0.55rem 1rem 0.55rem 2.2rem",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.15)",
+                  padding: "0.6rem 1rem 0.6rem 2.4rem",
+                  background: "#ffffff",
+                  border: "1px solid #dadcd0",
                   borderRadius: "9999px",
-                  color: "#ffffff",
-                  fontSize: "0.82rem",
+                  color: "#171d16",
+                  fontSize: "0.84rem",
                   outline: "none",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
                 }}
               />
               <svg
                 style={{
                   position: "absolute",
-                  left: "0.85rem",
+                  left: "0.95rem",
                   top: "50%",
                   transform: "translateY(-50%)",
                   width: "14px",
                   height: "14px",
                   fill: "none",
-                  stroke: "rgba(255,255,255,0.4)",
-                  strokeWidth: 2,
+                  stroke: "#3f6e14",
+                  strokeWidth: 2.2,
                 }}
                 viewBox="0 0 24 24"
               >
@@ -457,16 +461,17 @@ export default function ResourcesPage() {
                   onClick={() => setSelectedArticle(blog)}
                 >
                   <div className="blog-card-meta">
-                    <span className="blog-category">{blog.category}</span>
+                    <span className="blog-tag">{blog.category}</span>
                     <span className="blog-read-time">{blog.readTime}</span>
                   </div>
                   <h3>{blog.title}</h3>
                   <p>{blog.excerpt}</p>
                   <div className="blog-card-footer" style={{ marginTop: "auto", paddingTop: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span className="blog-read-link" style={{ fontWeight: 700, color: "var(--color-brand-strong, #3f6e14)", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
-                      READ BRIEF <span>→</span>
+                    <span className="blog-read-link">
+                      <span>READ BRIEF</span>
+                      <span>→</span>
                     </span>
-                    <span style={{ fontSize: "0.72rem", color: "#64748b", letterSpacing: "0.05em" }}>
+                    <span style={{ fontSize: "0.72rem", color: "#64748b", letterSpacing: "0.05em", fontWeight: 600 }}>
                       {blog.date}
                     </span>
                   </div>
@@ -476,17 +481,18 @@ export default function ResourcesPage() {
           </motion.div>
 
           {filteredBlogs.length === 0 && (
-            <div style={{ textAlign: "center", padding: "4rem 1rem", color: "#94a3b8" }}>
+            <div style={{ textAlign: "center", padding: "4rem 1rem", color: "#64748b" }}>
               <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>No research briefs found matching "{searchQuery}".</p>
               <button
                 onClick={() => { setSearchQuery(""); setActiveCategory("ALL") }}
                 style={{
-                  background: "transparent",
-                  border: "1px solid #a3e635",
-                  color: "#a3e635",
-                  padding: "0.4rem 1rem",
+                  background: "#ffffff",
+                  border: "1px solid #3f6e14",
+                  color: "#3f6e14",
+                  padding: "0.45rem 1.1rem",
                   borderRadius: "9999px",
                   fontSize: "0.78rem",
+                  fontWeight: 700,
                   cursor: "pointer",
                 }}
               >
@@ -499,35 +505,52 @@ export default function ResourcesPage() {
           <div
             style={{
               marginTop: "3.5rem",
-              background: "linear-gradient(135deg, rgba(63,110,20,0.15) 0%, rgba(10,20,12,0.9) 100%)",
-              border: "1px solid rgba(163,230,53,0.3)",
-              borderRadius: "1rem",
-              padding: "2.25rem 2.5rem",
+              background: "#081a0e",
+              border: "1px solid rgba(163,230,53,0.35)",
+              borderRadius: "1.25rem",
+              padding: "2.5rem 2.75rem",
               display: "flex",
               flexWrap: "wrap",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "1.5rem",
+              gap: "1.75rem",
+              boxShadow: "0 24px 50px -12px rgba(8, 26, 14, 0.45)",
             }}
           >
-            <div>
-              <span style={{ fontSize: "0.72rem", letterSpacing: "0.12em", fontWeight: 800, color: "#a3e635", display: "block", marginBottom: "0.4rem" }}>
+            <div style={{ maxWidth: "660px" }}>
+              <span style={{ fontSize: "0.75rem", letterSpacing: "0.14em", fontWeight: 800, color: "#a3e635", display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a3e635", boxShadow: "0 0 8px #a3e635" }} />
                 ANNUAL EXECUTIVE WHITE PAPER
               </span>
-              <h3 style={{ margin: "0 0 0.5rem 0", color: "#ffffff", fontSize: "1.35rem", fontFamily: "var(--font-heading)" }}>
+              <h3 style={{ margin: "0.25rem 0 0.65rem 0", color: "#ffffff", fontSize: "1.45rem", fontFamily: "var(--font-heading)", lineHeight: 1.3 }}>
                 2026 India Flexible Workforce &amp; OSTP Skilling Index
               </h3>
-              <p style={{ margin: 0, color: "#94a3b8", fontSize: "0.88rem", maxWidth: "600px" }}>
+              <p style={{ margin: 0, color: "#d2dbd0", fontSize: "0.92rem", lineHeight: 1.65 }}>
                 Comprehensive statistical review analyzing hiring cycle efficiency, statutory compliance benchmarks, and retention dynamics across 100,000+ shifts.
               </p>
             </div>
             <button
               onClick={() => triggerDownloadSimulation("India_Flexible_Workforce_OSTP_Index_2026.pdf")}
-              className="action action--lime"
-              style={{ whiteSpace: "nowrap", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              style={{
+                background: "#a3e635",
+                color: "#06130b",
+                border: "none",
+                borderRadius: "9999px",
+                padding: "0.85rem 1.8rem",
+                fontWeight: 800,
+                fontSize: "0.82rem",
+                letterSpacing: "0.06em",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                boxShadow: "0 6px 20px rgba(163, 230, 53, 0.35)",
+                whiteSpace: "nowrap",
+                transition: "all 0.25s ease",
+              }}
             >
               <span>DOWNLOAD PDF DOSSIER</span>
-              <span>↓</span>
+              <span style={{ fontSize: "1rem" }}>↓</span>
             </button>
           </div>
         </div>
@@ -719,20 +742,20 @@ export default function ResourcesPage() {
                 maxWidth: "720px",
                 maxHeight: "88vh",
                 overflowY: "auto",
-                background: "#0c1810",
-                border: "1px solid rgba(163,230,53,0.35)",
+                background: "#ffffff",
+                border: "1px solid #c4e28c",
                 borderRadius: "1.25rem",
                 padding: "2.5rem",
-                boxShadow: "0 30px 80px rgba(0,0,0,0.8)",
-                color: "#e2e8f0",
+                boxShadow: "0 30px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(63, 110, 20, 0.12)",
+                color: "#171d16",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
                 <div>
-                  <span style={{ fontSize: "0.72rem", letterSpacing: "0.1em", fontWeight: 800, color: "#a3e635", textTransform: "uppercase" }}>
+                  <span style={{ fontSize: "0.72rem", letterSpacing: "0.1em", fontWeight: 800, color: "#3f6e14", textTransform: "uppercase", background: "#eff7dc", padding: "0.25rem 0.65rem", borderRadius: "0.35rem", border: "1px solid #c4e28c" }}>
                     {selectedArticle.category} · {selectedArticle.readTime}
                   </span>
-                  <h2 style={{ fontSize: "1.6rem", color: "#ffffff", margin: "0.5rem 0 0.25rem 0", fontFamily: "var(--font-heading)" }}>
+                  <h2 style={{ fontSize: "1.6rem", color: "#171d16", margin: "0.75rem 0 0.25rem 0", fontFamily: "var(--font-heading)", lineHeight: 1.25 }}>
                     {selectedArticle.title}
                   </h2>
                   <span style={{ fontSize: "0.78rem", color: "#64748b" }}>Published {selectedArticle.date}</span>
@@ -740,54 +763,58 @@ export default function ResourcesPage() {
                 <button
                   onClick={() => setSelectedArticle(null)}
                   style={{
-                    background: "rgba(255,255,255,0.08)",
-                    border: "none",
+                    background: "#eff7dc",
+                    border: "1px solid #c4e28c",
                     borderRadius: "50%",
                     width: "36px",
                     height: "36px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: "#ffffff",
+                    color: "#3f6e14",
                     fontSize: "1.2rem",
+                    fontWeight: 700,
                     cursor: "pointer",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   ✕
                 </button>
               </div>
 
-              <div style={{ marginBottom: "1.75rem", lineHeight: 1.7, fontSize: "0.95rem", color: "#cbd5e1" }}>
+              <div style={{ marginBottom: "1.75rem", lineHeight: 1.7, fontSize: "0.95rem", color: "#4e5a4a" }}>
                 <p style={{ marginBottom: "1rem" }}>{selectedArticle.fullContent}</p>
                 <p>{selectedArticle.excerpt}</p>
               </div>
 
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.75rem", padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>
-                <h4 style={{ margin: "0 0 0.75rem 0", fontSize: "0.8rem", letterSpacing: "0.08em", color: "#a3e635", textTransform: "uppercase" }}>
+              <div style={{ background: "#f8fbf3", border: "1px solid #dbe8ca", borderRadius: "0.75rem", padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>
+                <h4 style={{ margin: "0 0 0.75rem 0", fontSize: "0.8rem", letterSpacing: "0.08em", color: "#3f6e14", textTransform: "uppercase", fontWeight: 800 }}>
                   Key Executive Takeaways
                 </h4>
-                <ul style={{ margin: 0, paddingLeft: "1.25rem", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.85rem", color: "#94a3b8" }}>
+                <ul style={{ margin: 0, paddingLeft: "1.25rem", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.88rem", color: "#2d4513" }}>
                   {selectedArticle.keyTakeaways.map((takeaway, i) => (
                     <li key={i}>{takeaway}</li>
                   ))}
                 </ul>
               </div>
 
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center", paddingTop: "1.25rem", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center", paddingTop: "1.25rem", borderTop: "1px solid #e2e8f0" }}>
                 <button
                   onClick={() => triggerDownloadSimulation(selectedArticle.downloadablePdf)}
                   style={{
-                    background: "#a3e635",
-                    color: "#06130b",
+                    background: "#3f6e14",
+                    color: "#ffffff",
                     border: "none",
                     borderRadius: "9999px",
-                    padding: "0.65rem 1.4rem",
+                    padding: "0.7rem 1.5rem",
                     fontWeight: 700,
                     fontSize: "0.82rem",
                     cursor: "pointer",
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.5rem",
+                    boxShadow: "0 4px 14px rgba(63, 110, 20, 0.3)",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   <span>DOWNLOAD EXECUTIVE PDF</span>
@@ -797,8 +824,8 @@ export default function ResourcesPage() {
                   onClick={() => setSelectedArticle(null)}
                   style={{
                     background: "transparent",
-                    color: "#94a3b8",
-                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#64748b",
+                    border: "1px solid #cbd5e1",
                     borderRadius: "9999px",
                     padding: "0.65rem 1.4rem",
                     fontWeight: 600,
