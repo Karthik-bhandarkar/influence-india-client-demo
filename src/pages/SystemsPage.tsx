@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import OrbitalWorkforceEngine from "../components/OrbitalWorkforceEngine"
 
 const benefits = [
@@ -152,6 +153,7 @@ export default function SystemsPage({
   onNavigate: (target: string) => void
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [activeShift, setActiveShift] = useState<"blue" | "grey">("blue")
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
@@ -162,24 +164,44 @@ export default function SystemsPage({
       {/* Systems / Job Eco-System Hero */}
       <section className="section systems-hero-section">
         <div className="container">
-          <div className="page-header-badge">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="page-header-badge"
+          >
             <span className="page-badge-dot" />
-            <span>JOB ECO-SYSTEM & DEDICATED OPERATION SYSTEM</span>
-          </div>
+            <span>JOB ECO-SYSTEM &amp; DEDICATED OPERATION SYSTEM</span>
+          </motion.div>
 
-          <h1 className="editorial-page-title">
+          <motion.h1
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="editorial-page-title"
+          >
             BECOME AN INFLUENCE INDIA
             <br />
             <span className="text-lime">TEAM MEMBER</span>
-          </h1>
+          </motion.h1>
 
-          <p className="editorial-lead">
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="editorial-lead"
+          >
             Seamless earning opportunities and knowledge gaining. Join the 250+
             community of companies delivering quality job requirements — and
             grow up to infinite in your career.
-          </p>
+          </motion.p>
 
-          <div className="hero-actions">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="hero-actions"
+          >
             <button
               type="button"
               className="action action--lime"
@@ -196,9 +218,14 @@ export default function SystemsPage({
               <span>OPEN POSITIONS</span>
               <span>↓</span>
             </button>
-          </div>
+          </motion.div>
 
-          <div className="systems-hero-image-wrap">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="systems-hero-image-wrap"
+          >
             <img
               src="/images/systems-telemetry-hub.jpg"
               alt="Operations Command Center and India live telemetry at Influence India Services"
@@ -210,7 +237,7 @@ export default function SystemsPage({
               <span className="live-status-dot" />
               <span>LIVE TELEMETRY · 250+ CLIENT COMPANIES CONNECTED</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -232,6 +259,128 @@ export default function SystemsPage({
         </div>
       </section>
 
+      {/* Live Dual-Shift Operational Simulator */}
+      <section className="section systems-shift-simulator-section" style={{ background: "#fbfcf8", padding: "5rem 0", borderBottom: "1px solid rgba(23, 29, 22, 0.08)" }}>
+        <div className="container">
+          <div className="section-heading-editorial">
+            <span className="section-label-text">OPERATIONAL CYCLES · 12H ARCHITECTURE</span>
+            <h2>
+              ROTATIONAL DAY SHIFTS
+              <br />
+              <span className="text-lime">ZERO NIGHT-DUTY MANDATE</span>
+            </h2>
+            <p className="heading-sub">
+              Influence India Services operates strictly day shifts across two 8-hour operational cycles. Explore duty parameters below.
+            </p>
+          </div>
+
+          {/* Interactive Shift Selector Tabs */}
+          <div style={{ display: "flex", gap: "1rem", marginTop: "2rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={() => setActiveShift("blue")}
+              style={{
+                padding: "0.75rem 1.6rem",
+                borderRadius: "12px",
+                border: activeShift === "blue" ? "2px solid #2563eb" : "1px solid rgba(23,29,22,0.15)",
+                background: activeShift === "blue" ? "#eff6ff" : "#ffffff",
+                color: activeShift === "blue" ? "#1d4ed8" : "#4b5563",
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                transition: "all 0.25s ease",
+              }}
+            >
+              <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#2563eb", display: "inline-block" }} />
+              <span>SHIFT BLUE (06:00 – 14:00)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveShift("grey")}
+              style={{
+                padding: "0.75rem 1.6rem",
+                borderRadius: "12px",
+                border: activeShift === "grey" ? "2px solid #4b5563" : "1px solid rgba(23,29,22,0.15)",
+                background: activeShift === "grey" ? "#f3f4f6" : "#ffffff",
+                color: activeShift === "grey" ? "#111827" : "#4b5563",
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                transition: "all 0.25s ease",
+              }}
+            >
+              <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#4b5563", display: "inline-block" }} />
+              <span>SHIFT GREY (14:00 – 22:00)</span>
+            </button>
+          </div>
+
+          {/* Shift Details Interactive Panel */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeShift}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                background: "#ffffff",
+                border: "1px solid rgba(23, 29, 22, 0.1)",
+                borderRadius: "18px",
+                padding: "2.5rem",
+                boxShadow: "0 10px 30px -8px rgba(0,0,0,0.06)",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "2rem",
+              }}
+            >
+              <div>
+                <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.1em", color: "#3f6e14", textTransform: "uppercase" }}>
+                  OPERATING WINDOW
+                </span>
+                <h3 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#111827", marginTop: "0.35rem" }}>
+                  {activeShift === "blue" ? "06:00 AM – 02:00 PM" : "02:00 PM – 10:00 PM"}
+                </h3>
+                <p style={{ fontSize: "0.88rem", color: "#6b7280", marginTop: "0.5rem", lineHeight: 1.6 }}>
+                  {activeShift === "blue"
+                    ? "Morning prime enterprise deployment window. Rigorous 05:45 biometric check-in with dedicated onsite team leader handover."
+                    : "Afternoon rotational cycle ensuring seamless business continuity across banking, healthcare, and IT corridors."}
+                </p>
+              </div>
+
+              <div>
+                <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.1em", color: "#3f6e14", textTransform: "uppercase" }}>
+                  ROSTER PROTOCOL
+                </span>
+                <h3 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#111827", marginTop: "0.35rem" }}>
+                  {activeShift === "blue" ? "Morning Wave A" : "Afternoon Wave B"}
+                </h3>
+                <p style={{ fontSize: "0.88rem", color: "#6b7280", marginTop: "0.5rem", lineHeight: 1.6 }}>
+                  7-day flexible rolling week with statutory rest days. Zero overtime exploitation, with EPF &amp; medical cover logged on central DOS.
+                </p>
+              </div>
+
+              <div>
+                <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.1em", color: "#3f6e14", textTransform: "uppercase" }}>
+                  STANDBY RESOLUTION
+                </span>
+                <h3 style={{ fontSize: "1.45rem", fontWeight: 800, color: "#111827", marginTop: "0.35rem" }}>
+                  &lt; 4 Hours Guarantee
+                </h3>
+                <p style={{ fontSize: "0.88rem", color: "#6b7280", marginTop: "0.5rem", lineHeight: 1.6 }}>
+                  In the event of an unplanned absence, pre-vetted reserve aspirants from the regional cluster are mobilised within four hours.
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
+
       {/* Unbeatable Benefits */}
       <section className="section systems-benefits-section">
         <div className="container">
@@ -250,11 +399,15 @@ export default function SystemsPage({
 
           <div className="benefits-grid">
             {benefits.map((b) => (
-              <div key={b.number} className="benefit-card">
+              <motion.div
+                key={b.number}
+                whileHover={{ y: -4, borderColor: "#3f6e14" }}
+                className="benefit-card"
+              >
                 <span className="benefit-num">{b.number}</span>
                 <h3>{b.title}</h3>
                 <p>{b.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -296,11 +449,15 @@ export default function SystemsPage({
 
           <div className="corporate-pillars-grid">
             {corporatePillars.map((cp) => (
-              <div key={cp.number} className="corporate-pillar-card">
+              <motion.div
+                key={cp.number}
+                whileHover={{ y: -4, borderColor: "#3f6e14" }}
+                className="corporate-pillar-card"
+              >
                 <span className="corp-num">{cp.number}</span>
                 <h3>{cp.title}</h3>
                 <p>{cp.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -315,18 +472,22 @@ export default function SystemsPage({
               ONE MANAGED CONTRACT.
               <br />
               <span className="text-lime">
-                END-TO-END RECRUITMENT & MANAGEMENT.
+                END-TO-END RECRUITMENT &amp; MANAGEMENT.
               </span>
             </h2>
           </div>
 
           <div className="integrated-grid">
             {integratedOfferings.map((item, idx) => (
-              <div key={idx} className="integrated-card">
+              <motion.div
+                key={idx}
+                whileHover={{ y: -4, borderColor: "#3f6e14" }}
+                className="integrated-card"
+              >
                 <div className="integrated-marker">0{idx + 1}</div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -384,18 +545,22 @@ export default function SystemsPage({
 
           <div className="process-steps-grid">
             {steps.map((st) => (
-              <div key={st.num} className="process-step-card">
+              <motion.div
+                key={st.num}
+                whileHover={{ y: -4, borderColor: "#3f6e14" }}
+                className="process-step-card"
+              >
                 <span className="step-tag">{st.label}</span>
                 <span className="step-num">{st.num}</span>
                 <h3>{st.title}</h3>
                 <p>{st.text}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ Section with Smooth Animated Accordion */}
       <section className="section systems-faq-section">
         <div className="container">
           <div className="section-heading-editorial">
@@ -423,15 +588,29 @@ export default function SystemsPage({
                   <div className="faq-item-header">
                     <span className="faq-item-num">0{idx + 1}</span>
                     <h3>{faq.q}</h3>
-                    <span className="faq-toggle-icon">
-                      {isOpen ? "−" : "+"}
-                    </span>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="faq-toggle-icon"
+                      style={{ display: "grid", placeItems: "center" }}
+                    >
+                      +
+                    </motion.span>
                   </div>
-                  {isOpen && (
-                    <div className="faq-item-body">
-                      <p>{faq.a}</p>
-                    </div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        className="faq-item-body"
+                        style={{ overflow: "hidden" }}
+                      >
+                        <p>{faq.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )
             })}

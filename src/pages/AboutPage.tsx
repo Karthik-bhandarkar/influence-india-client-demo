@@ -15,8 +15,7 @@ const contact = {
     line1: "69, 1st Floor, Opposite Kuntamaramma Temple",
     line2: "Arehalli, AGS Layout Main Road, Banashankari 3rd Stage",
     city: "Bengaluru 560061, Karnataka, India",
-    directionsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Arehalli+AGS+Layout+Banashankari+3rd+Stage+Bengaluru+560061",
+    directionsUrl: "https://maps.app.goo.gl/Te4jpDgYpbt2toRbA",
   },
 }
 

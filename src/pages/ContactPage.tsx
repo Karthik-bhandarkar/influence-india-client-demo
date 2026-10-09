@@ -100,8 +100,7 @@ export default function ContactPage({ onNavigate }: ContactPageProps) {
   const [locationToast, setLocationToast] = useState<string | null>(null)
 
   const handleGetLocation = async () => {
-    const mapsUrl =
-      "https://www.google.com/maps/dir/?api=1&destination=12.9084977,77.5385120"
+    const mapsUrl = "https://maps.app.goo.gl/Te4jpDgYpbt2toRbA"
     window.open(mapsUrl, "_blank", "noopener,noreferrer")
     try {
       await navigator.clipboard.writeText(
@@ -534,7 +533,7 @@ Submitted via influenceindiaservices.com/contact`
               {/* Exact Location Google Map Image Card */}
               <div className="contact-map-box">
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=12.9084977,77.5385120"
+                  href="https://maps.app.goo.gl/Te4jpDgYpbt2toRbA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-map-link"
@@ -595,7 +594,7 @@ Submitted via influenceindiaservices.com/contact`
                 )}
 
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Arehalli+AGS+Layout+Banashankari+3rd+Stage+Bengaluru+560061"
+                  href="https://maps.app.goo.gl/Te4jpDgYpbt2toRbA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-maps-btn"

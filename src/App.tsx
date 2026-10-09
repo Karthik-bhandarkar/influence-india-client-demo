@@ -16,6 +16,7 @@ import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
 import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
 import FooterWordmark from "./components/FooterWordmark"
 import FooterEnterprise from "./components/FooterEnterprise"
+import LenisSmoothScroll from "./components/LenisSmoothScroll"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
@@ -30,8 +31,7 @@ const contact = {
     line2: "Arehalli, AGS Layout Main Road",
     line3: "Banashankari 3rd Stage",
     city: "Bengaluru 560061, Karnataka, India",
-    directionsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Arehalli+AGS+Layout+Banashankari+3rd+Stage+Bengaluru+560061",
+    directionsUrl: "https://maps.app.goo.gl/Te4jpDgYpbt2toRbA",
   },
 }
 
@@ -1561,46 +1561,57 @@ export default function App() {
   }, [])
 
   const handleNavigate = (target: string) => {
+    const resetScroll = () => {
+      if ((window as any).__lenis) {
+        ;(window as any).__lenis.scrollTo(0, { immediate: true })
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }
+    }
+
     const clean = target.replace("#", "").toLowerCase()
     if (clean === "about" || clean === "about-us") {
       setView("about")
       window.location.hash = "#about"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "gtp" || clean === "footprints") {
       setView("gtp")
       window.location.hash = "#gtp"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "systems" || clean === "ecosystem") {
       setView("systems")
       window.location.hash = "#systems"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "careers" || clean === "jobs") {
       setView("careers")
       window.location.hash = "#careers"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "resources" || clean === "insights") {
       setView("resources")
       window.location.hash = "#resources"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "contact" || clean === "contact-us") {
       setView("contact")
       window.location.hash = "#contact"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else if (clean === "home" || clean === "") {
       setView("home")
       window.location.hash = "#home"
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      resetScroll()
     } else {
       // It's a section on the home page like #what-we-do, #reliability, etc.
       if (view !== "home") {
         setView("home")
       }
       setTimeout(() => {
-        const el = document.querySelector(
-          target.startsWith("#") ? target : `#${target}`,
-        )
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" })
+        const selector = target.startsWith("#") ? target : `#${target}`
+        if ((window as any).__lenis) {
+          ;(window as any).__lenis.scrollTo(selector)
+        } else {
+          const el = document.querySelector(selector)
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" })
+          }
         }
       }, 50)
     }
@@ -1608,6 +1619,9 @@ export default function App() {
 
   return (
     <>
+      {/* Lenis Luxury Inertial Smooth Momentum Scroll */}
+      <LenisSmoothScroll />
+
       {/* 3px Razor-thin scroll progress telemetry line */}
       <div
         className="scroll-progress-bar"

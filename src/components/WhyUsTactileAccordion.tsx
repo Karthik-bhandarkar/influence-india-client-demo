@@ -92,12 +92,32 @@ export function AccordionOS({
   containerHeight = 520,
   containerWidth = "100%",
   autoPlay = true,
-  autoPlayInterval = 5000, // 5-second order-wise cycle as requested
+  autoPlayInterval = 3000, // Cycles every 3 seconds when scrolling meets section
   pauseOnHover = true,
   onItemChange,
 }: AccordionOSProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(defaultActiveIndex)
   const [isHovered, setIsHovered] = useState<boolean>(false)
+  const [isInView, setIsInView] = useState<boolean>(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // IntersectionObserver: Only start changing images when scrolling meets this section
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        threshold: 0.2, // Triggers when scrolling meets that section
+      }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const handleToggle = useCallback(
     (index: number) => {
@@ -128,16 +148,16 @@ export function AccordionOS({
     })
   }, [items.length, onItemChange])
 
-  // Automatic slide changing (AutoPlay every 2 seconds order-wise)
+  // Automatic slide changing every 3 seconds ONLY when scrolling meets this section
   useEffect(() => {
-    if (!autoPlay || (pauseOnHover && isHovered)) return
+    if (!autoPlay || !isInView || (pauseOnHover && isHovered)) return
 
     const interval = setInterval(() => {
       handleNext()
     }, autoPlayInterval)
 
     return () => clearInterval(interval)
-  }, [autoPlay, autoPlayInterval, pauseOnHover, isHovered, handleNext])
+  }, [autoPlay, autoPlayInterval, isInView, pauseOnHover, isHovered, handleNext])
 
   // Global Keyboard Navigation (ArrowUp, ArrowDown, W/S, 1-5, Escape)
   useEffect(() => {
@@ -173,6 +193,7 @@ export function AccordionOS({
 
   return (
     <div
+      ref={rootRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`accordion-os-root ${className}`}
@@ -311,10 +332,19 @@ export function AccordionOS({
                     </svg>
                   </button>
 
-                  <div className="accordion-os-counter">
+                  <div className="accordion-os-counter" title="Auto-advancing every 3 seconds while in view">
                     <span>{String((activeIndex ?? 0) + 1).padStart(2, "0")}</span>
                     <span className="accordion-os-counter-divider">/</span>
                     <span>{String(items.length).padStart(2, "0")}</span>
+                    {isInView && (
+                      <motion.div
+                        key={`timer-beam-${activeIndex}`}
+                        className="accordion-os-timer-beam"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 3, ease: "linear" }}
+                      />
+                    )}
                   </div>
 
                   <button
@@ -583,11 +613,13 @@ export function AccordionOS({
         }
 
         .accordion-os-counter {
+          position: relative;
+          overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
           height: 28px;
-          padding: 0 4px;
+          padding: 0 6px;
           gap: 4px;
           font-family: var(--font-mono);
           font-size: 11.5px;
@@ -595,6 +627,17 @@ export function AccordionOS({
           line-height: 1;
           color: #171d16;
           font-variant-numeric: tabular-nums;
+          border-radius: 6px;
+        }
+
+        .accordion-os-timer-beam {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #3f6e14;
+          transform-origin: left;
         }
 
         .accordion-os-counter-divider {
