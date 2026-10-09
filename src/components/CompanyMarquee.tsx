@@ -1,12 +1,16 @@
 import { useMemo } from "react"
+
 import { MARQUEE_LOGOS } from "../data/marqueeLogos"
 
 export default function CompanyMarquee() {
   // Distribute the 167 unique client & institutional logos across two smooth scrolling rows
+
   const { row1, row2 } = useMemo(() => {
     const half = Math.ceil(MARQUEE_LOGOS.length / 2)
+
     return {
       row1: MARQUEE_LOGOS.slice(0, half),
+
       row2: MARQUEE_LOGOS.slice(half),
     }
   }, [])
@@ -26,8 +30,8 @@ export default function CompanyMarquee() {
             Trusted by India’s leading enterprise &amp; industry teams.
           </h2>
           <p className="marquee-sub">
-            Empowering 250+ enterprise workplaces &amp; institutions across India with managed
-            staffing &amp; verified operations
+            Empowering 250+ enterprise workplaces &amp; institutions across
+            India with managed staffing &amp; verified operations
           </p>
         </div>
       </div>

@@ -4,38 +4,60 @@ export interface ContactPageProps {
   onNavigate: (target: string) => void
 }
 
-import { contactChannels, inquiryCategories, teamSizes, faqs } from '../data/contactPageData'
+import {
+  contactChannels,
+  inquiryCategories,
+  teamSizes,
+  faqs,
+} from "../data/contactPageData"
 
 export default function ContactPage({ onNavigate }: ContactPageProps) {
   const [fullName, setFullName] = useState("")
+
   const [email, setEmail] = useState("")
+
   const [phone, setPhone] = useState("")
+
   const [company, setCompany] = useState("")
+
   const [category, setCategory] = useState(inquiryCategories[0])
+
   const [teamSize, setTeamSize] = useState(teamSizes[0])
+
   const [preferredMethod, setPreferredMethod] = useState("Email")
+
   const [message, setMessage] = useState("")
 
   const [isSubmitted, setIsSubmitted] = useState(false)
+
   const [submittedData, setSubmittedData] = useState<{
     mailtoUrl: string
+
     summary: string
   } | null>(null)
+
   const [copied, setCopied] = useState(false)
+
   const [openFaq, setOpenFaq] = useState<number | null>(0)
+
   const [locationToast, setLocationToast] = useState<string | null>(null)
 
   const handleGetLocation = async () => {
-    const mapsUrl = "https://maps.app.goo.gl/jDV9X3riE4SQLkmU9"
+    const mapsUrl =
+      "https://www.google.com/maps/place/Influence+India+Services/@12.9118978,77.5395274,1116m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3bae3f8aa3f97aef:0xbe31969d0bde211!8m2!3d12.9118978!4d77.5395274!16s%2Fg%2F11zyngt34j?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D"
+
     window.open(mapsUrl, "_blank", "noopener,noreferrer")
+
     try {
       await navigator.clipboard.writeText(
         "Influence India Services, 69, 1st Floor, Opposite Kuntamaramma Temple, Arehalli, AGS Layout Main Road, Banashankari 3rd Stage, Bengaluru 560061, Karnataka, India (GPS: 12.9084977, 77.5385120)",
       )
+
       setLocationToast("Location address copied & opened in Google Maps!")
     } catch {
       setLocationToast("Opening Bengaluru Office on Google Maps...")
     }
+
     setTimeout(() => setLocationToast(null), 4000)
   }
 
@@ -46,7 +68,9 @@ export default function ContactPage({ onNavigate }: ContactPageProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    const subject = `[Influence India Inquiry] ${category} — ${fullName}${company ? ` (${company})` : ""}`
+    const subject = `[Influence India Inquiry] ${category} — ${fullName}${
+      company ? ` (${company})` : ""
+    }`
 
     const bodyText = `INFLUENCE INDIA SERVICES — DIRECT INQUIRY
 ===========================================
@@ -70,19 +94,25 @@ Submitted via influenceindiaservices.com/contact`
 
     setSubmittedData({
       mailtoUrl,
+
       summary: bodyText,
     })
+
     setIsSubmitted(true)
 
     // Trigger user's mail client directly
+
     window.location.href = mailtoUrl
   }
 
   const handleCopySummary = async () => {
     if (!submittedData) return
+
     try {
       await navigator.clipboard.writeText(submittedData.summary)
+
       setCopied(true)
+
       setTimeout(() => setCopied(false), 2500)
     } catch {
       // Fallback
@@ -91,11 +121,17 @@ Submitted via influenceindiaservices.com/contact`
 
   const handleResetForm = () => {
     setIsSubmitted(false)
+
     setSubmittedData(null)
+
     setFullName("")
+
     setEmail("")
+
     setPhone("")
+
     setCompany("")
+
     setMessage("")
   }
 
@@ -224,7 +260,10 @@ Submitted via influenceindiaservices.com/contact`
                       </div>
 
                       <div className="contact-field">
-                        <label htmlFor="contact-email" className="contact-label">
+                        <label
+                          htmlFor="contact-email"
+                          className="contact-label"
+                        >
                           Work Email <span className="text-required">*</span>
                         </label>
                         <input
@@ -241,7 +280,10 @@ Submitted via influenceindiaservices.com/contact`
 
                     <div className="contact-form-row">
                       <div className="contact-field">
-                        <label htmlFor="contact-phone" className="contact-label">
+                        <label
+                          htmlFor="contact-phone"
+                          className="contact-label"
+                        >
                           Phone / WhatsApp{" "}
                           <span className="text-required">*</span>
                         </label>
@@ -276,9 +318,7 @@ Submitted via influenceindiaservices.com/contact`
 
                     {/* Inquiry Category Selector */}
                     <div className="contact-field">
-                      <label className="contact-label">
-                        Inquiry Category
-                      </label>
+                      <label className="contact-label">Inquiry Category</label>
                       <div className="contact-category-chips">
                         {inquiryCategories.map((cat) => (
                           <button
@@ -374,6 +414,7 @@ Submitted via influenceindiaservices.com/contact`
                 </>
               ) : (
                 /* Success / Submission Prepared State */
+
                 <div className="contact-success-state">
                   <div className="contact-success-badge">
                     <span className="contact-success-icon" aria-hidden="true">
@@ -452,39 +493,29 @@ Submitted via influenceindiaservices.com/contact`
             {/* Headquarters Card */}
             <div className="contact-info-card">
               <span className="contact-info-eyebrow">HEADQUARTERS</span>
-              <h3 className="contact-info-heading">
-                Influence India Services
-              </h3>
+              <h3 className="contact-info-heading">Influence India Services</h3>
 
               {/* Exact Location Google Map Image Card */}
-              <div className="contact-map-box">
-                <a
-                  href="https://maps.app.goo.gl/jDV9X3riE4SQLkmU9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-map-link"
-                  title="Click to view Bengaluru Office exact location in Google Maps"
-                >
-                  <img
-                    src="/images/bengaluru-office-map.png"
-                    alt="Google Map Exact Location — Bengaluru Office, Arehalli, AGS Layout, Banashankari 3rd Stage"
-                    className="contact-map-img"
-                    width="768"
-                    height="460"
-                    loading="lazy"
-                  />
-                  <div className="contact-map-overlay">
-                    <span className="contact-map-overlay-text">
-                      <span aria-hidden="true">📍</span>
-                      <span>Bengaluru Office (Arehalli, AGS Layout)</span>
-                    </span>
-                    <span className="contact-map-overlay-badge">
-                      Click to Open ↗
-                    </span>
-                  </div>
-                </a>
+              <div
+                className="contact-map-box"
+                style={{
+                  display: "flex",
+                  height: "320px",
+                  padding: "0",
+                  overflow: "hidden",
+                }}
+              >
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.05843886039088!2d77.53922969083136!3d12.911897814820152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f8aa3f97aef%3A0xbe31969d0bde211!2sInfluence%20India%20Services!5e0!3m2!1sen!2sin!4v1791550188537!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, flex: 1 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Influence India Services Exact Location"
+                ></iframe>
               </div>
-
               <address className="contact-info-address">
                 69, 1st Floor, Opposite Kuntamaramma Temple
                 <br />
@@ -508,7 +539,9 @@ Submitted via influenceindiaservices.com/contact`
                   className="contact-get-location-btn"
                   title="Get exact location and directions for the Bengaluru office"
                 >
-                  <span className="btn-icon" aria-hidden="true">📍</span>
+                  <span className="btn-icon" aria-hidden="true">
+                    📍
+                  </span>
                   <span>GET LOCATION</span>
                   <span aria-hidden="true">↗</span>
                 </button>
@@ -520,7 +553,7 @@ Submitted via influenceindiaservices.com/contact`
                 )}
 
                 <a
-                  href="https://maps.app.goo.gl/jDV9X3riE4SQLkmU9"
+                  href="https://www.google.com/maps/place/Influence+India+Services/@12.9118978,77.5395274,1116m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3bae3f8aa3f97aef:0xbe31969d0bde211!8m2!3d12.9118978!4d77.5395274!16s%2Fg%2F11zyngt34j?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-maps-btn"
@@ -530,7 +563,10 @@ Submitted via influenceindiaservices.com/contact`
                 </a>
               </div>
 
-              <div className="contact-info-meta-item" style={{ marginTop: "1.25rem" }}>
+              <div
+                className="contact-info-meta-item"
+                style={{ marginTop: "1.25rem" }}
+              >
                 <span className="contact-meta-label">HOURS OF OPERATION</span>
                 <span className="contact-meta-val">
                   Monday – Saturday · 10:00AM – 6:00PM IST
@@ -569,12 +605,19 @@ Submitted via influenceindiaservices.com/contact`
               <div className="contact-cities-cloud">
                 {[
                   "Bengaluru (HQ)",
+
                   "Mumbai & Pune",
+
                   "Chennai",
+
                   "Hyderabad",
+
                   "Gujarat Cluster",
+
                   "Uttar Pradesh",
+
                   "Bhubaneswar",
+
                   "30+ Tier-1 & Tier-2 Cities",
                 ].map((city, idx) => (
                   <span key={idx} className="contact-city-tag">
@@ -618,7 +661,10 @@ Submitted via influenceindiaservices.com/contact`
         </section>
 
         {/* Quick FAQ Section */}
-        <section className="contact-faq-section" aria-label="Frequently Asked Questions">
+        <section
+          className="contact-faq-section"
+          aria-label="Frequently Asked Questions"
+        >
           <div className="contact-faq-header">
             <span className="contact-info-eyebrow">HELP &amp; FAQS</span>
             <h2 className="contact-faq-title">Frequently Asked Questions</h2>

@@ -1,95 +1,169 @@
 import React, { useState } from "react"
+
 import { motion, type Transition } from "framer-motion"
 
 export interface FolderCardItem {
   id?: string | number
+
   number: string
+
   title: string
+
   description: string
+
   bgImage?: string
+
   characterImage?: string
+
   folderColor: string
+
   gradientTop?: string
+
   gradientBottom?: string
+
   borderColor: string
+
   textColor: string
+
   subTextColor: string
+
   badgeBg: string
+
   badgeBorder: string
+
   badgeText: string
+
   badgeDotColor: string
+
   href?: string
+
   stamp?: string
 }
 
 export const RELIABILITY_FOLDER_CARDS: FolderCardItem[] = [
   {
     id: "01",
+
     number: "01",
+
     title: "Real-Time Workforce Monitoring",
-    description: "A central Dedicated Operation System (DOS) tracks attendance, rosters and performance at every milestone.",
+
+    description:
+      "A central Dedicated Operation System (DOS) tracks attendance, rosters and performance at every milestone.",
+
     folderColor: "#F4FBF7",
+
     gradientTop: "#FFFFFF",
+
     gradientBottom: "#E5F6ED",
+
     borderColor: "rgba(16, 185, 129, 0.28)",
+
     textColor: "#0F291E",
+
     subTextColor: "rgba(15, 41, 30, 0.72)",
+
     badgeBg: "rgba(255, 255, 255, 0.85)",
+
     badgeBorder: "rgba(16, 185, 129, 0.3)",
+
     badgeText: "#065F46",
+
     badgeDotColor: "#10B981",
+
     bgImage: "/images/reliability-dos-telemetry.jpg",
+
     stamp: "DOS ACTIVE · 0 OUTAGES",
   },
+
   {
     id: "02",
+
     number: "02",
+
     title: "Pan-India Network Coverage",
-    description: "From Bengaluru to every major corridor, our sourcing and training network spans 30+ regional hubs.",
+
+    description:
+      "From Bengaluru to every major corridor, our sourcing and training network spans 30+ regional hubs.",
+
     folderColor: "#FCFAF6",
+
     gradientTop: "#FFFFFF",
+
     gradientBottom: "#F4EDE1",
+
     borderColor: "rgba(217, 119, 6, 0.24)",
+
     textColor: "#2A1E14",
+
     subTextColor: "rgba(42, 30, 20, 0.72)",
+
     badgeBg: "rgba(255, 255, 255, 0.85)",
+
     badgeBorder: "rgba(217, 119, 6, 0.28)",
+
     badgeText: "#854D0E",
+
     badgeDotColor: "#F59E0B",
+
     bgImage: "/images/reliability-pan-india.jpg",
+
     stamp: "PAN-INDIA · 30+ CITIES",
   },
+
   {
     id: "03",
+
     number: "03",
+
     title: "24/7 Client Support",
-    description: "Real people, 365 days a year. Whether routine roster updates or urgent replacement, we own the outcome.",
+
+    description:
+      "Real people, 365 days a year. Whether routine roster updates or urgent replacement, we own the outcome.",
+
     folderColor: "#F8FAFC",
+
     gradientTop: "#FFFFFF",
+
     gradientBottom: "#EDF2F7",
+
     borderColor: "rgba(99, 102, 241, 0.24)",
+
     textColor: "#141A29",
+
     subTextColor: "rgba(20, 26, 41, 0.72)",
+
     badgeBg: "rgba(255, 255, 255, 0.85)",
+
     badgeBorder: "rgba(99, 102, 241, 0.28)",
+
     badgeText: "#3730A3",
+
     badgeDotColor: "#6366F1",
+
     bgImage: "/images/reliability-support-247.jpg",
+
     stamp: "365 DAYS · REAL PEOPLE",
   },
 ]
 
 const gpuSpringTransition: Transition = {
   type: "spring",
+
   stiffness: 260,
+
   damping: 28,
+
   mass: 0.75,
+
   restDelta: 0.0005,
+
   restSpeed: 0.0005,
 }
 
 export function FolderPeek({ card }: { card: FolderCardItem }) {
   const Component = card.href ? motion.a : motion.div
+
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -103,10 +177,13 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
         className="group relative block h-[430px] w-full cursor-pointer select-none overflow-hidden rounded-[28px] transform-gpu [backface-visibility:hidden] [contain:paint] [perspective:1000px] transition-shadow duration-300"
         style={{
           border: `1.5px solid ${card.borderColor}`,
+
           background: "#181D20",
+
           boxShadow: isHovered
             ? "0 22px 48px -10px rgba(15, 23, 42, 0.16), 0 38px 72px -16px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
             : "0 1px 3px rgba(0, 0, 0, 0.04), 0 12px 28px -6px rgba(15, 23, 42, 0.09), 0 24px 48px -12px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
+
           boxSizing: "border-box",
         }}
         initial="initial"
@@ -118,6 +195,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           className="absolute inset-0 z-0 overflow-hidden transform-gpu will-change-[transform]"
           variants={{
             initial: { scale: 1 },
+
             hover: { scale: 1.08 },
           }}
           transition={gpuSpringTransition}
@@ -140,6 +218,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           className="pointer-events-none absolute inset-x-0 top-[78px] z-20 h-[380px] transform-gpu will-change-[transform]"
           variants={{
             initial: { y: 0 },
+
             hover: { y: 46 },
           }}
           transition={gpuSpringTransition}
@@ -189,10 +268,12 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
             className="absolute right-6 top-[38px] flex h-7 w-7 transform-gpu items-center justify-center rounded-full will-change-[transform]"
             style={{
               background: "rgba(0, 0, 0, 0.04)",
+
               border: "1px solid rgba(0, 0, 0, 0.08)",
             }}
             variants={{
               initial: { x: 0, scale: 1 },
+
               hover: { x: 4, scale: 1.1 },
             }}
             transition={gpuSpringTransition}
@@ -231,27 +312,44 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
               <span
                 style={{
                   display: "inline-flex",
+
                   alignItems: "center",
+
                   gap: "0.45rem",
+
                   fontFamily: "var(--font-mono)",
+
                   fontSize: "9px",
+
                   fontWeight: 700,
+
                   letterSpacing: "0.08em",
+
                   textTransform: "uppercase",
+
                   padding: "3px 9px",
+
                   borderRadius: "9999px",
+
                   background: card.badgeBg,
+
                   border: `1px solid ${card.badgeBorder}`,
+
                   color: card.badgeText,
+
                   boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
                 }}
               >
                 <span
                   style={{
                     width: "5px",
+
                     height: "5px",
+
                     borderRadius: "9999px",
+
                     backgroundColor: card.badgeDotColor,
+
                     boxShadow: `0 0 6px ${card.badgeDotColor}`,
                   }}
                 />

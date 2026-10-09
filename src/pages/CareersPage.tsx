@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react"
+
 import { motion, AnimatePresence } from "framer-motion"
 
-import { gtcCommitments, stories, Role, openRoles } from '../data/careers'
+import { gtcCommitments, stories, Role, openRoles } from "../data/careers"
 
 export default function CareersPage() {
   const [activeDept, setActiveDept] = useState<string>("all")
+
   const [selectedRole, setSelectedRole] = useState<Role | null>(null)
+
   const [applicantName, setApplicantName] = useState("")
+
   const [applicantPhone, setApplicantPhone] = useState("")
+
   const [applicantDegree, setApplicantDegree] = useState("")
 
   useEffect(() => {
@@ -259,8 +264,11 @@ export default function CareersPage() {
           <div
             style={{
               display: "flex",
+
               flexWrap: "wrap",
+
               gap: "0.6rem",
+
               margin: "2.5rem 0 2rem",
             }}
           >
@@ -271,21 +279,32 @@ export default function CareersPage() {
                 onClick={() => setActiveDept(dept.id)}
                 style={{
                   padding: "0.45rem 1.1rem",
+
                   borderRadius: "9999px",
+
                   fontSize: "0.72rem",
+
                   fontWeight: 800,
+
                   letterSpacing: "0.08em",
+
                   border:
                     activeDept === dept.id
                       ? "1.5px solid #3f6e14"
                       : "1px solid rgba(23, 29, 22, 0.15)",
-                  background:
-                    activeDept === dept.id ? "#ecfccb" : "#ffffff",
+
+                  background: activeDept === dept.id ? "#ecfccb" : "#ffffff",
+
                   color: activeDept === dept.id ? "#365314" : "#4e5a4a",
+
                   cursor: "pointer",
+
                   transition: "all 0.2s ease",
+
                   display: "inline-flex",
+
                   alignItems: "center",
+
                   gap: "0.4rem",
                 }}
               >
@@ -294,9 +313,13 @@ export default function CareersPage() {
                   style={{
                     background:
                       activeDept === dept.id ? "#365314" : "rgba(0,0,0,0.06)",
+
                     color: activeDept === dept.id ? "#ffffff" : "#4e5a4a",
+
                     fontSize: "0.65rem",
+
                     padding: "0.1rem 0.4rem",
+
                     borderRadius: "9999px",
                   }}
                 >
@@ -328,7 +351,9 @@ export default function CareersPage() {
 
                   <div className="role-card-right">
                     <div className="role-tags">
-                      <span className="role-tag role-tag--type">{role.type}</span>
+                      <span className="role-tag role-tag--type">
+                        {role.type}
+                      </span>
                       <span className="role-tag role-tag--exp">{role.exp}</span>
                     </div>
                     <button
@@ -375,13 +400,21 @@ export default function CareersPage() {
           <div
             style={{
               position: "fixed",
+
               inset: 0,
+
               zIndex: 9999,
+
               background: "rgba(6, 19, 11, 0.7)",
+
               backdropFilter: "blur(6px)",
+
               display: "flex",
+
               alignItems: "center",
+
               justifyContent: "center",
+
               padding: "1.5rem",
             }}
             onClick={() => setSelectedRole(null)}
@@ -393,38 +426,93 @@ export default function CareersPage() {
               transition={{ duration: 0.25 }}
               style={{
                 background: "#ffffff",
+
                 maxWidth: "520px",
+
                 width: "100%",
+
                 borderRadius: "1.25rem",
+
                 padding: "2.25rem",
+
                 boxShadow: "0 25px 60px -15px rgba(0,0,0,0.4)",
+
                 border: "1px solid rgba(23, 29, 22, 0.12)",
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-                <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "#3f6e14", letterSpacing: "0.1em" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "1rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    color: "#3f6e14",
+                    letterSpacing: "0.1em",
+                  }}
+                >
                   FAST-TRACK CANDIDATE ROSTER
                 </span>
                 <button
                   type="button"
                   onClick={() => setSelectedRole(null)}
-                  style={{ background: "none", border: "1px solid rgba(0,0,0,0.1)", borderRadius: "50%", width: "30px", height: "30px", cursor: "pointer" }}
+                  style={{
+                    background: "none",
+                    border: "1px solid rgba(0,0,0,0.1)",
+                    borderRadius: "50%",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                  }}
                 >
                   ✕
                 </button>
               </div>
 
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 800, color: "#111827", marginBottom: "0.3rem" }}>
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.5rem",
+                  fontWeight: 800,
+                  color: "#111827",
+                  marginBottom: "0.3rem",
+                }}
+              >
                 Apply for {selectedRole.title}
               </h3>
-              <p style={{ fontSize: "0.85rem", color: "#6b7280", marginBottom: "1.5rem" }}>
+              <p
+                style={{
+                  fontSize: "0.85rem",
+                  color: "#6b7280",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 {selectedRole.desc}
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.9rem",
+                }}
+              >
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 800, color: "#374151", marginBottom: "0.3rem" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.75rem",
+                      fontWeight: 800,
+                      color: "#374151",
+                      marginBottom: "0.3rem",
+                    }}
+                  >
                     FULL NAME *
                   </label>
                   <input
@@ -432,12 +520,26 @@ export default function CareersPage() {
                     value={applicantName}
                     onChange={(e) => setApplicantName(e.target.value)}
                     placeholder="Enter your full name"
-                    style={{ width: "100%", padding: "0.75rem 1rem", borderRadius: "8px", border: "1px solid #d1d5db", fontSize: "0.9rem" }}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "8px",
+                      border: "1px solid #d1d5db",
+                      fontSize: "0.9rem",
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 800, color: "#374151", marginBottom: "0.3rem" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.75rem",
+                      fontWeight: 800,
+                      color: "#374151",
+                      marginBottom: "0.3rem",
+                    }}
+                  >
                     WHATSAPP / PHONE NUMBER *
                   </label>
                   <input
@@ -445,12 +547,26 @@ export default function CareersPage() {
                     value={applicantPhone}
                     onChange={(e) => setApplicantPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    style={{ width: "100%", padding: "0.75rem 1rem", borderRadius: "8px", border: "1px solid #d1d5db", fontSize: "0.9rem" }}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "8px",
+                      border: "1px solid #d1d5db",
+                      fontSize: "0.9rem",
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 800, color: "#374151", marginBottom: "0.3rem" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.75rem",
+                      fontWeight: 800,
+                      color: "#374151",
+                      marginBottom: "0.3rem",
+                    }}
+                  >
                     HIGHEST EDUCATION / DEGREE *
                   </label>
                   <input
@@ -458,11 +574,19 @@ export default function CareersPage() {
                     value={applicantDegree}
                     onChange={(e) => setApplicantDegree(e.target.value)}
                     placeholder="e.g. B.Com, BBA, B.E., Diploma"
-                    style={{ width: "100%", padding: "0.75rem 1rem", borderRadius: "8px", border: "1px solid #d1d5db", fontSize: "0.9rem" }}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "8px",
+                      border: "1px solid #d1d5db",
+                      fontSize: "0.9rem",
+                    }}
                   />
                 </div>
 
-                <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
+                <div
+                  style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}
+                >
                   <a
                     href={`mailto:careers@influenceindiaservices.com?subject=Application%20for%20${encodeURIComponent(
                       selectedRole.title,
@@ -471,13 +595,21 @@ export default function CareersPage() {
                     )}%0D%0AEducation:%20${encodeURIComponent(applicantDegree)}`}
                     style={{
                       flex: 1,
+
                       textAlign: "center",
+
                       padding: "0.85rem",
+
                       background: "#3f6e14",
+
                       color: "#ffffff",
+
                       borderRadius: "8px",
+
                       fontWeight: 800,
+
                       fontSize: "0.85rem",
+
                       textDecoration: "none",
                     }}
                   >
@@ -493,14 +625,23 @@ export default function CareersPage() {
                     rel="noopener noreferrer"
                     style={{
                       padding: "0.85rem 1.25rem",
+
                       background: "#25D366",
+
                       color: "#ffffff",
+
                       borderRadius: "8px",
+
                       fontWeight: 800,
+
                       fontSize: "0.85rem",
+
                       textDecoration: "none",
+
                       display: "flex",
+
                       alignItems: "center",
+
                       gap: "0.4rem",
                     }}
                   >

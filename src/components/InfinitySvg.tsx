@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+
 import gsap from "gsap"
 
 export default function InfinitySvg({
@@ -7,60 +8,89 @@ export default function InfinitySvg({
   className?: string
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
+
   const pathRef = useRef<SVGPathElement>(null)
+
   const pulseRef = useRef<SVGCircleElement>(null)
+
   const glowPathRef = useRef<SVGPathElement>(null)
+
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const path = pathRef.current
+
     const pulse = pulseRef.current
+
     const glowPath = glowPathRef.current
+
     if (!path || !pulse || !glowPath) return
 
     const pathLength = path.getTotalLength()
 
     // Setup dash array for flowing trail effect
+
     gsap.set(glowPath, {
       strokeDasharray: `${pathLength * 0.35} ${pathLength * 0.65}`,
+
       strokeDashoffset: 0,
     })
 
     // GSAP continuous animation of glowing stroke trail
+
     const trailTween = gsap.to(glowPath, {
       strokeDashoffset: -pathLength,
+
       duration: 5,
+
       ease: "none",
+
       repeat: -1,
     })
 
     // GSAP motion path animation for traveling particle
+
     const progressObj = { progress: 0 }
+
     const particleTween = gsap.to(progressObj, {
       progress: 1,
+
       duration: 5,
+
       ease: "none",
+
       repeat: -1,
+
       onUpdate: () => {
         const point = path.getPointAtLength(progressObj.progress * pathLength)
+
         pulse.setAttribute("cx", point.x.toString())
+
         pulse.setAttribute("cy", point.y.toString())
       },
     })
 
     // Ambient breathing scale
+
     const breatheTween = gsap.to(path, {
       scale: 1.02,
+
       transformOrigin: "center center",
+
       duration: 2.5,
+
       yoyo: true,
+
       repeat: -1,
+
       ease: "sine.inOut",
     })
 
     return () => {
       trailTween.kill()
+
       particleTween.kill()
+
       breatheTween.kill()
     }
   }, [])

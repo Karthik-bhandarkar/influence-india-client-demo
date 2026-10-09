@@ -1,54 +1,98 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
+
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+
 import InfinitySvg from "./components/InfinitySvg"
+
 import LandingVideoSection from "./components/LandingVideoSection"
+
 import CompanyMarquee from "./components/CompanyMarquee"
+
 import { useLandingCardsScrollAnimation } from "./hooks/useLandingCardsScrollAnimation"
+
 import AboutPage from "./pages/AboutPage"
+
 import GtpPage from "./pages/GtpPage"
+
 import SystemsPage from "./pages/SystemsPage"
+
 import CareersPage from "./pages/CareersPage"
+
 import ResourcesPage from "./pages/ResourcesPage"
+
 import ContactPage from "./pages/ContactPage"
-import { LiveHubStatusBadge, QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
+
+import {
+  LiveHubStatusBadge,
+  QuickEnquiryDrawer,
+} from "./components/HalaskaMicroUX"
+
 import ReliabilityEconomics from "./components/ReliabilityEconomics"
+
 import FolderCards from "./components/FolderCards"
+
 import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
+
 import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
+
 import FooterWordmark from "./components/FooterWordmark"
+
 import FooterEnterprise from "./components/FooterEnterprise"
+
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
-import { contact } from './data/contact'
-import { navigation } from './data/navigation'
-import { services, reliabilityPillars, ecosystemNodes, innovationPillars } from './data/home'
-import { reasons, testimonials, faqs, aboutAims, twelveCommitments, expansionCities, sectors, policies } from './data/about'
+import { contact } from "./data/contact"
+
+import { navigation } from "./data/navigation"
+
+import {
+  services,
+  reliabilityPillars,
+  ecosystemNodes,
+  innovationPillars,
+} from "./data/home"
+
+import {
+  reasons,
+  testimonials,
+  faqs,
+  aboutAims,
+  twelveCommitments,
+  expansionCities,
+  sectors,
+  policies,
+} from "./data/about"
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
 function Icon({ name, className = "" }: { name: IconName; className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M4 12h15M13 5l7 7-7 7" />,
+
     "arrow-up": <path d="M5 19 19 5M5 5h14v14" />,
+
     people: (
       <>
         <circle cx="9" cy="8" r="3" />
         <path d="M3 21v-3a6 6 0 0 1 12 0v3M17 5a3 3 0 0 1 0 6M17 15a5 5 0 0 1 4 5" />
       </>
     ),
+
     work: (
       <>
         <rect x="3" y="7" width="18" height="14" rx="2" />
         <path d="M8 7V3h8v4M3 12c5 4 13 4 18 0M10 14h4" />
       </>
     ),
+
     growth: (
       <>
         <path d="m3 18 6-6 4 4 8-11M14 5h7v7M3 22h18" />
       </>
     ),
+
     globe: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -56,41 +100,52 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
         <path d="M3 12h18" />
       </>
     ),
+
     mail: (
       <>
         <rect x="3" y="5" width="18" height="14" rx="2" />
         <path d="m3 6 9 7 9-7" />
       </>
     ),
+
     whatsapp: (
       <>
         <path d="M20.6 11.8a8.6 8.6 0 0 1-12.8 7.5L3 21l1.6-4.8a8.6 8.6 0 1 1 16-4.4Z" />
         <path d="M8.2 7.5c-.8 1-.8 2.5.3 4.2 1.2 2 3.7 3.6 5.6 3.6.9 0 1.8-.6 2.1-1.4l-2.6-1.3-.8 1c-1.6-.6-2.7-1.7-3.3-3.1l.9-.9-1.2-2.3Z" />
       </>
     ),
+
     plus: <path d="M12 4v16M4 12h16" />,
+
     menu: <path d="M3 6h18M3 12h18M3 18h18" />,
+
     close: <path d="m5 5 14 14M5 19 19 5" />,
+
     check: <path d="m5 13 4 4L19 7" />,
+
     shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
+
     clock: (
       <>
         <circle cx="12" cy="12" r="9" />
         <path d="M12 6v6l4 2" />
       </>
     ),
+
     chart: (
       <>
         <path d="M3 3v18h18" />
         <path d="m19 9-5 5-4-4-3 3" />
       </>
     ),
+
     building: (
       <>
         <rect x="4" y="2" width="16" height="20" rx="2" />
         <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01" />
       </>
     ),
+
     compass: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -119,21 +174,28 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null)
+
   const [inView, setInView] = useState(false)
 
   useEffect(() => {
     const el = ref.current
+
     if (!el) return
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true)
+
           observer.disconnect()
         }
       },
+
       { threshold },
     )
+
     observer.observe(el)
+
     return () => observer.disconnect()
   }, [threshold])
 
@@ -145,14 +207,20 @@ function useCountUp(target: number, inView: boolean, duration = 1200) {
 
   useEffect(() => {
     if (!inView) return
+
     let startTime: number | null = null
+
     let animationFrameId: number
 
     function animate(now: number) {
       if (!startTime) startTime = now
+
       const elapsed = now - startTime
+
       const progress = Math.min(elapsed / duration, 1)
+
       const easeProgress = 1 - Math.pow(1 - progress, 3)
+
       setCount(Math.floor(easeProgress * target))
 
       if (progress < 1) {
@@ -163,6 +231,7 @@ function useCountUp(target: number, inView: boolean, duration = 1200) {
     }
 
     animationFrameId = requestAnimationFrame(animate)
+
     return () => cancelAnimationFrame(animationFrameId)
   }, [target, inView, duration])
 
@@ -171,21 +240,27 @@ function useCountUp(target: number, inView: boolean, duration = 1200) {
 
 function useScrollProgress() {
   const [progress, setProgress] = useState(0)
+
   const [showPill, setShowPill] = useState(false)
 
   useEffect(() => {
     function handleScroll() {
       const scrollTotal =
         document.documentElement.scrollHeight - window.innerHeight
+
       const currentScroll = window.scrollY
+
       if (scrollTotal > 0) {
         setProgress(Math.min(currentScroll / scrollTotal, 1))
       }
+
       setShowPill(currentScroll > 260)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
+
     handleScroll()
+
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -194,20 +269,31 @@ function useScrollProgress() {
 
 function ActionLink({
   href,
+
   children,
+
   variant = "dark",
+
   arrow = "arrow-up",
+
   className = "",
+
   onClick,
 }: {
   href: string
+
   children: ReactNode
+
   variant?: "dark" | "outline" | "outline-light" | "lime" | "light"
+
   arrow?: IconName
+
   className?: string
+
   onClick?: () => void
 }) {
   const external = href.startsWith("https:")
+
   return (
     <a
       href={href}
@@ -223,11 +309,15 @@ function ActionLink({
 
 function SectionLabel({
   number,
+
   children,
+
   light = false,
 }: {
   number?: string
+
   children: ReactNode
+
   light?: boolean
 }) {
   return (
@@ -241,9 +331,11 @@ function SectionLabel({
 
 function Brand({
   footer = false,
+
   onNavigateHome,
 }: {
   footer?: boolean
+
   onNavigateHome?: () => void
 }) {
   return (
@@ -253,6 +345,7 @@ function Brand({
       onClick={(e) => {
         if (onNavigateHome) {
           e.preventDefault()
+
           onNavigateHome()
         }
       }}
@@ -272,24 +365,32 @@ function Brand({
 
 function Header({
   activeView,
+
   onNavigate,
+
   onOpenRoster,
 }: {
   activeView: ActiveView
+
   onNavigate: (target: string) => void
+
   onOpenRoster?: () => void
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
+
   const toggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
       if (event.key === "Escape" && menuOpen) {
         setMenuOpen(false)
+
         toggleRef.current?.focus()
       }
     }
+
     document.addEventListener("keydown", handleKey)
+
     return () => document.removeEventListener("keydown", handleKey)
   }, [menuOpen])
 
@@ -300,9 +401,11 @@ function Header({
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map((item) => {
             const cleanHref = item.href.replace("#", "")
+
             const isActive =
               activeView === cleanHref ||
               (cleanHref === "about" && activeView === "about")
+
             return (
               <a
                 key={item.href}
@@ -310,6 +413,7 @@ function Header({
                 className={isActive ? "is-active" : ""}
                 onClick={(e) => {
                   e.preventDefault()
+
                   onNavigate(item.href)
                 }}
               >
@@ -327,27 +431,44 @@ function Header({
               title="Open Fast-Track Roster Desk"
               style={{
                 display: "inline-flex",
+
                 alignItems: "center",
+
                 gap: "0.45rem",
+
                 padding: "0.5rem 0.95rem",
+
                 borderRadius: "9999px",
+
                 fontSize: "0.72rem",
+
                 fontWeight: 600,
+
                 letterSpacing: "0.04em",
+
                 textTransform: "uppercase",
+
                 background: "rgba(17, 19, 21, 0.05)",
+
                 border: "1px solid rgba(17, 19, 21, 0.12)",
+
                 color: "var(--color-ink)",
+
                 cursor: "pointer",
+
                 transition: "all 0.2s",
               }}
             >
               <span
                 style={{
                   width: "7px",
+
                   height: "7px",
+
                   borderRadius: "50%",
+
                   backgroundColor: "#3f6e14",
+
                   boxShadow: "0 0 6px #3f6e14",
                 }}
               />
@@ -386,6 +507,7 @@ function Header({
             type="button"
             onClick={() => {
               setMenuOpen(false)
+
               onOpenRoster()
             }}
             className="mobile-roster-action"
@@ -400,7 +522,9 @@ function Header({
             href={item.href}
             onClick={(e) => {
               e.preventDefault()
+
               setMenuOpen(false)
+
               onNavigate(item.href)
             }}
           >
@@ -422,49 +546,68 @@ function Header({
   )
 }
 
-
-
 function Hero() {
   const [highlightDrawn, setHighlightDrawn] = useState(false)
+
   const heroRef = useRef<HTMLElement>(null)
 
   // Interactive mouse tilt & parallax physics to eliminate the flat feel
+
   const mouseX = useMotionValue(0)
+
   const mouseY = useMotionValue(0)
+
   const springConfig = { stiffness: 85, damping: 20 }
+
   const smoothX = useSpring(mouseX, springConfig)
+
   const smoothY = useSpring(mouseY, springConfig)
 
   // 3D Parallax & Tilt transformations
+
   const leftPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.5, 2.5])
+
   const leftPageRotateX = useTransform(smoothY, [-0.5, 0.5], [2, -2])
 
   const rightPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-3.5, 3.5])
+
   const rightPageRotateX = useTransform(smoothY, [-0.5, 0.5], [3, -3])
+
   const rightPageX = useTransform(smoothX, [-0.5, 0.5], [-8, 8])
+
   const rightPageY = useTransform(smoothY, [-0.5, 0.5], [-6, 6])
 
   // Floating Lime Card has deeper parallax for tactile multi-layered depth
+
   const noteX = useTransform(smoothX, [-0.5, 0.5], [-16, 16])
+
   const noteY = useTransform(smoothY, [-0.5, 0.5], [-12, 12])
 
   useEffect(() => {
     // Trigger marker brush stroke right after the book unfolds and lands
+
     const timer = setTimeout(() => setHighlightDrawn(true), 750)
+
     return () => clearTimeout(timer)
   }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!heroRef.current) return
+
     const rect = heroRef.current.getBoundingClientRect()
+
     const normX = (e.clientX - rect.left) / rect.width - 0.5
+
     const normY = (e.clientY - rect.top) / rect.height - 0.5
+
     mouseX.set(normX)
+
     mouseY.set(normY)
   }
 
   const handleMouseLeave = () => {
     mouseX.set(0)
+
     mouseY.set(0)
   }
 
@@ -490,25 +633,36 @@ function Hero() {
           className="hero-copy"
           initial={{
             opacity: 0,
+
             rotateY: -22,
+
             rotateX: 4,
+
             scale: 0.94,
+
             z: -40,
           }}
           animate={{
             opacity: 1,
+
             rotateY: 0,
+
             rotateX: 0,
+
             scale: 1,
+
             z: 0,
           }}
           style={{
             transformOrigin: "right center",
+
             rotateY: leftPageRotateY,
+
             rotateX: leftPageRotateX,
           }}
           transition={{
             duration: 1.25,
+
             ease: [0.16, 1, 0.3, 1],
           }}
         >
@@ -528,7 +682,11 @@ function Hero() {
                 style={{ display: "block" }}
                 initial={{ y: 45, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.3,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 One system.
               </motion.span>
@@ -539,10 +697,16 @@ function Hero() {
                 style={{ display: "inline-block" }}
                 initial={{ y: 45, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.44, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.44,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 <span
-                  className={`hero-highlight ${highlightDrawn ? "is-drawn" : ""}`}
+                  className={`hero-highlight ${
+                    highlightDrawn ? "is-drawn" : ""
+                  }`}
                 >
                   Every step
                   <svg
@@ -561,7 +725,11 @@ function Hero() {
                 style={{ display: "block" }}
                 initial={{ y: 45, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.58, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.58,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 of the career.
               </motion.span>
@@ -573,7 +741,11 @@ function Hero() {
             className="hero-description"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.72, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.75,
+              delay: 0.72,
+              ease: [0.16, 1, 0.3, 1],
+            }}
           >
             Sourcing, skill training, certification and onsite management —
             unified across India under one accountable team. We are emerging the
@@ -585,7 +757,11 @@ function Hero() {
             className="hero-actions"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.86, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.65,
+              delay: 0.86,
+              ease: [0.16, 1, 0.3, 1],
+            }}
           >
             <ActionLink href={contact.whatsapp} variant="lime" arrow="whatsapp">
               Talk with us
@@ -618,28 +794,42 @@ function Hero() {
           className="hero-visual"
           initial={{
             opacity: 0,
+
             rotateY: 26,
+
             rotateX: 5,
+
             scale: 0.92,
+
             z: -70,
           }}
           animate={{
             opacity: 1,
+
             rotateY: 0,
+
             rotateX: 0,
+
             scale: 1,
+
             z: 0,
           }}
           style={{
             transformOrigin: "left center",
+
             rotateY: rightPageRotateY,
+
             rotateX: rightPageRotateX,
+
             x: rightPageX,
+
             y: rightPageY,
           }}
           transition={{
             duration: 1.35,
+
             ease: [0.16, 1, 0.3, 1],
+
             delay: 0.1,
           }}
         >
@@ -657,7 +847,11 @@ function Hero() {
               className="photo-index"
               initial={{ opacity: 0, y: -18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.6,
+                delay: 0.65,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               01 — PEOPLE AT WORK
             </motion.span>
@@ -670,12 +864,16 @@ function Hero() {
             animate={{ opacity: 1, y: 0, x: 0, rotate: 0, scale: 1 }}
             style={{
               x: noteX,
+
               y: noteY,
             }}
             transition={{
               type: "spring",
+
               stiffness: 120,
+
               damping: 15,
+
               delay: 0.85,
             }}
             whileHover={{ scale: 1.03, y: -4 }}
@@ -685,7 +883,11 @@ function Hero() {
               aria-hidden="true"
               initial={{ rotate: 0 }}
               animate={{ rotate: 45 }}
-              transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.95,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               <Icon name="plus" />
             </motion.span>
@@ -756,6 +958,7 @@ function OutcomeOwnership({
             onClick={(e) => {
               if (onNavigateAbout) {
                 e.preventDefault()
+
                 onNavigateAbout()
               }
             }}
@@ -771,8 +974,11 @@ function OutcomeOwnership({
 
 function Metrics() {
   const { ref, inView } = useInView()
+
   const count1 = useCountUp(100, inView, 1200)
+
   const count2 = useCountUp(250, inView, 1400)
+
   const count3 = useCountUp(30, inView, 1000)
 
   return (
@@ -818,11 +1024,7 @@ function Metrics() {
   )
 }
 
-function Services({
-  onNavigate,
-}: {
-  onNavigate?: (target: string) => void
-}) {
+function Services({ onNavigate }: { onNavigate?: (target: string) => void }) {
   const { ref, inView } = useInView()
 
   return (
@@ -853,6 +1055,7 @@ function Services({
             className="services-pill-cta"
             onClick={(e) => {
               e.preventDefault()
+
               if (onNavigate) {
                 onNavigate("systems")
               } else {
@@ -861,7 +1064,9 @@ function Services({
             }}
           >
             <span>ALL TWELVE SERVICES</span>
-            <span className="cta-arrow" aria-hidden="true">→</span>
+            <span className="cta-arrow" aria-hidden="true">
+              →
+            </span>
           </a>
         </div>
 
@@ -942,8 +1147,6 @@ function Reliability() {
   )
 }
 
-
-
 function PillarsOfInnovation() {
   const { ref, inView } = useInView()
 
@@ -988,7 +1191,9 @@ function PillarsOfInnovation() {
 
 function PricingDisruption() {
   const { ref, inView } = useInView()
+
   const countSavings = useCountUp(65, inView, 1200)
+
   const countOwned = useCountUp(100, inView, 1200)
 
   return (
@@ -1221,6 +1426,7 @@ function Faq() {
         <div className="faq-list">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx
+
             return (
               <div
                 key={idx}
@@ -1293,9 +1499,13 @@ function ReadyToDriveChange() {
         <p
           style={{
             marginTop: "1.5rem",
+
             maxWidth: "600px",
+
             color: "var(--dark-muted)",
+
             fontSize: "0.95rem",
+
             lineHeight: "1.8",
           }}
         >
@@ -1319,10 +1529,15 @@ function ReadyToDriveChange() {
 function GtpNotice() {
   const gtpItems = [
     "GROW TOGETHER POLICY: 21 FOOTPRINTS PUBLISHED",
+
     "OSTP — ONSITE SKILL TRAINING PROGRAMS NOW LIVE",
+
     "PAN-INDIA REACH: 30+ CITIES ACTIVE",
+
     "ZERO CAPEX ONBOARDING & DEPLOYMENT",
+
     "MANAGED TALENT PIPELINES ACROSS KEY CORRIDORS",
+
     "ENTERPRISE-GRADE WORKFORCE RELIABILITY",
   ]
 
@@ -1352,16 +1567,23 @@ function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
 
 function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
+
   const [isFocused, setIsFocused] = useState(false)
+
   const [autoPeek, setAutoPeek] = useState(false)
+
   const hasPeekedRef = useRef(false)
 
   // Auto-peek on scroll: when the button first slides into view,
+
   // reveal the full text for 4.2 seconds to introduce "30+ Cities Live · Talk with us",
+
   // then smoothly collapse back into "just icon" to keep the screen clean.
+
   useEffect(() => {
     if (show && !hasPeekedRef.current) {
       hasPeekedRef.current = true
+
       const startTimer = setTimeout(() => {
         setAutoPeek(true)
       }, 400)
@@ -1372,6 +1594,7 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
 
       return () => {
         clearTimeout(startTimer)
+
         clearTimeout(endTimer)
       }
     }
@@ -1426,49 +1649,68 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
 
 export default function App() {
   const { progress, showPill } = useScrollProgress()
+
   const [rosterDrawerOpen, setRosterDrawerOpen] = useState(false)
+
   const [view, setView] = useState<ActiveView>(() => {
     if (typeof window !== "undefined") {
       const hash = window.location.hash.toLowerCase()
+
       if (hash === "#about" || hash === "#about-us") return "about"
+
       if (hash === "#gtp" || hash === "#footprints") return "gtp"
+
       if (hash === "#systems" || hash === "#ecosystem") return "systems"
+
       if (hash === "#careers" || hash === "#jobs") return "careers"
+
       if (hash === "#resources" || hash === "#insights") return "resources"
+
       if (hash === "#contact" || hash === "#contact-us") return "contact"
     }
+
     return "home"
   })
 
   // Smooth bidirectional "getting up" & above/below parallax scroll animations for landing cards
+
   useLandingCardsScrollAnimation(view)
 
   useEffect(() => {
     function handleHashChange() {
       const hash = window.location.hash.toLowerCase()
+
       if (hash === "#about" || hash === "#about-us") {
         setView("about")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#gtp" || hash === "#footprints") {
         setView("gtp")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#systems" || hash === "#ecosystem") {
         setView("systems")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#careers" || hash === "#jobs") {
         setView("careers")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#resources" || hash === "#insights") {
         setView("resources")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#contact" || hash === "#contact-us") {
         setView("contact")
+
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else if (hash === "#home" || hash === "") {
         setView("home")
       }
     }
+
     window.addEventListener("hashchange", handleHashChange)
+
     return () => window.removeEventListener("hashchange", handleHashChange)
   }, [])
 
@@ -1482,45 +1724,64 @@ export default function App() {
     }
 
     const clean = target.replace("#", "").toLowerCase()
+
     if (clean === "about" || clean === "about-us") {
       setView("about")
+
       window.location.hash = "#about"
+
       resetScroll()
     } else if (clean === "gtp" || clean === "footprints") {
       setView("gtp")
+
       window.location.hash = "#gtp"
+
       resetScroll()
     } else if (clean === "systems" || clean === "ecosystem") {
       setView("systems")
+
       window.location.hash = "#systems"
+
       resetScroll()
     } else if (clean === "careers" || clean === "jobs") {
       setView("careers")
+
       window.location.hash = "#careers"
+
       resetScroll()
     } else if (clean === "resources" || clean === "insights") {
       setView("resources")
+
       window.location.hash = "#resources"
+
       resetScroll()
     } else if (clean === "contact" || clean === "contact-us") {
       setView("contact")
+
       window.location.hash = "#contact"
+
       resetScroll()
     } else if (clean === "home" || clean === "") {
       setView("home")
+
       window.location.hash = "#home"
+
       resetScroll()
     } else {
       // It's a section on the home page like #what-we-do, #reliability, etc.
+
       if (view !== "home") {
         setView("home")
       }
+
       setTimeout(() => {
         const selector = target.startsWith("#") ? target : `#${target}`
+
         if ((window as any).__lenis) {
           ;(window as any).__lenis.scrollTo(selector)
         } else {
           const el = document.querySelector(selector)
+
           if (el) {
             el.scrollIntoView({ behavior: "smooth" })
           }
@@ -1546,7 +1807,11 @@ export default function App() {
       </a>
 
       <div id="home">
-        <Header activeView={view} onNavigate={handleNavigate} onOpenRoster={() => setRosterDrawerOpen(true)} />
+        <Header
+          activeView={view}
+          onNavigate={handleNavigate}
+          onOpenRoster={() => setRosterDrawerOpen(true)}
+        />
         <main id="main">
           {view === "home" && (
             <>

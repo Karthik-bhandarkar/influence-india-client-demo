@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react"
+
 import { motion, AnimatePresence } from "framer-motion"
 
-import { Footprint, footprints } from '../data/gtp'
+import { Footprint, footprints } from "../data/gtp"
 
 export default function GtpPage({
   onNavigate,
@@ -9,7 +10,11 @@ export default function GtpPage({
   onNavigate: (target: string) => void
 }) {
   const [activeCategory, setActiveCategory] = useState<string>("all")
-  const [selectedFootprint, setSelectedFootprint] = useState<Footprint | null>(null)
+
+  const [selectedFootprint, setSelectedFootprint] = useState<Footprint | null>(
+    null,
+  )
+
   const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -89,10 +94,15 @@ export default function GtpPage({
             className="gtp-hero-image-wrap"
             style={{
               marginTop: "3.5rem",
+
               position: "relative",
+
               borderRadius: "1.25rem",
+
               overflow: "hidden",
+
               border: "1px solid rgba(255,255,255,0.12)",
+
               boxShadow: "0 24px 60px -12px rgba(0,0,0,0.5)",
             }}
           >
@@ -104,9 +114,13 @@ export default function GtpPage({
               className="gtp-hero-image"
               style={{
                 width: "100%",
+
                 height: "auto",
+
                 display: "block",
+
                 objectFit: "cover",
+
                 maxHeight: "560px",
               }}
               loading="eager"
@@ -115,19 +129,33 @@ export default function GtpPage({
               className="gtp-hero-image-badge"
               style={{
                 position: "absolute",
+
                 bottom: "1.5rem",
+
                 left: "1.5rem",
+
                 background: "rgba(13,15,17,0.85)",
+
                 backdropFilter: "blur(12px)",
+
                 border: "1px solid rgba(255,255,255,0.15)",
+
                 borderRadius: "9999px",
+
                 padding: "0.6rem 1.4rem",
+
                 display: "inline-flex",
+
                 alignItems: "center",
+
                 gap: "0.75rem",
+
                 color: "#f8f9fa",
+
                 fontSize: "0.75rem",
+
                 fontWeight: 700,
+
                 letterSpacing: "0.08em",
               }}
             >
@@ -135,13 +163,19 @@ export default function GtpPage({
                 className="live-status-dot"
                 style={{
                   width: "8px",
+
                   height: "8px",
+
                   borderRadius: "50%",
+
                   background: "#a3e635",
+
                   boxShadow: "0 0 10px #a3e635",
                 }}
               />
-              <span>100% GENDER EQUALITY &amp; INCLUSIVE WORKFORCE · BENGALURU HQ</span>
+              <span>
+                100% GENDER EQUALITY &amp; INCLUSIVE WORKFORCE · BENGALURU HQ
+              </span>
             </div>
           </motion.div>
         </div>
@@ -202,7 +236,8 @@ export default function GtpPage({
             </h2>
             <p className="heading-sub">
               Every commitment below is measurable, published, and reviewed —
-              the operating conscience of the Grow Together Policy. Click any card to inspect operational benchmark.
+              the operating conscience of the Grow Together Policy. Click any
+              card to inspect operational benchmark.
             </p>
           </div>
 
@@ -211,9 +246,13 @@ export default function GtpPage({
             className="gtp-filter-pill-bar"
             style={{
               display: "flex",
+
               flexWrap: "wrap",
+
               gap: "0.6rem",
+
               margin: "2.5rem 0 2rem",
+
               justifyContent: "flex-start",
             }}
           >
@@ -224,21 +263,32 @@ export default function GtpPage({
                 onClick={() => setActiveCategory(cat.id)}
                 style={{
                   padding: "0.45rem 1.1rem",
+
                   borderRadius: "9999px",
+
                   fontSize: "0.72rem",
+
                   fontWeight: 800,
+
                   letterSpacing: "0.08em",
+
                   border:
                     activeCategory === cat.id
                       ? "1.5px solid #3f6e14"
                       : "1px solid rgba(23, 29, 22, 0.15)",
-                  background:
-                    activeCategory === cat.id ? "#ecfccb" : "#ffffff",
+
+                  background: activeCategory === cat.id ? "#ecfccb" : "#ffffff",
+
                   color: activeCategory === cat.id ? "#365314" : "#4e5a4a",
+
                   cursor: "pointer",
+
                   transition: "all 0.2s ease",
+
                   display: "inline-flex",
+
                   alignItems: "center",
+
                   gap: "0.4rem",
                 }}
               >
@@ -246,10 +296,16 @@ export default function GtpPage({
                 <span
                   style={{
                     background:
-                      activeCategory === cat.id ? "#365314" : "rgba(0,0,0,0.06)",
+                      activeCategory === cat.id
+                        ? "#365314"
+                        : "rgba(0,0,0,0.06)",
+
                     color: activeCategory === cat.id ? "#ffffff" : "#4e5a4a",
+
                     fontSize: "0.65rem",
+
                     padding: "0.1rem 0.4rem",
+
                     borderRadius: "9999px",
                   }}
                 >
@@ -270,7 +326,10 @@ export default function GtpPage({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  whileHover={{ y: -4, boxShadow: "0 14px 30px -8px rgba(63, 110, 20, 0.18)" }}
+                  whileHover={{
+                    y: -4,
+                    boxShadow: "0 14px 30px -8px rgba(63, 110, 20, 0.18)",
+                  }}
                   className={`footprint-card ${
                     item.isGoal ? "footprint-card--goal" : ""
                   }`}
@@ -285,9 +344,13 @@ export default function GtpPage({
                       <span
                         style={{
                           fontSize: "0.62rem",
+
                           fontWeight: 800,
+
                           letterSpacing: "0.08em",
+
                           color: "#3f6e14",
+
                           textTransform: "uppercase",
                         }}
                       >
@@ -315,13 +378,21 @@ export default function GtpPage({
             className="footprint-modal-overlay"
             style={{
               position: "fixed",
+
               inset: 0,
+
               zIndex: 9999,
+
               background: "rgba(6, 19, 11, 0.7)",
+
               backdropFilter: "blur(6px)",
+
               display: "flex",
+
               alignItems: "center",
+
               justifyContent: "center",
+
               padding: "1.5rem",
             }}
             onClick={() => setSelectedFootprint(null)}
@@ -333,12 +404,19 @@ export default function GtpPage({
               transition={{ duration: 0.25 }}
               style={{
                 background: "#ffffff",
+
                 maxWidth: "540px",
+
                 width: "100%",
+
                 borderRadius: "1.25rem",
+
                 padding: "2.25rem",
+
                 boxShadow: "0 25px 60px -15px rgba(0,0,0,0.4)",
+
                 border: "1px solid rgba(23, 29, 22, 0.12)",
+
                 position: "relative",
               }}
               onClick={(e) => e.stopPropagation()}
@@ -346,19 +424,28 @@ export default function GtpPage({
               <div
                 style={{
                   display: "flex",
+
                   justifyContent: "space-between",
+
                   alignItems: "center",
+
                   marginBottom: "1.25rem",
                 }}
               >
                 <span
                   style={{
                     fontFamily: "var(--font-mono)",
+
                     fontSize: "0.8rem",
+
                     fontWeight: 900,
+
                     background: "#06130b",
+
                     color: "#a3e635",
+
                     padding: "0.3rem 0.7rem",
+
                     borderRadius: "6px",
                   }}
                 >
@@ -369,13 +456,21 @@ export default function GtpPage({
                   onClick={() => setSelectedFootprint(null)}
                   style={{
                     background: "none",
+
                     border: "1px solid rgba(0,0,0,0.1)",
+
                     borderRadius: "50%",
+
                     width: "32px",
+
                     height: "32px",
+
                     cursor: "pointer",
+
                     fontSize: "1rem",
+
                     display: "grid",
+
                     placeItems: "center",
                   }}
                 >
@@ -386,10 +481,15 @@ export default function GtpPage({
               <h3
                 style={{
                   fontFamily: "var(--font-display)",
+
                   fontSize: "1.5rem",
+
                   fontWeight: 800,
+
                   color: "#111827",
+
                   marginBottom: "0.75rem",
+
                   lineHeight: 1.25,
                 }}
               >
@@ -399,8 +499,11 @@ export default function GtpPage({
               <p
                 style={{
                   fontSize: "1rem",
+
                   lineHeight: 1.6,
+
                   color: "#4b5563",
+
                   marginBottom: "1.5rem",
                 }}
               >
@@ -411,20 +514,30 @@ export default function GtpPage({
                 <div
                   style={{
                     background: "#f7fee7",
+
                     border: "1px solid #d9f99d",
+
                     borderRadius: "10px",
+
                     padding: "1rem 1.25rem",
+
                     marginBottom: "1.5rem",
                   }}
                 >
                   <span
                     style={{
                       display: "block",
+
                       fontSize: "0.65rem",
+
                       fontWeight: 900,
+
                       letterSpacing: "0.1em",
+
                       color: "#3f6e14",
+
                       marginBottom: "0.3rem",
+
                       textTransform: "uppercase",
                     }}
                   >
@@ -433,8 +546,11 @@ export default function GtpPage({
                   <p
                     style={{
                       fontSize: "0.92rem",
+
                       fontWeight: 600,
+
                       color: "#1e293b",
+
                       margin: 0,
                     }}
                   >
@@ -443,18 +559,31 @@ export default function GtpPage({
                 </div>
               )}
 
-              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.75rem",
+                  justifyContent: "flex-end",
+                }}
+              >
                 <button
                   type="button"
                   onClick={() => setSelectedFootprint(null)}
                   style={{
                     padding: "0.6rem 1.25rem",
+
                     background: "#111827",
+
                     color: "#ffffff",
+
                     borderRadius: "8px",
+
                     fontWeight: 700,
+
                     fontSize: "0.85rem",
+
                     border: "none",
+
                     cursor: "pointer",
                   }}
                 >

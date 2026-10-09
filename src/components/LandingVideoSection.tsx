@@ -4,13 +4,18 @@ export default function LandingVideoSection({ onNavigate }: {
   onNavigate?: (target: string) => void
 } = {}) {
   const [isPlaying, setIsPlaying] = useState(true)
+
   const [isMuted, setIsMuted] = useState(true)
+
   const videoRef = useRef<HTMLVideoElement>(null)
+
   const sectionRef = useRef<HTMLElement>(null)
+
   const [inView, setInView] = useState(false)
 
   useEffect(() => {
     const el = sectionRef.current
+
     if (!el) return
 
     const observer = new IntersectionObserver(
@@ -19,29 +24,38 @@ export default function LandingVideoSection({ onNavigate }: {
           setInView(true)
         }
       },
+
       { threshold: 0.25 },
     )
 
     observer.observe(el)
+
     return () => observer.disconnect()
   }, [])
 
   function togglePlay() {
     const vid = videoRef.current
+
     if (!vid) return
+
     if (vid.paused) {
       vid.play()
+
       setIsPlaying(true)
     } else {
       vid.pause()
+
       setIsPlaying(false)
     }
   }
 
   function toggleMute() {
     const vid = videoRef.current
+
     if (!vid) return
+
     vid.muted = !vid.muted
+
     setIsMuted(vid.muted)
   }
 

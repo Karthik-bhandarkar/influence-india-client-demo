@@ -1,12 +1,20 @@
 import { useState, useEffect, useRef } from "react"
+
 import { motion, AnimatePresence } from "framer-motion"
+
 import InfinitySvg from "../components/InfinitySvg"
 
 interface AboutPageProps {
   onNavigate?: (target: string) => void
 }
 
-import { contact, aboutAims, twelveCommitments, timelineEvents, leadership } from '../data/aboutPageData'
+import {
+  contact,
+  aboutAims,
+  twelveCommitments,
+  timelineEvents,
+  leadership,
+} from "../data/aboutPageData"
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
   useEffect(() => {
@@ -28,6 +36,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
 /* =========================================================================
    1. HERO SECTION: BALANCED 2-COLUMN STAGE WITH RICH FOREGROUND SHOWCASE
    ========================================================================= */
+
 function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
   return (
     <section className="about-hero-stage" aria-labelledby="about-hero-title">
@@ -74,15 +83,19 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
             {/* Editorial Heading */}
             <h1 id="about-hero-title" className="about-hero-headline">
               Creating good
-              <span className="about-hero-headline-accent"> work opportunities </span>
+              <span className="about-hero-headline-accent">
+                {" "}
+                work opportunities{" "}
+              </span>
               for Indian youth.
             </h1>
 
             {/* Narrative Lead */}
             <p className="about-hero-narrative">
-              Driving positive change by promoting a dignified, efficient and work-friendly
-              culture nationwide — creating a skilled and sustainable future for India’s
-              working sector by revolutionising the way people work.
+              Driving positive change by promoting a dignified, efficient and
+              work-friendly culture nationwide — creating a skilled and
+              sustainable future for India’s working sector by revolutionising
+              the way people work.
             </p>
 
             {/* Primary Action Buttons */}
@@ -142,7 +155,11 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
             className="about-hero-right"
             initial={{ opacity: 0, scale: 0.94, y: 32 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.85,
+              delay: 0.15,
+              ease: [0.16, 1, 0.3, 1],
+            }}
           >
             <div className="about-showcase-card">
               {/* Main Visual Image */}
@@ -162,14 +179,21 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
               <div className="about-floating-telemetry">
                 <div className="telemetry-header">
                   <span className="pulse-dot pulse-dot--active" />
-                  <span className="telemetry-tag">LIVE WORKFORCE TELEMETRY</span>
+                  <span className="telemetry-tag">
+                    LIVE WORKFORCE TELEMETRY
+                  </span>
                 </div>
                 <div className="telemetry-body">
                   <span className="telemetry-metric">3,400+</span>
-                  <span className="telemetry-desc">Trained Candidates Deployed FY 2025–26</span>
+                  <span className="telemetry-desc">
+                    Trained Candidates Deployed FY 2025–26
+                  </span>
                 </div>
                 <div className="telemetry-bar">
-                  <div className="telemetry-bar-fill" style={{ width: "94%" }} />
+                  <div
+                    className="telemetry-bar-fill"
+                    style={{ width: "94%" }}
+                  />
                 </div>
               </div>
 
@@ -178,7 +202,9 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
                 <div className="corridor-icon-badge">📍</div>
                 <div className="corridor-text">
                   <span className="corridor-title">BENGALURU HEADQUARTERS</span>
-                  <span className="corridor-sub">Banashankari 3rd Stage · 30+ Hubs Live</span>
+                  <span className="corridor-sub">
+                    Banashankari 3rd Stage · 30+ Hubs Live
+                  </span>
                 </div>
                 <span className="corridor-status-pill">ACTIVE</span>
               </div>
@@ -211,88 +237,141 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
 /* =========================================================================
    2. OUR MISSION: REFINED TWO-COLUMN WITH FAQ-STYLE ACCORDION & SCROLL-SYNCED VISUAL
    ========================================================================= */
+
 function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
   // FAQ-style accordion state (toggles open/close, default first item open)
+
   const [openPillar, setOpenPillar] = useState<number | null>(0)
+
   const [isDesktop, setIsDesktop] = useState(true)
+
   const isManualClickRef = useRef(false)
+
   const pillarRef0 = useRef<HTMLDivElement>(null)
+
   const pillarRef1 = useRef<HTMLDivElement>(null)
+
   const pillarRef2 = useRef<HTMLDivElement>(null)
 
   const pillars = [
     {
       num: "01",
+
       title: "Reliable & Equivalent Jobs",
+
       badge: "MERIT-BASED ACCESS",
+
       lead: "Matching educated aspirants to verified roles that respect their academic training and life goals.",
+
       body: "We provide reliable, affordable and structured job solutions that mirror educated youth's qualifications, creating genuine pathways into the formal corporate and institutional sectors.",
+
       tag: "QUALIFICATION RECOGNITION",
-      tagline: "Bridging degrees with dignity in India’s premier corporate corridors.",
+
+      tagline:
+        "Bridging degrees with dignity in India’s premier corporate corridors.",
+
       metric: "100%",
+
       metricLabel: "Academic-to-role qualification alignment rate",
+
       image: "/images/workplace-team.jpg",
     },
+
     {
       num: "02",
+
       title: "Unemployment Impact Eradication",
+
       badge: "ZERO ASPIRANT FEES",
+
       lead: "Direct conversion from degree to professional offer letter with zero hidden charges.",
+
       body: "We strive to reduce unemployment impact among Indian youth by offering education-equivalent jobs, elevating workplace dignity, and improving the overall quality of life for families nationwide.",
+
       tag: "ZERO FINANCIAL FRICTION",
+
       tagline: "Equal opportunity for every educated aspirant across India.",
+
       metric: "75%",
+
       metricLabel: "Unemployment impact reduction in serviced sectors",
+
       image: "/images/corporate-interview.jpg",
     },
+
     {
       num: "03",
+
       title: "Corporate Skills with Education",
+
       badge: "OSTP PRACTICAL DRILLS",
+
       lead: "Hands-on pre-deployment orientation ensuring Day-1 productivity.",
+
       body: "Our proprietary OSTP (Onsite Skill Training Program) prepares candidates in soft skills, digital tools, workplace ethics, and safety protocols before they ever step onto the client floor.",
+
       tag: "DAY-1 READINESS",
-      tagline: "Groomed, certified, and ready for high-compliance enterprise environments.",
+
+      tagline:
+        "Groomed, certified, and ready for high-compliance enterprise environments.",
+
       metric: "Day-1",
+
       metricLabel: "Immediate deployment standard across partner enterprises",
+
       image: "/images/skill-certification.jpg",
     },
   ]
 
   const pillarRefs = [pillarRef0, pillarRef1, pillarRef2]
+
   const activeIndex = openPillar ?? 0
+
   const currentPillar = pillars[activeIndex]
 
   // Track viewport width for responsive motion
+
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024)
     }
+
     handleResize()
+
     window.addEventListener("resize", handleResize)
+
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   // Scroll effect: while reading through the left side, the right side image shifts down accordingly
+
   useEffect(() => {
     const handleScroll = () => {
       if (isManualClickRef.current) return
+
       const refs = [pillarRef0, pillarRef1, pillarRef2]
+
       const targetLine = window.innerHeight * 0.42
 
       let bestIdx = 0
+
       let bestDist = Infinity
 
       refs.forEach((ref, idx) => {
         if (!ref.current) return
+
         const rect = ref.current.getBoundingClientRect()
+
         const mid = rect.top + rect.height / 2
+
         const dist = Math.abs(mid - targetLine)
 
         // Only evaluate if card is visible in the viewport
+
         if (rect.bottom > 120 && rect.top < window.innerHeight - 100) {
           if (dist < bestDist) {
             bestDist = dist
+
             bestIdx = idx
           }
         }
@@ -304,22 +383,30 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
+
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const togglePillar = (idx: number) => {
     isManualClickRef.current = true
+
     setOpenPillar(openPillar === idx ? null : idx)
+
     setTimeout(() => {
       isManualClickRef.current = false
     }, 900)
   }
 
   // Calculate downward offset for the right side image to follow what is being read on the left
+
   const yOffset = activeIndex === 0 ? 0 : activeIndex === 1 ? 110 : 215
 
   return (
-    <section id="mission" className="about-mission-section" aria-labelledby="mission-title">
+    <section
+      id="mission"
+      className="about-mission-section"
+      aria-labelledby="mission-title"
+    >
       <div className="container">
         <div className="mission-grid">
           {/* Copy Column with FAQ-style animated accordion */}
@@ -337,21 +424,30 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
 
               <h2 id="mission-title" className="mission-heading">
                 Leading the transition towards a{" "}
-                <span className="text-lime-contrast">sustainable workspace</span> in India.
+                <span className="text-lime-contrast">
+                  sustainable workspace
+                </span>{" "}
+                in India.
               </h2>
 
               <p className="mission-lead-text">
-                Influence India Services was founded on the fundamental principle that India’s educated
-                youth deserve direct, transparent, and merit-based access to the modern economy.
-                We provide the entire operational infrastructure bridging ambitious candidates and
-                India’s premier enterprises.
+                Influence India Services was founded on the fundamental
+                principle that India’s educated youth deserve direct,
+                transparent, and merit-based access to the modern economy. We
+                provide the entire operational infrastructure bridging ambitious
+                candidates and India’s premier enterprises.
               </p>
             </motion.div>
 
             {/* Interactive Pillar Selector Cards styled & animated like FAQ items */}
-            <div className="mission-pillars-stack" role="region" aria-label="Our Mission Pillars">
+            <div
+              className="mission-pillars-stack"
+              role="region"
+              aria-label="Our Mission Pillars"
+            >
               {pillars.map((p, idx) => {
                 const isOpen = openPillar === idx
+
                 return (
                   <motion.div
                     key={idx}
@@ -360,7 +456,9 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: idx * 0.08 }}
-                    className={`mission-pillar-card ${isOpen ? "is-active is-open" : ""}`}
+                    className={`mission-pillar-card ${
+                      isOpen ? "is-active is-open" : ""
+                    }`}
                   >
                     <button
                       type="button"
@@ -376,8 +474,18 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                           <span className="pillar-badge-sub">{p.badge}</span>
                         </div>
                       </div>
-                      <span className={`pillar-toggle-indicator ${isOpen ? "is-open" : ""}`} aria-hidden="true">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <span
+                        className={`pillar-toggle-indicator ${
+                          isOpen ? "is-open" : ""
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 14 14"
+                          fill="none"
+                        >
                           <path
                             d="M7 1V13M1 7H13"
                             stroke="currentColor"
@@ -397,7 +505,10 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{
+                            duration: 0.35,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
                           className="pillar-collapsible-wrapper"
                         >
                           <div className="pillar-expanded-body">
@@ -431,10 +542,13 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
                     <span className="pulse-dot" />
                     OPERATIONAL COVENANT
                   </span>
-                  <h4 className="policy-action-title">Grow Together Policy (GTP)</h4>
+                  <h4 className="policy-action-title">
+                    Grow Together Policy (GTP)
+                  </h4>
                   <p className="policy-action-desc">
-                    Explore our 21 published footprints driving 100% gender diversity,
-                    zero aspirant fees, and lifelong career progression.
+                    Explore our 21 published footprints driving 100% gender
+                    diversity, zero aspirant fees, and lifelong career
+                    progression.
                   </p>
                 </div>
                 <button
@@ -458,15 +572,20 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
               }}
               transition={{
                 type: "spring",
+
                 stiffness: 230,
+
                 damping: 27,
+
                 mass: 0.85,
               }}
             >
               <div className="mission-showcase-frame">
                 <div className="mission-reading-tracker">
                   <span className="tracker-pulse-dot" />
-                  <span className="tracker-text">SCROLL SYNC · PILLAR 0{activeIndex + 1}</span>
+                  <span className="tracker-text">
+                    SCROLL SYNC · PILLAR 0{activeIndex + 1}
+                  </span>
                 </div>
 
                 <AnimatePresence mode="wait">
@@ -509,26 +628,44 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
 
               {/* Supporting Micro-Stats with dynamic active pillar indicators */}
               <div className="mission-micro-stats">
-                <div className={`micro-stat-box ${activeIndex === 0 ? "is-highlighted" : ""}`}>
+                <div
+                  className={`micro-stat-box ${
+                    activeIndex === 0 ? "is-highlighted" : ""
+                  }`}
+                >
                   <div className="micro-stat-top">
                     <span className="micro-stat-val">100%</span>
                     <span className="micro-stat-dot" />
                   </div>
-                  <span className="micro-stat-lbl">Equal gender opportunity in placement rosters</span>
+                  <span className="micro-stat-lbl">
+                    Equal gender opportunity in placement rosters
+                  </span>
                 </div>
-                <div className={`micro-stat-box ${activeIndex === 1 ? "is-highlighted" : ""}`}>
+                <div
+                  className={`micro-stat-box ${
+                    activeIndex === 1 ? "is-highlighted" : ""
+                  }`}
+                >
                   <div className="micro-stat-top">
                     <span className="micro-stat-val">75%</span>
                     <span className="micro-stat-dot" />
                   </div>
-                  <span className="micro-stat-lbl">Unemployment impact reduction in serviced sectors</span>
+                  <span className="micro-stat-lbl">
+                    Unemployment impact reduction in serviced sectors
+                  </span>
                 </div>
-                <div className={`micro-stat-box ${activeIndex === 2 ? "is-highlighted" : ""}`}>
+                <div
+                  className={`micro-stat-box ${
+                    activeIndex === 2 ? "is-highlighted" : ""
+                  }`}
+                >
                   <div className="micro-stat-top">
                     <span className="micro-stat-val">Day-1</span>
                     <span className="micro-stat-dot" />
                   </div>
-                  <span className="micro-stat-lbl">Immediate productivity readiness via OSTP drills</span>
+                  <span className="micro-stat-lbl">
+                    Immediate productivity readiness via OSTP drills
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -542,6 +679,7 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
 /* =========================================================================
    3. OUR AIM: HIGH-IMPACT METRICS WITH INTERACTIVE PROGRESS INDICATORS
    ========================================================================= */
+
 function OurAim() {
   return (
     <section className="about-aims-section" aria-labelledby="aims-title">
@@ -559,8 +697,9 @@ function OurAim() {
             </h2>
           </div>
           <p className="aims-aside-desc">
-            Delivering 100% placement conversion, dignified employment, and sustainable career
-            transformation across 30+ major Indian economic corridors.
+            Delivering 100% placement conversion, dignified employment, and
+            sustainable career transformation across 30+ major Indian economic
+            corridors.
           </p>
         </div>
 
@@ -593,23 +732,32 @@ function OurAim() {
 /* =========================================================================
    4. WHAT WE STAND FOR: 12 COMMITMENTS WITH CATEGORY FILTER
    ========================================================================= */
+
 function WhatWeStandFor() {
   const [filter, setFilter] = useState<string>("all")
 
   const categories = [
     { id: "all", label: "All (12 Commitments)" },
+
     { id: "youth", label: "Youth & Opportunity" },
+
     { id: "quality", label: "Training & Quality" },
+
     { id: "tech", label: "Scale & Telemetry" },
+
     { id: "ethics", label: "Ethics & Compliance" },
   ]
 
-  const filtered = filter === "all"
-    ? twelveCommitments
-    : twelveCommitments.filter((c) => c.category === filter)
+  const filtered =
+    filter === "all"
+      ? twelveCommitments
+      : twelveCommitments.filter((c) => c.category === filter)
 
   return (
-    <section className="about-commitments-section" aria-labelledby="commitments-title">
+    <section
+      className="about-commitments-section"
+      aria-labelledby="commitments-title"
+    >
       <div className="container">
         <div className="commitments-header-split">
           <div>
@@ -620,12 +768,15 @@ function WhatWeStandFor() {
             <h2 id="commitments-title" className="commitments-heading">
               Twelve commitments
               <br />
-              <span className="text-muted-editorial">behind every placement.</span>
+              <span className="text-muted-editorial">
+                behind every placement.
+              </span>
             </h2>
           </div>
           <p className="commitments-aside-desc">
-            A unified operational covenant ensuring merit, transparency, statutory compliance,
-            and lifelong dignity for every aspirant who passes through our doors.
+            A unified operational covenant ensuring merit, transparency,
+            statutory compliance, and lifelong dignity for every aspirant who
+            passes through our doors.
           </p>
         </div>
 
@@ -635,7 +786,9 @@ function WhatWeStandFor() {
             <button
               key={cat.id}
               type="button"
-              className={`commitment-filter-btn ${filter === cat.id ? "is-active" : ""}`}
+              className={`commitment-filter-btn ${
+                filter === cat.id ? "is-active" : ""
+              }`}
               onClick={() => setFilter(cat.id)}
             >
               {cat.label}
@@ -674,9 +827,17 @@ function WhatWeStandFor() {
 /* =========================================================================
    5. INSPIRED BY INFINITY: COSMIC BRAND EMBLEM & PHILOSOPHY
    ========================================================================= */
-function InspiredByInfinity({ onNavigate }: { onNavigate?: (target: string) => void }) {
+
+function InspiredByInfinity({
+  onNavigate,
+}: {
+  onNavigate?: (target: string) => void
+}) {
   return (
-    <section className="about-infinity-section" aria-labelledby="infinity-title">
+    <section
+      className="about-infinity-section"
+      aria-labelledby="infinity-title"
+    >
       <div className="about-infinity-bg-radial" />
       <div className="container about-infinity-container">
         <div className="about-infinity-grid">
@@ -706,17 +867,20 @@ function InspiredByInfinity({ onNavigate }: { onNavigate?: (target: string) => v
 
             <div className="infinity-paragraphs-stack">
               <p>
-                Infinity is derived from the universe and endless opportunities. In an economy as
-                dynamic and expansive as India’s, potential is infinite — but the catalyst lies in
-                equipping educated youth with real-world skills.
+                Infinity is derived from the universe and endless opportunities.
+                In an economy as dynamic and expansive as India’s, potential is
+                infinite — but the catalyst lies in equipping educated youth
+                with real-world skills.
               </p>
               <p>
-                To seize these opportunities, one needs both education and the practical competencies
-                required for equivalent roles. When our youth are properly trained and ethically matched,
-                enterprise productivity flourishes.
+                To seize these opportunities, one needs both education and the
+                practical competencies required for equivalent roles. When our
+                youth are properly trained and ethically matched, enterprise
+                productivity flourishes.
               </p>
               <blockquote className="infinity-quote-box">
-                "Fuelling a sustainable workspace, powering the way towards a young, skilful work sector in India."
+                "Fuelling a sustainable workspace, powering the way towards a
+                young, skilful work sector in India."
               </blockquote>
             </div>
 
@@ -750,17 +914,29 @@ function InspiredByInfinity({ onNavigate }: { onNavigate?: (target: string) => v
 /* =========================================================================
    6. ACROSS INDIA WHERE WE ARE: EXPANSION CORRIDORS & BENGALURU HQ
    ========================================================================= */
-function AcrossIndiaWhereWeAre({ onNavigate }: { onNavigate?: (target: string) => void }) {
+
+function AcrossIndiaWhereWeAre({
+  onNavigate,
+}: {
+  onNavigate?: (target: string) => void
+}) {
   const [copied, setCopied] = useState(false)
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText("69, 1st Floor, Arehalli, AGS Layout Main Road, Banashankari 3rd Stage, Bengaluru 560061")
+    navigator.clipboard.writeText(
+      "69, 1st Floor, Arehalli, AGS Layout Main Road, Banashankari 3rd Stage, Bengaluru 560061",
+    )
+
     setCopied(true)
+
     setTimeout(() => setCopied(false), 2400)
   }
 
   return (
-    <section className="about-locations-section" aria-labelledby="locations-title">
+    <section
+      className="about-locations-section"
+      aria-labelledby="locations-title"
+    >
       <div className="container">
         <div className="locations-header-split">
           <div>
@@ -771,12 +947,14 @@ function AcrossIndiaWhereWeAre({ onNavigate }: { onNavigate?: (target: string) =
             <h2 id="locations-title" className="locations-heading">
               From Bengaluru
               <br />
-              <span className="text-muted-editorial">to every national corridor.</span>
+              <span className="text-muted-editorial">
+                to every national corridor.
+              </span>
             </h2>
           </div>
           <p className="locations-aside-desc">
-            Thirty-plus cities, one accountable operating team, and direct ground supervision
-            at every client facility.
+            Thirty-plus cities, one accountable operating team, and direct
+            ground supervision at every client facility.
           </p>
         </div>
 
@@ -786,8 +964,9 @@ function AcrossIndiaWhereWeAre({ onNavigate }: { onNavigate?: (target: string) =
             <span className="hq-eyebrow-tag">CORPORATE HEADQUARTERS</span>
             <h3 className="hq-city-name">BENGALURU, KARNATAKA</h3>
             <p className="hq-address-line">
-              69, 1st Floor, Opposite Kuntamaramma Temple, Arehalli, AGS Layout Main Road,
-              Banashankari 3rd Stage, Bengaluru 560061, Karnataka, India
+              69, 1st Floor, Opposite Kuntamaramma Temple, Arehalli, AGS Layout
+              Main Road, Banashankari 3rd Stage, Bengaluru 560061, Karnataka,
+              India
             </p>
 
             <div className="hq-actions-cluster">
@@ -823,7 +1002,9 @@ function AcrossIndiaWhereWeAre({ onNavigate }: { onNavigate?: (target: string) =
 
           {/* Right Column: Corridors & Onsite Training Preview */}
           <div className="corridors-showcase-card">
-            <span className="corridors-tag">EXPANSION & DEPLOYMENT CORRIDORS</span>
+            <span className="corridors-tag">
+              EXPANSION & DEPLOYMENT CORRIDORS
+            </span>
             <div className="corridor-pills-flow">
               {expansionCities.map((city, idx) => (
                 <div key={idx} className="corridor-chip">

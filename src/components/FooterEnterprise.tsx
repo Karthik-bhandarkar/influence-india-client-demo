@@ -6,68 +6,113 @@ export interface FooterEnterpriseProps {
 
 const companyLinks = [
   { label: "Home", nav: "home" },
+
   { label: "About us", nav: "about" },
+
   { label: "Grow Together Policy", nav: "gtp" },
+
   { label: "Job eco-system", nav: "systems" },
+
   { label: "Driving the future", nav: "careers" },
+
   { label: "Charging forward", nav: "systems" },
+
   { label: "Careers", nav: "careers" },
+
   { label: "Resources", nav: "resources" },
+
   { label: "Contact us", nav: "home", target: "#contact" },
 ]
 
 const servicesLinks = [
   { label: "Right staffing", nav: "home", target: "#services" },
+
   { label: "Elevate entity growth", nav: "home", target: "#services" },
-  { label: "PAN-India sourcing & recruiting", nav: "home", target: "#services" },
+
+  {
+    label: "PAN-India sourcing & recruiting",
+    nav: "home",
+    target: "#services",
+  },
+
   { label: "Staffing services", nav: "home", target: "#services" },
+
   { label: "Managed services", nav: "home", target: "#services" },
+
   { label: "Skill adoption", nav: "home", target: "#services" },
+
   { label: "Onsite skill training (OSTP)", nav: "home", target: "#services" },
+
   { label: "Unique platform", nav: "systems" },
 ]
 
 const sectorLinks = [
   "Corporate & IT services",
+
   "Hospitality",
+
   "Facility management",
+
   "Banking & financial services",
+
   "Retail & e-commerce",
+
   "Manufacturing & industrial",
+
   "Logistics & warehousing",
+
   "Healthcare support",
 ]
 
 const regionalHubs = [
   "Gujarat",
+
   "Uttar Pradesh",
+
   "Bhubaneswar",
+
   "Mumbai & Pune",
+
   "Chennai",
+
   "Hyderabad",
 ]
 
 const policies = [
   { title: "Code of Conduct", id: "conduct" },
+
   { title: "Privacy Policy", id: "privacy" },
+
   { title: "Terms & Conditions", id: "terms" },
+
   { title: "Refund Policy", id: "refund" },
+
   { title: "Whistleblowing Policy", id: "whistleblowing" },
+
   { title: "Grow Together Policy", id: "gtp" },
 ]
 
-export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) {
+export default function FooterEnterprise({
+  onNavigate,
+}: FooterEnterpriseProps) {
   const [email, setEmail] = useState("")
+
   const [sent, setSent] = useState(false)
-  const [activePolicy, setActivePolicy] = useState<{ title: string; desc: string } | null>(null)
+
+  const [activePolicy, setActivePolicy] = useState<{
+    title: string
+    desc: string
+  } | null>(null)
 
   const handleLinkClick = (nav: string, target?: string) => {
     if (target) {
       if (window.location.hash !== "#home" && window.location.hash !== "") {
         onNavigate("home")
       }
+
       setTimeout(() => {
         const el = document.querySelector(target)
+
         if (el) {
           el.scrollIntoView({ behavior: "smooth" })
         } else {
@@ -76,6 +121,7 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
       }, 80)
     } else {
       onNavigate(nav)
+
       window.scrollTo({ top: 0, behavior: "smooth" })
     }
   }
@@ -83,31 +129,41 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
   const handlePolicyClick = (policyTitle: string, id: string) => {
     if (id === "gtp") {
       onNavigate("gtp")
+
       window.scrollTo({ top: 0, behavior: "smooth" })
+
       return
     }
 
     const descriptions: Record<string, string> = {
       conduct:
         "Influence India Services upholds strict integrity, workplace dignity, candidate protection, and uncompromised compliance across all Indian labor standards.",
+
       privacy:
         "Candidate records, institutional data, and enterprise metrics are fully encrypted and held with institutional confidentiality.",
+
       terms:
         "All workforce engagements and OSTP training programs are governed by binding, transparent SLAs ensuring mutual delivery milestones.",
+
       refund:
         "Milestone-based operational governance provides complete fairness, placement accountability, and contract compliance.",
+
       whistleblowing:
         "A confidential 24/7 ombudsman channel is maintained for direct escalation of any grievance or compliance concern without fear of retaliation.",
     }
 
     setActivePolicy({
       title: policyTitle,
-      desc: descriptions[id] || "Official policy documentation maintained by Influence India Services Compliance Board.",
+
+      desc:
+        descriptions[id] ||
+        "Official policy documentation maintained by Influence India Services Compliance Board.",
     })
   }
 
   const onEmailSubmit = (e: FormEvent) => {
     e.preventDefault()
+
     if (email.trim()) {
       setSent(true)
     }
@@ -119,6 +175,7 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
       aria-label="Influence India Services Footer"
       style={{
         backgroundColor: "#FFFFFF",
+
         color: "#111827",
       }}
     >
@@ -129,14 +186,15 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
       <div className="relative mx-auto max-w-[1340px] px-6 pt-16 pb-10 sm:px-10 lg:px-12">
         {/* 2. FIVE-COLUMN ENTERPRISE GRID */}
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.3fr_0.9fr_1.1fr_1fr_1.4fr] lg:gap-8 xl:gap-11">
-          
           {/* COLUMN 1: Brand & Identity */}
           <div className="flex flex-col items-start pr-2">
             <a
               href="#home"
               onClick={(e) => {
                 e.preventDefault()
+
                 onNavigate("home")
+
                 window.scrollTo({ top: 0, behavior: "smooth" })
               }}
               className="group inline-block leading-none transition-opacity hover:opacity-85"
@@ -163,7 +221,8 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
             </a>
 
             <p className="mt-5 text-[13.5px] leading-[1.75] text-[#5A6B63] max-w-[310px] font-normal">
-              One system for sourcing, training, certification, deployment and onsite management — built for entities and aspirants across India.
+              One system for sourcing, training, certification, deployment and
+              onsite management — built for entities and aspirants across India.
             </p>
 
             {/* Social outline circles matching screenshot */}
@@ -184,7 +243,12 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
                 aria-label="X (Twitter)"
                 className="grid h-9 w-9 place-items-center rounded-full border border-[#d3d4d3] text-[#5A6B63] transition-all hover:border-[#b06741] hover:text-[#0e2119] hover:shadow-sm"
               >
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
@@ -204,10 +268,23 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
                 aria-label="Instagram"
                 className="grid h-9 w-9 place-items-center rounded-full border border-[#d3d4d3] text-[#5A6B63] transition-all hover:border-[#b06741] hover:text-[#0e2119] hover:shadow-sm"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
                   <rect x="3" y="3" width="18" height="18" rx="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                 </svg>
               </a>
             </div>
@@ -235,6 +312,7 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
                     href={`#${item.nav}`}
                     onClick={(e) => {
                       e.preventDefault()
+
                       handleLinkClick(item.nav, item.target)
                     }}
                     className="inline-block transition-colors hover:text-[#005952]"
@@ -259,6 +337,7 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
                     href={`#${item.nav}`}
                     onClick={(e) => {
                       e.preventDefault()
+
                       handleLinkClick(item.nav, item.target)
                     }}
                     className="inline-block transition-colors hover:text-[#005952]"
@@ -293,21 +372,29 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
             <h4 className="mt-3.5 text-[9.5px] font-bold uppercase tracking-[0.38em] text-[#0e2119]">
               Corporate Office
             </h4>
-            
+
             <p className="mt-5 text-[13.5px] leading-[1.65] text-[#5A6B63]">
-              69, 1st Floor, Opposite Kuntamaramma Temple, Arehalli, AGS Layout Main Road
+              69, 1st Floor, Opposite Kuntamaramma Temple, Arehalli, AGS Layout
+              Main Road
               <br />
               Bengaluru 560061, Karnataka, India
             </p>
 
             <a
-              href="https://maps.app.goo.gl/jDV9X3riE4SQLkmU9"
+              href="https://www.google.com/maps/place/Influence+India+Services/@12.9118978,77.5395274,1116m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3bae3f8aa3f97aef:0xbe31969d0bde211!8m2!3d12.9118978!4d77.5395274!16s%2Fg%2F11zyngt34j?hl=en&entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.1em] text-[#0e2119] uppercase transition-colors hover:text-[#005952]"
             >
               <span>GET DIRECTIONS</span>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+              >
                 <line x1="7" y1="17" x2="17" y2="7" />
                 <polyline points="7 7 17 7 17 17" />
               </svg>
@@ -337,7 +424,8 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
                   rel="noopener noreferrer"
                   className="hover:text-[#005952] transition-colors"
                 >
-                  +91 96063 29992 <span className="text-[#5A6B63] font-normal">(WhatsApp)</span>
+                  +91 96063 29992{" "}
+                  <span className="text-[#5A6B63] font-normal">(WhatsApp)</span>
                 </a>
               </div>
               <div className="text-[12px] text-[#7c6f6d]">
@@ -354,7 +442,8 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
               className="text-[20px] sm:text-[23px] font-light text-[#0e2119]"
               style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
             >
-              Direct staffing inquiries &amp; career guidance, straight to your inbox.
+              Direct staffing inquiries &amp; career guidance, straight to your
+              inbox.
             </p>
             {sent ? (
               <p className="rounded-full border border-[#005952]/30 bg-[#F0FDF4] px-6 py-3 text-[12.5px] font-medium text-[#005952]">
@@ -419,18 +508,20 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
               </span>
               <div className="footer-marquee-viewport flex-1 overflow-hidden relative">
                 <div className="footer-marquee-track flex items-center gap-2.5 w-max">
-                  {[...regionalHubs, ...regionalHubs, ...regionalHubs].map((city, idx) => (
-                    <div
-                      key={idx}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#d3d4d3] text-[11px] font-medium text-[#374151] whitespace-nowrap shadow-2xs hover:border-[#005952] transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shadow-[0_0_4px_#3b82f6]" />
-                      <span>{city}</span>
-                      <span className="text-[8px] font-bold uppercase px-1.5 py-0.2 rounded-full bg-blue-50 border border-blue-200 text-blue-700">
-                        ACTIVE
-                      </span>
-                    </div>
-                  ))}
+                  {[...regionalHubs, ...regionalHubs, ...regionalHubs].map(
+                    (city, idx) => (
+                      <div
+                        key={idx}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#d3d4d3] text-[11px] font-medium text-[#374151] whitespace-nowrap shadow-2xs hover:border-[#005952] transition-colors"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shadow-[0_0_4px_#3b82f6]" />
+                        <span>{city}</span>
+                        <span className="text-[8px] font-bold uppercase px-1.5 py-0.2 rounded-full bg-blue-50 border border-blue-200 text-blue-700">
+                          ACTIVE
+                        </span>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             </div>
@@ -455,7 +546,8 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
         {/* 6. BOTTOM POLICY ROW (Matching screenshot) */}
         <div className="mt-6 flex flex-col gap-4 border-t border-[#d3d4d3] pt-6 sm:flex-row sm:items-center sm:justify-between text-[11.5px] text-[#5A6B63]">
           <p className="text-[12px] text-[#5A6B63]">
-            © {new Date().getFullYear()} Influence India Services. All rights reserved.
+            © {new Date().getFullYear()} Influence India Services. All rights
+            reserved.
           </p>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium text-[#5A6B63]">
@@ -474,19 +566,27 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
 
         {/* 7. BOTTOM SUB-STRIP: Tagline + Back to top */}
         <div className="mt-4 flex items-center justify-between border-t border-[#e5e7eb] pt-3 text-[10px] font-bold tracking-[0.14em] text-[#7c6f6d] uppercase">
-          <span className="text-[#5A6B63]">
-            PEOPLE. WORK. ACROSS INDIA.
-          </span>
+          <span className="text-[#5A6B63]">PEOPLE. WORK. ACROSS INDIA.</span>
           <a
             href="#home"
             onClick={(e) => {
               e.preventDefault()
+
               window.scrollTo({ top: 0, behavior: "smooth" })
             }}
             className="inline-flex items-center gap-1 text-[#0e2119] hover:text-[#005952] transition-colors"
           >
             <span>BACK TO TOP</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
             </svg>
