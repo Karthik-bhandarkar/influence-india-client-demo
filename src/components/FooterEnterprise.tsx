@@ -301,7 +301,7 @@ export default function FooterEnterprise({ onNavigate }: FooterEnterpriseProps) 
             </p>
 
             <a
-              href="https://maps.app.goo.gl/Te4jpDgYpbt2toRbA"
+              href="https://maps.app.goo.gl/jDV9X3riE4SQLkmU9"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.1em] text-[#0e2119] uppercase transition-colors hover:text-[#005952]"
