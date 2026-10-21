@@ -40,6 +40,7 @@ import FooterWordmark from "./components/FooterWordmark"
 import FooterEnterprise from "./components/FooterEnterprise"
 
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
+import { IISLogoLiquidIntro } from "./components/IISLogoLiquidIntro"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
@@ -1778,6 +1779,7 @@ export default function App() {
 
   return (
     <>
+      <IISLogoLiquidIntro />
       {/* Lenis Luxury Inertial Smooth Momentum Scroll */}
       <LenisSmoothScroll />
 

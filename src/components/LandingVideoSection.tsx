@@ -94,7 +94,7 @@ export default function LandingVideoSection({ onNavigate }: {
               muted
               playsInline
               preload="metadata"
-              poster="/images/operations-command.jpg"
+              poster="/images/workplace-poster.jpg"
               className="landing-video-element"
             >
               <source src="/videos/workplace-loop.mp4" type="video/mp4" />
