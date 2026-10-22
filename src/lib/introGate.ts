@@ -29,11 +29,11 @@ export const COOKIE_MAX_AGE_SEC = 30 * 24 * 60 * 60; // 30 days in seconds
 export const STORAGE_KEY = "iis_last_activity_at";
 export const THROTTLE_ACTIVITY_MS = 60 * 1000; // 1 minute throttle interval
 
-/**
- * Reads the previous last-activity timestamp from cookie or localStorage fallback
- */
 export function getSavedActivityTimestamp(): number | null {
   if (typeof window === "undefined") return null;
+
+  let cookieTs: number | null = null;
+  let lsTs: number | null = null;
 
   // 1. First-party functional cookie
   try {
@@ -42,7 +42,9 @@ export function getSavedActivityTimestamp(): number | null {
     if (cookie) {
       const val = cookie.substring(COOKIE_NAME.length + 1);
       const parsed = parseInt(val, 10);
-      if (!isNaN(parsed) && parsed > 0) return parsed;
+      if (!isNaN(parsed) && parsed > 0) {
+        cookieTs = parsed;
+      }
     }
   } catch (e) {}
 
@@ -51,11 +53,17 @@ export function getSavedActivityTimestamp(): number | null {
     const lsVal = localStorage.getItem(STORAGE_KEY);
     if (lsVal) {
       const parsed = parseInt(lsVal, 10);
-      if (!isNaN(parsed) && parsed > 0) return parsed;
+      if (!isNaN(parsed) && parsed > 0) {
+        lsTs = parsed;
+      }
     }
   } catch (e) {}
 
-  return null;
+  // Unify: pick the most recent recorded activity to resolve any competing timestamps
+  if (cookieTs !== null && lsTs !== null) {
+    return Math.max(cookieTs, lsTs);
+  }
+  return cookieTs ?? lsTs ?? null;
 }
 
 /**

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   INACTIVITY_THRESHOLD_MS,
   THROTTLE_ACTIVITY_MS,
+  STORAGE_KEY,
   shouldPlayIntro,
   recordActivityTimestamp,
   getSavedActivityTimestamp,
@@ -90,7 +91,32 @@ export function IISLogoLiquidIntro({
         const prevTs = getSavedActivityTimestamp();
         const now = Date.now();
         if (prevTs && now - prevTs >= inactivityThresholdMs) {
-          // 3+ hours have elapsed while tab was in background!
+          // 3+ hours have elapsed while tab was in background.
+          // Gracefully protect visitor: do NOT interrupt if user is in an active form or reading workflow
+          const activeEl = document.activeElement;
+          const isInputFocused =
+            activeEl &&
+            (activeEl.tagName === "INPUT" ||
+              activeEl.tagName === "TEXTAREA" ||
+              activeEl.tagName === "SELECT" ||
+              activeEl.getAttribute("contenteditable") === "true");
+
+          const hasDirtyFormInput = Array.from(
+            document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+              "input:not([type=hidden]):not([type=submit]):not([type=button]), textarea"
+            )
+          ).some((el) => el.value && el.value.trim().length > 0);
+
+          const isFormPageOrScrolled =
+            window.location.hash === "#contact" || window.scrollY > 200;
+
+          if (isInputFocused || hasDirtyFormInput || isFormPageOrScrolled) {
+            // Do not interrupt active visitor workflow; slide window forward
+            recordActivityTimestamp(now);
+            lastThrottledActivity = now;
+            return;
+          }
+
           recordActivityTimestamp(now);
           finishedRef.current = false;
           setProgress(0);
@@ -115,11 +141,22 @@ export function IISLogoLiquidIntro({
       }
     };
 
+    // Cross-tab synchronization: keep activity consistent across tabs without polling
+    const handleStorageEvent = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        const parsed = parseInt(e.newValue, 10);
+        if (!isNaN(parsed) && parsed > 0) {
+          lastThrottledActivity = parsed;
+        }
+      }
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pointerdown", handleUserActivity, { passive: true });
     window.addEventListener("keydown", handleUserActivity, { passive: true });
     window.addEventListener("touchstart", handleUserActivity, { passive: true });
     window.addEventListener("scroll", handleUserActivity, { passive: true });
+    window.addEventListener("storage", handleStorageEvent);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
@@ -127,6 +164,7 @@ export function IISLogoLiquidIntro({
       window.removeEventListener("keydown", handleUserActivity);
       window.removeEventListener("touchstart", handleUserActivity);
       window.removeEventListener("scroll", handleUserActivity);
+      window.removeEventListener("storage", handleStorageEvent);
     };
   }, [inactivityThresholdMs]);
 
@@ -196,10 +234,16 @@ export function IISLogoLiquidIntro({
         completeIntro();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
+    // Failsafe watchdog timer: guarantees a visitor is never trapped if RAF or browser is throttled
+    const watchdogTimer = setTimeout(() => {
+      if (!finishedRef.current) {
+        completeIntro();
+      }
+    }, FILL_DURATION_MS + NAME_DELAY_MS + TAGLINE_DELAY_MS + HOLD_LOCKUP_MS + 1000);
 
     return () => {
       clearTimeout(skipTimer);
+      clearTimeout(watchdogTimer);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
