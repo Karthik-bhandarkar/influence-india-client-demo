@@ -713,10 +713,6 @@ function Hero() {
               <Icon name="globe" />
             </span>
             <span>YOUR FUTURE DREAMS COME TRUE TODAY</span>
-            <a href="#what-we-do" aria-label="Explore what we do">
-              <span>Explore</span>
-              <Icon name="arrow" />
-            </a>
           </motion.div>
         </div>
 
