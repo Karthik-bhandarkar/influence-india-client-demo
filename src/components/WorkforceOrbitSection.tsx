@@ -862,6 +862,7 @@ export default function WorkforceOrbitSection() {
 
           {/* Direct Stage Navigation Tabs */}
           <div
+            className="orbital-stage-tabs-row"
             style={{
               display: "flex",
 

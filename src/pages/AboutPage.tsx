@@ -411,10 +411,10 @@ function OurMission({ onNavigate }: { onNavigate?: (target: string) => void }) {
           {/* Copy Column with FAQ-style animated accordion */}
           <div className="mission-copy">
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.45 }}
             >
               <div className="section-label-chip">
                 <span className="chip-num">01</span>
