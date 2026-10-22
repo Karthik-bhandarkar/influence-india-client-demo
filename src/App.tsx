@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion"
 
 import WorkplaceVideoSection from "./components/WorkplaceVideoSection"
 
@@ -35,6 +41,8 @@ import SiteFooter from "./components/SiteFooter"
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
 import { IISLogoLiquidIntro } from "./components/IISLogoLiquidIntro"
 
+import SeoMetadata from "./components/SeoMetadata"
+
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
 import { contact } from "./data/contact"
@@ -47,7 +55,7 @@ import { reasons, testimonials, faqs } from "./data/about"
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
-function Icon({ name, className = "" }: { name: IconName; className?: string }) {
+function Icon({ name, className = "" }: { name: IconName className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M4 12h15M13 5l7 7-7 7" />,
 
@@ -336,7 +344,7 @@ function Brand({
           src="/images/influence-india-logo.png"
           width="1600"
           height="1081"
-          alt="Influence India Services"
+          alt="Influence India Services Corporate Brand Logo"
         />
       </span>
     </a>
@@ -421,7 +429,10 @@ function Header({
             )
           })}
         </nav>
-        <div className="header-actions-group" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <div
+          className="header-actions-group"
+          style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+        >
           {onOpenRoster && (
             <button
               type="button"
@@ -430,26 +441,42 @@ function Header({
               title="Open Fast-Track Roster Desk"
               style={{
                 alignItems: "center",
+
                 gap: "0.45rem",
+
                 padding: "0.5rem 0.95rem",
+
                 borderRadius: "9999px",
+
                 fontSize: "0.72rem",
+
                 fontWeight: 600,
+
                 letterSpacing: "0.04em",
+
                 textTransform: "uppercase",
+
                 background: "rgba(17, 19, 21, 0.05)",
+
                 border: "1px solid rgba(17, 19, 21, 0.12)",
+
                 color: "var(--color-ink)",
+
                 cursor: "pointer",
+
                 transition: "all 0.2s",
               }}
             >
               <span
                 style={{
                   width: "7px",
+
                   height: "7px",
+
                   borderRadius: "50%",
+
                   backgroundColor: "#3f6e14",
+
                   boxShadow: "0 0 6px #3f6e14",
                 }}
               />
@@ -608,6 +635,11 @@ function Hero() {
 
           {/* Staggered Kinetic Headline */}
           <h1 id="hero-title" className="hero-title-video">
+            <span className="sr-only">
+              Contract Staffing Company in Bengaluru, Managed Workforce
+              Deployment &amp; OSTP Free Skill Training with Job Placement
+              across India
+            </span>
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 style={{ display: "block" }}
@@ -859,14 +891,14 @@ function Services({ onNavigate }: { onNavigate?: (target: string) => void }) {
 
   return (
     <section
-      id="what-we-do"
+      id="services"
       ref={ref}
       className={`services-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="services-title"
     >
-      <span id="services" className="sr-only" aria-hidden="true" />
+      <span id="what-we-do" className="sr-only" aria-hidden="true" />
       <div className="container">
         <div className="services-header-row">
           <div>
@@ -948,6 +980,7 @@ function Reliability() {
 
   return (
     <section
+      id="dos-reliability"
       className={`section reliability-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
@@ -1028,6 +1061,7 @@ function PricingDisruption() {
 
   return (
     <section
+      id="single-vendor-advantage"
       ref={ref}
       className={`section pricing-section editorial-reveal ${
         inView ? "is-revealed" : ""
@@ -1093,20 +1127,21 @@ function SkillTraining() {
 
   return (
     <section
-      id="careers"
+      id="ostp-skill-training"
       ref={ref}
       className={`section careers-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="training-title"
     >
+      <span id="careers" className="sr-only" aria-hidden="true" />
       <div className="container">
         <SectionLabel number="07">SKILL TRAINING</SectionLabel>
         <div className="careers-grid">
           <div className="careers-photo">
             <img
               src="/images/team-training.jpg"
-              alt="Workplace group presentation and training session"
+              alt="Aspirants undergoing practical OSTP onsite skill training and assessment before deployment"
               width="1200"
               height="800"
               loading="lazy"
@@ -1154,6 +1189,7 @@ function WhyUs() {
 
   return (
     <section
+      id="sectors"
       ref={ref}
       className={`section why-us-section editorial-reveal ${
         inView ? "is-revealed" : ""
@@ -1230,10 +1266,11 @@ function Faq() {
 
   return (
     <section
-      id="resources"
+      id="faq"
       className="section faq-section"
       aria-labelledby="faq-title"
     >
+      <span id="resources" className="sr-only" aria-hidden="true" />
       <div className="container faq-layout">
         <div className="faq-aside">
           <SectionLabel number="10">08 QUESTIONS</SectionLabel>
@@ -1395,7 +1432,7 @@ function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
   return <SiteFooter onNavigate={onNavigate} />
 }
 
-function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
+function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
 
   const [isFocused, setIsFocused] = useState(false)
@@ -1415,6 +1452,7 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
       hasPeekedRef.current = true
 
       // On mobile screens keep floating widget compact to prevent covering cards/buttons
+
       if (typeof window !== "undefined" && window.innerWidth < 640) {
         return
       }
@@ -1429,6 +1467,7 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
 
       return () => {
         clearTimeout(startTimer)
+
         clearTimeout(endTimer)
       }
     }
@@ -1575,6 +1614,7 @@ export default function App() {
 
   return (
     <>
+      <SeoMetadata activeView={view} />
       <IISLogoLiquidIntro />
       {/* Lenis Luxury Inertial Smooth Momentum Scroll */}
       <LenisSmoothScroll />

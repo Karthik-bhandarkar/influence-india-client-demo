@@ -884,7 +884,8 @@ h3 {
   z-index: 2;
 }
 
-.hero-video-stage {
+.hero-video-stage,
+.hero-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -908,7 +909,8 @@ h3 {
   );
 }
 
-.hero-video-media {
+.hero-video-media,
+.hero-bg-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -917,8 +919,10 @@ h3 {
   filter: brightness(1.10) contrast(1.02);
 }
 
-.hero-video-media--poster {
+.hero-video-media--poster,
+.hero-bg-poster {
   filter: brightness(1.05);
+  object-fit: cover;
 }
 
 /* Multi-stop Architectural Dark Scrim Overlay with Atmospheric Top Gradient */
@@ -1177,6 +1181,7 @@ h3 {
   grid-template-columns: 1.1fr 1fr;
   gap: 3.5rem;
   position: relative;
+  z-index: 2;
   transform-style: preserve-3d;
 }
 
@@ -3946,16 +3951,25 @@ h3 {
 
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .hero-photo {
-    min-height: 440px;
+    display: none;
+  }
+
+  .hero-visual {
+    margin-left: 0;
+    padding-bottom: 0;
   }
 
   .hero-image-note {
-    left: -1rem;
-    width: 90%;
+    position: relative;
+    left: 0;
+    bottom: auto;
+    width: 100%;
+    max-width: 440px;
+    margin-top: 1.5rem;
   }
 
   .outcome-grid,
@@ -4050,6 +4064,9 @@ h3 {
     gap: 1rem;
   }
 }
+
+
+
 
 /* =========================================================================
    About Us Redesigned Page Styles: 2-Column Hero Stage, Rich Showcases & Animations
@@ -9289,3 +9306,17 @@ body,
 
 
 
+
+
+/* Accessibility & Technical SEO Utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}

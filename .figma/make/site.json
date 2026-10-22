@@ -1,12 +1,15 @@
 {
-  "description": "Streamline your staffing needs with integrated sourcing, skill training, and management services across India, ensuring a skilled workforce and operational efficiency.",
+  "description": "Trusted single-vendor contract staffing & managed workforce partner in Bengaluru (560061) & across 30+ Indian cities. 100% PF/ESIC/CLRA compliance, Onsite Skill Training (OSTP), <4hr replacement SLA for enterprises, and zero-fee trained job placements for aspirants.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
     "ignoreReducedMotion": false
   },
-  "title": "Influence India Services | Staffing & Workforce Management",
+  "icons": {
+    "icon": "/favicon-32x32.png"
+  },
+  "title": "Influence India Services | Contract Staffing, Managed Workforce & OSTP Job Placement in Bengaluru & PAN-India",
   "language": "en"
 }

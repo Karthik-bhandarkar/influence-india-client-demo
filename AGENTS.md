@@ -39,3 +39,13 @@ This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin con
 - Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
 - Ensure JSX tags are closed and braces are balanced.
 - Export components as default exports.
+
+## Canonical Git Repository
+
+The ONLY official and authoritative GitHub repository for this project is:
+- **Repository URL:** `https://github.com/Karthik-bhandarkar/influence-india-client-demo`
+- **Default Branch:** `main`
+
+> **CRITICAL RULE FOR ALL AGENTS & SCRIPTS:**  
+> Never push code to any other repository (such as `rshashank-r/Influenceindia` or external forks). All code changes and releases MUST only be pushed to `https://github.com/Karthik-bhandarkar/influence-india-client-demo` on the `main` branch.
+
