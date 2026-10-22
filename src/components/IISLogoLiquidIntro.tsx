@@ -1,12 +1,8 @@
 import { useEffect, useRef, useState, useId, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  INACTIVITY_THRESHOLD_MS,
-  THROTTLE_ACTIVITY_MS,
-  STORAGE_KEY,
   shouldPlayIntro,
-  recordActivityTimestamp,
-  getSavedActivityTimestamp,
+  clearIntroActivityTimestamp,
 } from "../lib/introGate";
 
 interface IISLogoLiquidIntroProps {
@@ -14,7 +10,7 @@ interface IISLogoLiquidIntroProps {
   onComplete?: () => void;
   /** Force play even if inactivity window is still active (useful for testing) */
   forcePlay?: boolean;
-  /** Inactivity threshold in milliseconds (defaults to 3 hours) */
+  /** Inactivity threshold in milliseconds (optional / backward compatible) */
   inactivityThresholdMs?: number;
 }
 
@@ -27,39 +23,23 @@ const FADE_DURATION_MS = 450;     // Smooth fade-out into the homepage
 /**
  * IISLogoLiquidIntro
  * 
- * Strict specifications from implementation brief:
- * - 3-hour inactivity persistence gate via functional cookie 'iis_last_activity_at'
- * - Timestamp recorded immediately upon deciding to show intro (prevents refresh loop)
- * - Throttled user activity sliding window during active usage
- * - Background tab (visibilitychange) evaluation
- * - Bottom-to-top 2000 ms liquid-fill SVG wave animation
- * - Staggered company name & tagline (#686868)
- * - Responsive UI tuned for mobile (360px+), tablet, laptop, and desktop
- * - Keyboard 'Escape' and skip button for instant frictionless dismissal
- * - Smooth fade out preserving deep link / requested route
+ * Plays the approved liquid-fill logo intro on every full page load,
+ * including browser refreshes and direct URL visits, while respecting prefers-reduced-motion.
  */
 export function IISLogoLiquidIntro({
   onComplete,
   forcePlay = false,
-  inactivityThresholdMs = INACTIVITY_THRESHOLD_MS,
 }: IISLogoLiquidIntroProps) {
   const clipId = useId().replace(/:/g, "_") + "_liquid_clip";
 
-  // Gate evaluation on app entry
-  const [shouldRun, setShouldRun] = useState(() => {
-    const play = shouldPlayIntro(inactivityThresholdMs, forcePlay);
-    // Write timestamp immediately when deciding to show or skip:
-    // "When deciding to show the intro, write the current timestamp before starting the animation,
-    // not only after completion. This prevents the animation from replaying if the visitor
-    // immediately refreshes because of a network issue or partial load."
-    // "When skipping the intro, update the timestamp so the new visit starts a fresh inactivity window."
-    recordActivityTimestamp(Date.now());
-    return play;
+  // Gate evaluation on app entry: always play on full load unless prefers-reduced-motion
+  const [shouldRun] = useState(() => {
+    return shouldPlayIntro(undefined, forcePlay);
   });
 
   const [isVisible, setIsVisible] = useState(shouldRun);
   const [progress, setProgress] = useState(0); // 0.0 to 1.0
-  const [wavePath, setWavePath] = useState("M 0 1.05 L 1 1.05 L 1 1.05 L 0 1.05 Z");
+  const [wavePath, setWavePath] = useState("M 0 1.05 L 1 1.05 L 1 1.05 Z");
   const [showCompanyName, setShowCompanyName] = useState(false);
   const [showTagline, setShowTagline] = useState(false);
   const [showSkipHint, setShowSkipHint] = useState(false);
@@ -70,8 +50,14 @@ export function IISLogoLiquidIntro({
     if (finishedRef.current) return;
     finishedRef.current = true;
 
-    // Refresh last-activity timestamp on completion
-    recordActivityTimestamp(Date.now());
+    if (typeof window !== "undefined") {
+      (window as any).__IIS_INTRO_LOG__ = (window as any).__IIS_INTRO_LOG__ || [];
+      (window as any).__IIS_INTRO_LOG__.push({
+        time: Date.now(),
+        event: "completed",
+      });
+    }
+
     setIsVisible(false);
 
     // Restore body scroll
@@ -82,96 +68,24 @@ export function IISLogoLiquidIntro({
     }, FADE_DURATION_MS);
   }, [onComplete]);
 
-  // Setup background tab visibility listener and throttled active user tracking
+  // Clean up any stale timestamps on initial mount and record telemetry
   useEffect(() => {
-    let lastThrottledActivity = Date.now();
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        const prevTs = getSavedActivityTimestamp();
-        const now = Date.now();
-        if (prevTs && now - prevTs >= inactivityThresholdMs) {
-          // 3+ hours have elapsed while tab was in background.
-          // Gracefully protect visitor: do NOT interrupt if user is in an active form or reading workflow
-          const activeEl = document.activeElement;
-          const isInputFocused =
-            activeEl &&
-            (activeEl.tagName === "INPUT" ||
-              activeEl.tagName === "TEXTAREA" ||
-              activeEl.tagName === "SELECT" ||
-              activeEl.getAttribute("contenteditable") === "true");
-
-          const hasDirtyFormInput = Array.from(
-            document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-              "input:not([type=hidden]):not([type=submit]):not([type=button]), textarea"
-            )
-          ).some((el) => el.value && el.value.trim().length > 0);
-
-          const isFormPageOrScrolled =
-            window.location.hash === "#contact" || window.scrollY > 200;
-
-          if (isInputFocused || hasDirtyFormInput || isFormPageOrScrolled) {
-            // Do not interrupt active visitor workflow; slide window forward
-            recordActivityTimestamp(now);
-            lastThrottledActivity = now;
-            return;
-          }
-
-          recordActivityTimestamp(now);
-          finishedRef.current = false;
-          setProgress(0);
-          setShowCompanyName(false);
-          setShowTagline(false);
-          setShowSkipHint(false);
-          setShouldRun(true);
-          setIsVisible(true);
-        } else {
-          // Slide activity window forward
-          recordActivityTimestamp(now);
-          lastThrottledActivity = now;
-        }
-      }
-    };
-
-    const handleUserActivity = () => {
-      const now = Date.now();
-      if (now - lastThrottledActivity > THROTTLE_ACTIVITY_MS) {
-        lastThrottledActivity = now;
-        recordActivityTimestamp(now);
-      }
-    };
-
-    // Cross-tab synchronization: keep activity consistent across tabs without polling
-    const handleStorageEvent = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        const parsed = parseInt(e.newValue, 10);
-        if (!isNaN(parsed) && parsed > 0) {
-          lastThrottledActivity = parsed;
-        }
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("pointerdown", handleUserActivity, { passive: true });
-    window.addEventListener("keydown", handleUserActivity, { passive: true });
-    window.addEventListener("touchstart", handleUserActivity, { passive: true });
-    window.addEventListener("scroll", handleUserActivity, { passive: true });
-    window.addEventListener("storage", handleStorageEvent);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("pointerdown", handleUserActivity);
-      window.removeEventListener("keydown", handleUserActivity);
-      window.removeEventListener("touchstart", handleUserActivity);
-      window.removeEventListener("scroll", handleUserActivity);
-      window.removeEventListener("storage", handleStorageEvent);
-    };
-  }, [inactivityThresholdMs]);
+    clearIntroActivityTimestamp();
+    if (typeof window !== "undefined") {
+      (window as any).__IIS_INTRO_LOG__ = (window as any).__IIS_INTRO_LOG__ || [];
+      (window as any).__IIS_INTRO_LOG__.push({
+        time: Date.now(),
+        event: "mounted",
+        shouldRun,
+      });
+    }
+  }, [shouldRun]);
 
   // Animation lifecycle
   useEffect(() => {
     if (!shouldRun) {
       onComplete?.();
+      document.body.style.overflow = "";
       return;
     }
 

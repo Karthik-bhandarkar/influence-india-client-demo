@@ -1,117 +1,52 @@
 /**
  * Influence India Services - Intro Persistence Gate
  * 
- * Strict specifications from implementation brief:
- * 1. Default inactivity threshold: 3 hours (3 * 60 * 60 * 1000 = 10,800,000 ms)
- * 2. Cookie name: 'iis_last_activity_at' (stores Unix timestamp in ms)
- *    - path=/; SameSite=Lax; Secure in HTTPS; max-age=30 days (2,592,000s)
- * 3. LocalStorage fallback with identical key 'iis_last_activity_at'
- * 4. On app entry: Read previous timestamp first:
- *    - If no usable timestamp -> first visit -> return true (show intro)
- *    - If now - previous timestamp >= 3 hours -> return true (show intro)
- *    - If now - previous timestamp < 3 hours -> return false (skip intro)
- * 5. On decision:
- *    - If showing intro: write current timestamp IMMEDIATELY before starting animation
- *      (prevents replay on immediate refresh or network retry)
- *    - If skipping intro: update timestamp so new visit starts fresh 3-hour inactivity window
- * 6. Throttled activity updates:
- *    - While user is actively browsing, update timestamp (throttled to at most once every 60s)
- * 7. Background tab returns:
- *    - When returning to a tab after 3+ hours away (visibilitychange -> 'visible'),
- *      evaluate gate and trigger intro if >= 3 hours inactive.
- * 8. Reduced motion:
- *    - Immediately skip intro if user prefers reduced motion.
+ * QUICK FIX: Play the IIS logo intro on every full page load.
+ *
+ * 1. The cookie-based and timestamp-based persistence gate is removed so the intro
+ *    plays on every full website load and browser refresh.
+ * 2. Stale 'iis_last_activity_at' values from previous visits are cleared and ignored.
+ * 3. Timestamps are no longer written or tracked.
+ * 4. Internal SPA navigation does not replay the intro.
+ * 5. Respects accessibility (prefers-reduced-motion: reduce).
  */
 
-export const PRODUCTION_INACTIVITY_THRESHOLD_MS = 3 * 60 * 60 * 1000; // 3 hours (10,800,000 ms)
-export const DEVELOPMENT_INACTIVITY_THRESHOLD_MS = 30 * 1000; // 30 seconds for dev testing
-
-export const PRODUCTION_THROTTLE_ACTIVITY_MS = 60 * 1000; // 1 minute in prod
-export const DEVELOPMENT_THROTTLE_ACTIVITY_MS = 5 * 1000; // 5 seconds in dev
-
-export function isDevEnvironment(): boolean {
-  return typeof import.meta !== "undefined" && Boolean(import.meta.env?.DEV);
-}
-
-export function getInactivityThresholdMs(): number {
-  return isDevEnvironment()
-    ? DEVELOPMENT_INACTIVITY_THRESHOLD_MS
-    : PRODUCTION_INACTIVITY_THRESHOLD_MS;
-}
-
-export function getThrottleActivityMs(): number {
-  return isDevEnvironment()
-    ? DEVELOPMENT_THROTTLE_ACTIVITY_MS
-    : PRODUCTION_THROTTLE_ACTIVITY_MS;
-}
-
-export const INACTIVITY_THRESHOLD_MS = getInactivityThresholdMs();
 export const COOKIE_NAME = "iis_last_activity_at";
-export const COOKIE_MAX_AGE_SEC = 30 * 24 * 60 * 60; // 30 days in seconds
 export const STORAGE_KEY = "iis_last_activity_at";
-export const THROTTLE_ACTIVITY_MS = getThrottleActivityMs();
 
-export function getSavedActivityTimestamp(): number | null {
-  if (typeof window === "undefined") return null;
-
-  let cookieTs: number | null = null;
-  let lsTs: number | null = null;
-
-  // 1. First-party functional cookie
+/**
+ * Clears any stale intro activity cookie or localStorage entry
+ */
+export function clearIntroActivityTimestamp(): void {
+  if (typeof window === "undefined") return;
   try {
-    const cookies = document.cookie.split(";").map((c) => c.trim());
-    const cookie = cookies.find((c) => c.startsWith(`${COOKIE_NAME}=`));
-    if (cookie) {
-      const val = cookie.substring(COOKIE_NAME.length + 1);
-      const parsed = parseInt(val, 10);
-      if (!isNaN(parsed) && parsed > 0) {
-        cookieTs = parsed;
-      }
-    }
+    document.cookie = `${COOKIE_NAME}=; max-age=0; path=/; SameSite=Lax`;
   } catch (e) {}
-
-  // 2. LocalStorage fallback
   try {
-    const lsVal = localStorage.getItem(STORAGE_KEY);
-    if (lsVal) {
-      const parsed = parseInt(lsVal, 10);
-      if (!isNaN(parsed) && parsed > 0) {
-        lsTs = parsed;
-      }
-    }
+    localStorage.removeItem(STORAGE_KEY);
   } catch (e) {}
-
-  // Unify: pick the most recent recorded activity to resolve any competing timestamps
-  if (cookieTs !== null && lsTs !== null) {
-    return Math.max(cookieTs, lsTs);
-  }
-  return cookieTs ?? lsTs ?? null;
 }
 
 /**
- * Writes the last-activity timestamp to cookie and localStorage
+ * Returns null: timestamps are no longer used to gate the intro.
  */
-export function recordActivityTimestamp(ts: number = Date.now()): void {
-  if (typeof window === "undefined") return;
+export function getSavedActivityTimestamp(): number | null {
+  return null;
+}
 
-  const isSecure = window.location.protocol === "https:";
-  const secureFlag = isSecure ? "; Secure" : "";
-
-  try {
-    document.cookie = `${COOKIE_NAME}=${ts}; max-age=${COOKIE_MAX_AGE_SEC}; path=/; SameSite=Lax${secureFlag}`;
-  } catch (e) {}
-
-  try {
-    localStorage.setItem(STORAGE_KEY, ts.toString());
-  } catch (e) {}
+/**
+ * No-op: Timestamps are no longer written so every full page load plays the intro.
+ */
+export function recordActivityTimestamp(_ts: number = Date.now()): void {
+  // Persistence gate removed: do not write or update timestamps
 }
 
 /**
  * Determines whether the intro should play.
- * Follows the 3-hour inactivity rule and accessibility (reduced motion).
+ * Plays on every full document load, while respecting prefers-reduced-motion.
  */
 export function shouldPlayIntro(
-  inactivityThresholdMs: number = INACTIVITY_THRESHOLD_MS,
+  _inactivityThresholdMs?: number,
   forcePlay = false
 ): boolean {
   if (typeof window === "undefined") return false;
@@ -122,26 +57,11 @@ export function shouldPlayIntro(
     return false;
   }
 
-  const prevTs = getSavedActivityTimestamp();
-  const now = Date.now();
-
-  // First visit (no usable timestamp exists)
-  if (prevTs === null) {
-    return true;
-  }
-
-  // Inactivity threshold elapsed since last activity (30s in dev, 3h in prod)
-  return now - prevTs >= inactivityThresholdMs;
+  // Always play on full page load
+  return true;
 }
 
-if (typeof window !== "undefined" && isDevEnvironment()) {
-  (window as any).__IIS_INTRO_GATE__ = {
-    isDev: true,
-    thresholdMs: INACTIVITY_THRESHOLD_MS,
-    devThresholdMs: DEVELOPMENT_INACTIVITY_THRESHOLD_MS,
-    prodThresholdMs: PRODUCTION_INACTIVITY_THRESHOLD_MS,
-    getSavedActivityTimestamp,
-    recordActivityTimestamp,
-    shouldPlayIntro,
-  };
+// Clean up any stale timestamps on module load
+if (typeof window !== "undefined") {
+  clearIntroActivityTimestamp();
 }
