@@ -777,24 +777,42 @@ export function AccordionOS({
 
         @media (max-width: 768px), @container (max-width: 680px) {
           .accordion-os-card {
+            display: flex;
             flex-direction: column;
             justify-content: flex-start;
             height: auto !important;
-            min-height: 520px;
-            padding: 16px;
-            border-radius: 26px;
+            min-height: auto !important;
+            padding: 14px;
+            border-radius: 22px;
+            gap: 12px;
+          }
+
+          .accordion-os-visual-wrapper {
+            position: relative !important;
+            inset: auto !important;
+            width: 100% !important;
+            height: 190px !important;
+            border-radius: 16px !important;
+            overflow: hidden;
+            order: -1;
+            flex-shrink: 0;
           }
 
           .accordion-os-sidebar {
             width: 100% !important;
-            height: auto;
+            height: auto !important;
+          }
+
+          .accordion-os-items-stack {
+            gap: 8px;
           }
 
           .accordion-os-pill {
             width: 100% !important;
             max-width: 100% !important;
-            padding: 11px 16px;
-            border-radius: 20px;
+            padding: 10px 14px;
+            border-radius: 16px;
+            min-height: 44px;
           }
 
           .accordion-os-pill-open {
@@ -803,18 +821,24 @@ export function AccordionOS({
           }
 
           .accordion-os-title-text {
-            font-size: 14.5px;
+            font-size: 14px;
             white-space: normal;
           }
 
+          .accordion-os-claim-text {
+            font-size: 12.5px;
+            line-height: 1.5;
+          }
+
           .accordion-os-bottom-deck {
-            margin-top: 20px;
-            margin-bottom: 8px;
+            margin-top: 10px;
+            margin-bottom: 2px;
+            padding-top: 0;
           }
 
           .accordion-os-image,
           .accordion-os-image-scrim {
-            border-radius: 26px;
+            border-radius: 16px;
           }
         }
       `,
