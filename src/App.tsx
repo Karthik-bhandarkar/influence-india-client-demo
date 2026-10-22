@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion"
 
 import InfinitySvg from "./components/InfinitySvg"
 
@@ -41,6 +47,7 @@ import FooterEnterprise from "./components/FooterEnterprise"
 
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
 import { IISLogoLiquidIntro } from "./components/IISLogoLiquidIntro"
+
 import SeoMetadata from "./components/SeoMetadata"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
@@ -69,7 +76,7 @@ import {
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
-function Icon({ name, className = "" }: { name: IconName; className?: string }) {
+function Icon({ name, className = "" }: { name: IconName className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M4 12h15M13 5l7 7-7 7" />,
 
@@ -424,7 +431,10 @@ function Header({
             )
           })}
         </nav>
-        <div className="header-actions-group" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <div
+          className="header-actions-group"
+          style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+        >
           {onOpenRoster && (
             <button
               type="button"
@@ -433,26 +443,42 @@ function Header({
               title="Open Fast-Track Roster Desk"
               style={{
                 alignItems: "center",
+
                 gap: "0.45rem",
+
                 padding: "0.5rem 0.95rem",
+
                 borderRadius: "9999px",
+
                 fontSize: "0.72rem",
+
                 fontWeight: 600,
+
                 letterSpacing: "0.04em",
+
                 textTransform: "uppercase",
+
                 background: "rgba(17, 19, 21, 0.05)",
+
                 border: "1px solid rgba(17, 19, 21, 0.12)",
+
                 color: "var(--color-ink)",
+
                 cursor: "pointer",
+
                 transition: "all 0.2s",
               }}
             >
               <span
                 style={{
                   width: "7px",
+
                   height: "7px",
+
                   borderRadius: "50%",
+
                   backgroundColor: "#3f6e14",
+
                   boxShadow: "0 0 6px #3f6e14",
                 }}
               />
@@ -535,6 +561,22 @@ function Hero() {
 
   const heroRef = useRef<HTMLElement>(null)
 
+  const shouldReduceMotion = useReducedMotion()
+
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+
+    window.addEventListener("resize", checkMobile)
+
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   // Interactive mouse tilt & parallax physics to eliminate the flat feel
 
   const mouseX = useMotionValue(0)
@@ -603,6 +645,35 @@ function Hero() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Full-bleed Video Background Layer with V-Shaped Bottom Boundary */}
+      <div className="hero-backdrop" aria-hidden="true">
+        {!shouldReduceMotion ? (
+          <video
+            key={isMobile ? "hero-vid-mobile" : "hero-vid-desktop"}
+            className="hero-bg-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/images/workplace-poster.jpg"
+          >
+            {isMobile ? (
+              <source src="/videos/iis-hero-mobile.mp4" type="video/mp4" />
+            ) : (
+              <source src="/videos/iis-hero-desktop.webm" type="video/webm" />
+            )}
+          </video>
+        ) : (
+          <img
+            src="/images/workplace-poster.jpg"
+            alt="Influence India Services workplace"
+            className="hero-bg-video hero-bg-poster"
+          />
+        )}
+        <div className="hero-video-scrim" />
+      </div>
+
       <div className="container hero-grid">
         {/* Animated Central Book Spine Crease & Depth Divider */}
         <motion.div
@@ -662,7 +733,9 @@ function Hero() {
           {/* Staggered Kinetic Headline */}
           <h1 id="hero-title">
             <span className="sr-only">
-              Contract Staffing Company in Bengaluru, Managed Workforce Deployment &amp; OSTP Free Skill Training with Job Placement across India
+              Contract Staffing Company in Bengaluru, Managed Workforce
+              Deployment &amp; OSTP Free Skill Training with Job Placement
+              across India
             </span>
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
@@ -671,7 +744,9 @@ function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
+
                   delay: 0.3,
+
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -686,7 +761,9 @@ function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
+
                   delay: 0.44,
+
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -714,7 +791,9 @@ function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
+
                   delay: 0.58,
+
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -730,7 +809,9 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.75,
+
               delay: 0.72,
+
               ease: [0.16, 1, 0.3, 1],
             }}
           >
@@ -746,7 +827,9 @@ function Hero() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
               duration: 0.65,
+
               delay: 0.86,
+
               ease: [0.16, 1, 0.3, 1],
             }}
           >
@@ -836,7 +919,9 @@ function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
+
                 delay: 0.65,
+
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
@@ -872,7 +957,9 @@ function Hero() {
               animate={{ rotate: 45 }}
               transition={{
                 duration: 0.8,
+
                 delay: 0.95,
+
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
@@ -1557,7 +1644,7 @@ function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
   return <FooterEnterprise onNavigate={onNavigate} />
 }
 
-function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
+function FloatingWhatsApp({ href, show }: { href: string show: boolean }) {
   const [isHovered, setIsHovered] = useState(false)
 
   const [isFocused, setIsFocused] = useState(false)
@@ -1577,6 +1664,7 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
       hasPeekedRef.current = true
 
       // On mobile screens keep floating widget compact to prevent covering cards/buttons
+
       if (typeof window !== "undefined" && window.innerWidth < 640) {
         return
       }
@@ -1591,6 +1679,7 @@ function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
 
       return () => {
         clearTimeout(startTimer)
+
         clearTimeout(endTimer)
       }
     }
