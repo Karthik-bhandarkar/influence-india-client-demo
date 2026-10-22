@@ -633,13 +633,14 @@ function Hero() {
             <SectionLabel light>ONE SYSTEM · EVERY STEP OF THE CAREER</SectionLabel>
           </motion.div>
 
+          <span className="sr-only">
+            Contract Staffing Company in Bengaluru, Managed Workforce
+            Deployment &amp; OSTP Free Skill Training with Job Placement
+            across India
+          </span>
+
           {/* Staggered Kinetic Headline */}
           <h1 id="hero-title" className="hero-title-video">
-            <span className="sr-only">
-              Contract Staffing Company in Bengaluru, Managed Workforce
-              Deployment &amp; OSTP Free Skill Training with Job Placement
-              across India
-            </span>
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 style={{ display: "block" }}
