@@ -258,7 +258,7 @@ export function IISLogoLiquidIntro({
                 Strictly keeps 1600 / 1081 aspect ratio
             */}
             <div className="relative w-[150px] xs:w-[170px] sm:w-[230px] md:w-[290px] aspect-[1600/1081] flex items-center justify-center transition-all duration-300">
-              {/* Layer A — Outline */}
+              {/* Layer A - Outline */}
               <img
                 src="/images/influence-india-logo-outline.png"
                 alt=""
@@ -270,7 +270,7 @@ export function IISLogoLiquidIntro({
                 }}
               />
 
-              {/* Layer B — Master Colored Artwork with Layer C liquid wave mask */}
+              {/* Layer B - Master Colored Artwork with Layer C liquid wave mask */}
               <div
                 className="absolute inset-0 w-full h-full pointer-events-none select-none"
                 style={{
