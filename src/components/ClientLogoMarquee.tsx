@@ -84,6 +84,22 @@ export default function ClientLogoMarquee() {
           ))}
         </div>
       </div>
+
+      {/* Shallow Reverse-V (∧) architectural bottom divider */}
+      <svg
+        className="company-marquee-v-divider"
+        viewBox="0 0 1200 40"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0 40 L600 0 L1200 40"
+          fill="none"
+          stroke="var(--color-line)"
+          strokeWidth="1.5"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
     </section>
   )
 }

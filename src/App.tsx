@@ -645,7 +645,7 @@ function Hero() {
                     preserveAspectRatio="none"
                     aria-hidden="true"
                   >
-                    <path d="M2 16C135 1 399 0 597 9" />
+                    <path d="M2 17C140 7 410 6 597 11" />
                   </svg>
                 </span>
               </motion.span>
