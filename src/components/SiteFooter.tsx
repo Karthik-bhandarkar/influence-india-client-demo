@@ -1,10 +1,11 @@
 import React, { useState, type FormEvent } from "react"
 
-export interface FooterEnterpriseProps {
+export interface SiteFooterProps {
   onNavigate: (view: string) => void
 }
+export type FooterEnterpriseProps = SiteFooterProps
 
-const companyLinks = [
+const companyLinks: { label: string; nav: string; target?: string }[] = [
   { label: "Home", nav: "home" },
 
   { label: "About us", nav: "about" },
@@ -21,7 +22,7 @@ const companyLinks = [
 
   { label: "Resources", nav: "resources" },
 
-  { label: "Contact us", nav: "home", target: "#contact" },
+  { label: "Contact us", nav: "contact" },
 ]
 
 const servicesLinks = [
@@ -92,9 +93,9 @@ const policies = [
   { title: "Grow Together Policy", id: "gtp" },
 ]
 
-export default function FooterEnterprise({
+export default function SiteFooter({
   onNavigate,
-}: FooterEnterpriseProps) {
+}: SiteFooterProps) {
   const [email, setEmail] = useState("")
 
   const [sent, setSent] = useState(false)

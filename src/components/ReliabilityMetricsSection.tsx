@@ -60,7 +60,7 @@ const COMPARISON: ComparisonRow[] = [
   },
 ]
 
-export default function ReliabilityEconomics() {
+export default function ReliabilityMetricsSection() {
   return (
     <div
       className="reliability-economics-wrap"

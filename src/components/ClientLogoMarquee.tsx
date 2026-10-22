@@ -2,7 +2,7 @@ import { useMemo } from "react"
 
 import { MARQUEE_LOGOS } from "../data/marqueeLogos"
 
-export default function CompanyMarquee() {
+export default function ClientLogoMarquee() {
   // Distribute the 167 unique client & institutional logos across two smooth scrolling rows
 
   const { row1, row2 } = useMemo(() => {

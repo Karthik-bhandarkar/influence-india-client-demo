@@ -824,6 +824,6 @@ export function AccordionOS({
   )
 }
 
-export default function WhyUsTactileAccordion() {
+export default function WhyChooseUsAccordion() {
   return <AccordionOS />
 }

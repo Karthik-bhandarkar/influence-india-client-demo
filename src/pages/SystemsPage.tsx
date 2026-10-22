@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 import { motion, AnimatePresence } from "framer-motion"
 
-import OrbitalWorkforceEngine from "../components/OrbitalWorkforceEngine"
+import WorkforceOrbitSection from "../components/WorkforceOrbitSection"
 
 import {
   benefits,
@@ -140,7 +140,7 @@ export default function SystemsPage({
               statutory compliance, and day-one onsite performance.
             </p>
           </div>
-          <OrbitalWorkforceEngine />
+          <WorkforceOrbitSection />
         </div>
       </section>
 

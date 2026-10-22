@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { motion, AnimatePresence } from "framer-motion"
 
-import { Footprint, footprints } from "../data/gtp"
+import { Footprint, footprints, categories, smartStaffingPillars } from "../data/gtp"
 
 export default function GtpPage({
   onNavigate,

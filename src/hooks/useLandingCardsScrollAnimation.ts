@@ -55,53 +55,53 @@ export function useLandingCardsScrollAnimation(activeView: string) {
 
         if (!cardEls || cardEls.length === 0) return
 
-        // 1. Entrance "Getting Up" Reveal with smooth stagger
-        // Animates in smoothly as the section enters, and stays visible
+        const isMobileScreen = window.innerWidth < 768
+
+        // 1. Entrance Reveal: subtle fade and rise, once per viewport entry
         gsap.fromTo(
           cardEls,
           {
-            opacity: 0.25,
-            y: 36,
-            scale: 0.98,
+            opacity: isMobileScreen ? 0.35 : 0.25,
+            y: isMobileScreen ? 16 : 36,
+            scale: isMobileScreen ? 0.99 : 0.98,
           },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.7,
-            stagger: 0.06,
+            duration: isMobileScreen ? 0.38 : 0.7,
+            stagger: isMobileScreen ? 0.04 : 0.06,
             ease: "power2.out",
             scrollTrigger: {
               trigger: gridEl,
-              start: "top 92%",
+              start: isMobileScreen ? "top 95%" : "top 92%",
               toggleActions: "play none none none",
               once: true,
             },
           },
         )
 
-        // 2. Continuous Organic Parallax Floating: moving above & below as you scroll
-        const isMobileScreen = window.innerWidth < 768
-        const maxShift = isMobileScreen ? 4 : 8
+        // 2. Parallax Floating: active on tablet/desktop (>= 768px), disabled on mobile for stable touch scrolling
+        if (!isMobileScreen) {
+          cardEls.forEach((card, i) => {
+            const shiftPercent = i % 2 === 0 ? -8 : 8
 
-        cardEls.forEach((card, i) => {
-          const shiftPercent = i % 2 === 0 ? -maxShift : maxShift
-
-          gsap.fromTo(
-            card,
-            { yPercent: -shiftPercent },
-            {
-              yPercent: shiftPercent,
-              ease: "none",
-              scrollTrigger: {
-                trigger: gridEl,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: isMobileScreen ? 0.6 : 1.2,
+            gsap.fromTo(
+              card,
+              { yPercent: -shiftPercent },
+              {
+                yPercent: shiftPercent,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: gridEl,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 1.2,
+                },
               },
-            },
-          )
-        })
+            )
+          })
+        }
       })
     })
 

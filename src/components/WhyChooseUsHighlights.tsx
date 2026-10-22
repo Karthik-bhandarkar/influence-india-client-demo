@@ -52,7 +52,7 @@ const FLOW_STEPS = [
   },
 ]
 
-export default function WhyUsEditorialFlow() {
+export default function WhyChooseUsHighlights() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
   return (

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 
 import { motion, AnimatePresence } from "framer-motion"
 
-import InfinitySvg from "../components/InfinitySvg"
+import InfinityGraphic from "../components/InfinityGraphic"
 
 interface AboutPageProps {
   onNavigate?: (target: string) => void
@@ -12,8 +12,7 @@ import {
   contact,
   aboutAims,
   twelveCommitments,
-  timelineEvents,
-  leadership,
+  expansionCities,
 } from "../data/aboutPageData"
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
@@ -844,7 +843,7 @@ function InspiredByInfinity({
           {/* Left: Infinity Symbol Interactive Showcase */}
           <div className="infinity-graphic-card">
             <div className="infinity-symbol-frame">
-              <InfinitySvg />
+              <InfinityGraphic />
             </div>
             <div className="infinity-caption-badge">
               <span className="pulse-dot" />
@@ -1009,8 +1008,8 @@ function AcrossIndiaWhereWeAre({
               {expansionCities.map((city, idx) => (
                 <div key={idx} className="corridor-chip">
                   <span className="pulse-dot" />
-                  <span className="corridor-chip-name">{city.name}</span>
-                  <span className="corridor-chip-badge">{city.tag}</span>
+                  <span className="corridor-chip-name">{typeof city === "string" ? city : (city as any).name}</span>
+                  <span className="corridor-chip-badge">{typeof city === "string" ? "Active Hub" : (city as any).tag}</span>
                 </div>
               ))}
             </div>

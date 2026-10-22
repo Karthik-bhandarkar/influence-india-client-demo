@@ -2,11 +2,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react"
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 
-import InfinitySvg from "./components/InfinitySvg"
+import WorkplaceVideoSection from "./components/WorkplaceVideoSection"
 
-import LandingVideoSection from "./components/LandingVideoSection"
-
-import CompanyMarquee from "./components/CompanyMarquee"
+import ClientLogoMarquee from "./components/ClientLogoMarquee"
 
 import { useLandingCardsScrollAnimation } from "./hooks/useLandingCardsScrollAnimation"
 
@@ -22,22 +20,17 @@ import ResourcesPage from "./pages/ResourcesPage"
 
 import ContactPage from "./pages/ContactPage"
 
-import {
-  LiveHubStatusBadge,
-  QuickEnquiryDrawer,
-} from "./components/HalaskaMicroUX"
+import { QuickEnquiryDrawer } from "./components/HalaskaMicroUX"
 
-import ReliabilityEconomics from "./components/ReliabilityEconomics"
+import ReliabilityMetricsSection from "./components/ReliabilityMetricsSection"
 
 import FolderCards from "./components/FolderCards"
 
-import WhyUsEditorialFlow from "./components/WhyUsEditorialFlow"
+import WhyChooseUsHighlights from "./components/WhyChooseUsHighlights"
 
-import WhyUsTactileAccordion from "./components/WhyUsTactileAccordion"
+import WhyChooseUsAccordion from "./components/WhyChooseUsAccordion"
 
-import FooterWordmark from "./components/FooterWordmark"
-
-import FooterEnterprise from "./components/FooterEnterprise"
+import SiteFooter from "./components/SiteFooter"
 
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
 import { IISLogoLiquidIntro } from "./components/IISLogoLiquidIntro"
@@ -48,23 +41,9 @@ import { contact } from "./data/contact"
 
 import { navigation } from "./data/navigation"
 
-import {
-  services,
-  reliabilityPillars,
-  ecosystemNodes,
-  innovationPillars,
-} from "./data/home"
+import { services, innovationPillars } from "./data/home"
 
-import {
-  reasons,
-  testimonials,
-  faqs,
-  aboutAims,
-  twelveCommitments,
-  expansionCities,
-  sectors,
-  policies,
-} from "./data/about"
+import { reasons, testimonials, faqs } from "./data/about"
 
 type IconName = "arrow" | "arrow-up" | "people" | "work" | "growth" | "globe" | "mail" | "whatsapp" | "plus" | "menu" | "close" | "check" | "shield" | "clock" | "chart" | "building" | "compass"
 
@@ -378,8 +357,19 @@ function Header({
   onOpenRoster?: () => void
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const toggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > 20)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
@@ -395,8 +385,16 @@ function Header({
     return () => document.removeEventListener("keydown", handleKey)
   }, [menuOpen])
 
+  const isHome = activeView === "home"
+
   return (
-    <header className="site-header">
+    <header
+      className={`site-header ${
+        isHome ? "site-header--home" : ""
+      } ${isScrolled ? "is-scrolled" : "is-top"} ${
+        menuOpen ? "is-menu-open" : ""
+      }`}
+    >
       <div className="container header-inner">
         <Brand onNavigateHome={() => onNavigate("home")} />
         <nav className="desktop-nav" aria-label="Main navigation">
@@ -528,146 +526,96 @@ function Header({
     </header>
   )
 }
-
 function Hero() {
   const [highlightDrawn, setHighlightDrawn] = useState(false)
-
+  const [isMobile, setIsMobile] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
-
-  // Interactive mouse tilt & parallax physics to eliminate the flat feel
-
-  const mouseX = useMotionValue(0)
-
-  const mouseY = useMotionValue(0)
-
-  const springConfig = { stiffness: 85, damping: 20 }
-
-  const smoothX = useSpring(mouseX, springConfig)
-
-  const smoothY = useSpring(mouseY, springConfig)
-
-  // 3D Parallax & Tilt transformations
-
-  const leftPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.5, 2.5])
-
-  const leftPageRotateX = useTransform(smoothY, [-0.5, 0.5], [2, -2])
-
-  const rightPageRotateY = useTransform(smoothX, [-0.5, 0.5], [-3.5, 3.5])
-
-  const rightPageRotateX = useTransform(smoothY, [-0.5, 0.5], [3, -3])
-
-  const rightPageX = useTransform(smoothX, [-0.5, 0.5], [-8, 8])
-
-  const rightPageY = useTransform(smoothY, [-0.5, 0.5], [-6, 6])
-
-  // Floating Lime Card has deeper parallax for tactile multi-layered depth
-
-  const noteX = useTransform(smoothX, [-0.5, 0.5], [-16, 16])
-
-  const noteY = useTransform(smoothY, [-0.5, 0.5], [-12, 12])
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    // Trigger marker brush stroke right after the book unfolds and lands
-
     const timer = setTimeout(() => setHighlightDrawn(true), 750)
 
-    return () => clearTimeout(timer)
+    const checkViewport = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    const checkMotion = () => {
+      setReducedMotion(
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      )
+    }
+
+    checkViewport()
+    checkMotion()
+
+    window.addEventListener("resize", checkViewport, { passive: true })
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener("resize", checkViewport)
+    }
   }, [])
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current) return
-
-    const rect = heroRef.current.getBoundingClientRect()
-
-    const normX = (e.clientX - rect.left) / rect.width - 0.5
-
-    const normY = (e.clientY - rect.top) / rect.height - 0.5
-
-    mouseX.set(normX)
-
-    mouseY.set(normY)
-  }
-
-  const handleMouseLeave = () => {
-    mouseX.set(0)
-
-    mouseY.set(0)
-  }
 
   return (
     <section
       ref={heroRef}
-      className="hero"
+      className="hero hero--fullbleed-video"
       aria-labelledby="hero-title"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
-      <div className="container hero-grid">
-        {/* Animated Central Book Spine Crease & Depth Divider */}
-        <motion.div
-          className="hero-book-spine"
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
-        />
-
-        {/* Left Page (Verso Spread): Editorial Content Unfolding & Landing */}
-        <motion.div
-          className="hero-copy"
-          initial={{
-            opacity: 0,
-
-            rotateY: -22,
-
-            rotateX: 4,
-
-            scale: 0.94,
-
-            z: -40,
-          }}
-          animate={{
-            opacity: 1,
-
-            rotateY: 0,
-
-            rotateX: 0,
-
-            scale: 1,
-
-            z: 0,
-          }}
-          style={{
-            transformOrigin: "right center",
-
-            rotateY: leftPageRotateY,
-
-            rotateX: leftPageRotateX,
-          }}
-          transition={{
-            duration: 1.25,
-
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+      {/* 1. Full-Bleed Architectural Video Stage with Poster Fallback */}
+      <div className="hero-video-stage" aria-hidden="true">
+        {!reducedMotion ? (
+          <video
+            ref={videoRef}
+            key={isMobile ? "mobile-video" : "desktop-video"}
+            className="hero-video-media"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/images/iis-hero-poster.jpg"
           >
-            <SectionLabel>ONE SYSTEM · EVERY STEP OF THE CAREER</SectionLabel>
+            {isMobile ? (
+              <source src="/videos/iis-hero-mobile.mp4" type="video/mp4" />
+            ) : (
+              <source src="/videos/iis-hero-desktop.webm" type="video/webm" />
+            )}
+          </video>
+        ) : (
+          <img
+            src="/images/iis-hero-poster.jpg"
+            alt=""
+            className="hero-video-media hero-video-media--poster"
+          />
+        )}
+
+        {/* Multi-stop Architectural Dark Scrim Overlay for WCAG AAA Readability */}
+        <div className="hero-video-scrim" />
+      </div>
+
+      {/* 2. Elevated Content Container with Preserved IIS Editorial Typography */}
+      <div className="container hero-content-container">
+        <div className="hero-editorial-panel">
+          {/* Top Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <SectionLabel light>ONE SYSTEM · EVERY STEP OF THE CAREER</SectionLabel>
           </motion.div>
 
           {/* Staggered Kinetic Headline */}
-          <h1 id="hero-title">
+          <h1 id="hero-title" className="hero-title-video">
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 style={{ display: "block" }}
-                initial={{ y: 45, opacity: 0 }}
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
-                  delay: 0.3,
+                  delay: 0.25,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -678,11 +626,11 @@ function Hero() {
             <span style={{ display: "block", overflow: "visible" }}>
               <motion.span
                 style={{ display: "inline-block" }}
-                initial={{ y: 45, opacity: 0 }}
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
-                  delay: 0.44,
+                  delay: 0.4,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -706,11 +654,11 @@ function Hero() {
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 style={{ display: "block" }}
-                initial={{ y: 45, opacity: 0 }}
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   duration: 0.8,
-                  delay: 0.58,
+                  delay: 0.55,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -719,14 +667,14 @@ function Hero() {
             </span>
           </h1>
 
-          {/* Description */}
+          {/* Preserved Supporting Description */}
           <motion.p
-            className="hero-description"
+            className="hero-description hero-description--video"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.75,
-              delay: 0.72,
+              delay: 0.68,
               ease: [0.16, 1, 0.3, 1],
             }}
           >
@@ -735,33 +683,33 @@ function Hero() {
             opportunities to the un-sourced world.
           </motion.p>
 
-          {/* Action CTAs */}
+          {/* Preserved Action CTAs */}
           <motion.div
             className="hero-actions"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
               duration: 0.65,
-              delay: 0.86,
+              delay: 0.8,
               ease: [0.16, 1, 0.3, 1],
             }}
           >
             <ActionLink href={contact.whatsapp} variant="lime" arrow="whatsapp">
               Talk with us
             </ActionLink>
-            <ActionLink href="#what-we-do" variant="outline">
+            <ActionLink href="#what-we-do" variant="outline-light">
               What we do
             </ActionLink>
           </motion.div>
 
-          {/* Bottom Bar */}
+          {/* Bottom Telemetry Bar */}
           <motion.div
-            className="hero-bottom"
+            className="hero-bottom hero-bottom--video"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.98, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="small-orbit">
+            <span className="small-orbit small-orbit--light">
               <Icon name="globe" />
             </span>
             <span>YOUR FUTURE DREAMS COME TRUE TODAY</span>
@@ -770,129 +718,32 @@ function Hero() {
               <Icon name="arrow" />
             </a>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Right Page (Recto Spread): Visual Plate Opening & Dimensional Landing */}
+        {/* Floating Lime Card: Tipped-in Chapter Bookmark Accent on Wide Screens */}
         <motion.div
-          className="hero-visual"
-          initial={{
-            opacity: 0,
-
-            rotateY: 26,
-
-            rotateX: 5,
-
-            scale: 0.92,
-
-            z: -70,
-          }}
-          animate={{
-            opacity: 1,
-
-            rotateY: 0,
-
-            rotateX: 0,
-
-            scale: 1,
-
-            z: 0,
-          }}
-          style={{
-            transformOrigin: "left center",
-
-            rotateY: rightPageRotateY,
-
-            rotateX: rightPageRotateX,
-
-            x: rightPageX,
-
-            y: rightPageY,
-          }}
+          className="hero-floating-badge-card hidden lg:flex"
+          initial={{ opacity: 0, y: 35, rotate: -3, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
           transition={{
-            duration: 1.35,
-
-            ease: [0.16, 1, 0.3, 1],
-
-            delay: 0.1,
+            type: "spring",
+            stiffness: 120,
+            damping: 16,
+            delay: 0.95,
           }}
+          whileHover={{ scale: 1.04, y: -4 }}
         >
-          {/* Photograph Plate */}
-          <div className="hero-photo">
-            <img
-              src="/images/workplace-team.jpg"
-              alt="Colleagues collaborating around a table in an Indian workplace"
-              width="1800"
-              height="1012"
-              fetchPriority="high"
-            />
-            {/* Top-Right Index Badge */}
-            <motion.span
-              className="photo-index"
-              initial={{ opacity: 0, y: -18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.65,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              01 — PEOPLE AT WORK
-            </motion.span>
+          <span className="note-orbit" aria-hidden="true">
+            <Icon name="plus" />
+          </span>
+          <div>
+            <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
+            <span className="image-note-title">
+              People &amp;<br />
+              workplaces.
+            </span>
           </div>
-
-          {/* Floating Lime Card ("People & workplaces."): Springs in like a tipped-in chapter bookmark */}
-          <motion.div
-            className="hero-image-note"
-            initial={{ opacity: 0, y: 55, x: -28, rotate: -6, scale: 0.88 }}
-            animate={{ opacity: 1, y: 0, x: 0, rotate: 0, scale: 1 }}
-            style={{
-              x: noteX,
-
-              y: noteY,
-            }}
-            transition={{
-              type: "spring",
-
-              stiffness: 120,
-
-              damping: 15,
-
-              delay: 0.85,
-            }}
-            whileHover={{ scale: 1.03, y: -4 }}
-          >
-            <motion.span
-              className="note-orbit"
-              aria-hidden="true"
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 45 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.95,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <Icon name="plus" />
-            </motion.span>
-            <div>
-              <span className="eyebrow">INFLUENCE INDIA SERVICES</span>
-              <span className="image-note-title">
-                People &<br />
-                workplaces.
-              </span>
-            </div>
-            <Icon name="arrow-up" />
-          </motion.div>
-
-          {/* Vertical Edge Margin Text */}
-          <motion.span
-            className="hero-side-text"
-            initial={{ opacity: 0, x: 15 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
-          >
-            STAFFING · WORKFORCE MANAGEMENT · SKILL TRAINING
-          </motion.span>
+          <Icon name="arrow-up" />
         </motion.div>
       </div>
     </section>
@@ -1124,7 +975,7 @@ function Reliability() {
           </p>
         </div>
         <FolderCards />
-        <ReliabilityEconomics />
+        <ReliabilityMetricsSection />
       </div>
     </section>
   )
@@ -1324,8 +1175,8 @@ function WhyUs() {
             operations never stall.
           </p>
         </div>
-        <WhyUsEditorialFlow />
-        <WhyUsTactileAccordion />
+        <WhyChooseUsHighlights />
+        <WhyChooseUsAccordion />
       </div>
     </section>
   )
@@ -1545,7 +1396,7 @@ function GtpNotice() {
 }
 
 function Footer({ onNavigate }: { onNavigate: (target: string) => void }) {
-  return <FooterEnterprise onNavigate={onNavigate} />
+  return <SiteFooter onNavigate={onNavigate} />
 }
 
 function FloatingWhatsApp({ href, show }: { href: string; show: boolean }) {
@@ -1639,66 +1490,51 @@ export default function App() {
 
   const [rosterDrawerOpen, setRosterDrawerOpen] = useState(false)
 
+  const resolveTargetView = (pathOrHash: string): ActiveView => {
+    const clean = pathOrHash.toLowerCase().replace(/^[#/]+/, "").split("/")[0].split("?")[0]
+    if (clean === "about" || clean === "about-us") return "about"
+    if (clean === "gtp" || clean === "footprints") return "gtp"
+    if (clean === "systems" || clean === "ecosystem") return "systems"
+    if (clean === "careers" || clean === "jobs") return "careers"
+    if (clean === "resources" || clean === "insights") return "resources"
+    if (clean === "contact" || clean === "contact-us") return "contact"
+    return "home"
+  }
+
   const [view, setView] = useState<ActiveView>(() => {
     if (typeof window !== "undefined") {
-      const hash = window.location.hash.toLowerCase()
-
-      if (hash === "#about" || hash === "#about-us") return "about"
-
-      if (hash === "#gtp" || hash === "#footprints") return "gtp"
-
-      if (hash === "#systems" || hash === "#ecosystem") return "systems"
-
-      if (hash === "#careers" || hash === "#jobs") return "careers"
-
-      if (hash === "#resources" || hash === "#insights") return "resources"
-
-      if (hash === "#contact" || hash === "#contact-us") return "contact"
+      const hash = window.location.hash
+      const path = window.location.pathname
+      if (hash && hash !== "#" && hash !== "#home") {
+        return resolveTargetView(hash)
+      }
+      if (path && path !== "/" && path !== "/home") {
+        return resolveTargetView(path)
+      }
     }
-
     return "home"
   })
 
   // Smooth bidirectional "getting up" & above/below parallax scroll animations for landing cards
-
   useLandingCardsScrollAnimation(view)
 
   useEffect(() => {
-    function handleHashChange() {
-      const hash = window.location.hash.toLowerCase()
-
-      if (hash === "#about" || hash === "#about-us") {
-        setView("about")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#gtp" || hash === "#footprints") {
-        setView("gtp")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#systems" || hash === "#ecosystem") {
-        setView("systems")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#careers" || hash === "#jobs") {
-        setView("careers")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#resources" || hash === "#insights") {
-        setView("resources")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#contact" || hash === "#contact-us") {
-        setView("contact")
-
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else if (hash === "#home" || hash === "") {
-        setView("home")
-      }
+    function handleRouteUpdate() {
+      const hash = window.location.hash
+      const path = window.location.pathname
+      const target = (hash && hash !== "#" && hash !== "#home") ? hash : path
+      const nextView = resolveTargetView(target)
+      setView(nextView)
+      window.scrollTo({ top: 0, behavior: "smooth" })
     }
 
-    window.addEventListener("hashchange", handleHashChange)
+    window.addEventListener("hashchange", handleRouteUpdate)
+    window.addEventListener("popstate", handleRouteUpdate)
 
-    return () => window.removeEventListener("hashchange", handleHashChange)
+    return () => {
+      window.removeEventListener("hashchange", handleRouteUpdate)
+      window.removeEventListener("popstate", handleRouteUpdate)
+    }
   }, [])
 
   const handleNavigate = (target: string) => {
@@ -1710,65 +1546,29 @@ export default function App() {
       }
     }
 
-    const clean = target.replace("#", "").toLowerCase()
+    const clean = target.replace(/^[#/]+/, "").toLowerCase().split("?")[0]
+    const targetPage = resolveTargetView(clean)
 
-    if (clean === "about" || clean === "about-us") {
-      setView("about")
-
-      window.location.hash = "#about"
-
-      resetScroll()
-    } else if (clean === "gtp" || clean === "footprints") {
-      setView("gtp")
-
-      window.location.hash = "#gtp"
-
-      resetScroll()
-    } else if (clean === "systems" || clean === "ecosystem") {
-      setView("systems")
-
-      window.location.hash = "#systems"
-
-      resetScroll()
-    } else if (clean === "careers" || clean === "jobs") {
-      setView("careers")
-
-      window.location.hash = "#careers"
-
-      resetScroll()
-    } else if (clean === "resources" || clean === "insights") {
-      setView("resources")
-
-      window.location.hash = "#resources"
-
-      resetScroll()
-    } else if (clean === "contact" || clean === "contact-us") {
-      setView("contact")
-
-      window.location.hash = "#contact"
-
+    if (["about", "gtp", "systems", "careers", "resources", "contact"].includes(targetPage)) {
+      setView(targetPage)
+      window.location.hash = `#${targetPage}`
       resetScroll()
     } else if (clean === "home" || clean === "") {
       setView("home")
-
       window.location.hash = "#home"
-
       resetScroll()
     } else {
       // It's a section on the home page like #what-we-do, #reliability, etc.
-
       if (view !== "home") {
         setView("home")
       }
 
       setTimeout(() => {
         const selector = target.startsWith("#") ? target : `#${target}`
-
         if ((window as any).__lenis) {
           ;(window as any).__lenis.scrollTo(selector)
         } else {
           const el = document.querySelector(selector)
-
           if (el) {
             el.scrollIntoView({ behavior: "smooth" })
           }
@@ -1804,12 +1604,12 @@ export default function App() {
           {view === "home" && (
             <>
               <Hero />
-              <CompanyMarquee />
+              <ClientLogoMarquee />
               <OutcomeOwnership
                 onNavigateAbout={() => handleNavigate("about")}
               />
               <Metrics />
-              <LandingVideoSection onNavigate={handleNavigate} />
+              <WorkplaceVideoSection onNavigate={handleNavigate} />
               <Services onNavigate={handleNavigate} />
               <Reliability />
               <PillarsOfInnovation />

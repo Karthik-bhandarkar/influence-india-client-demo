@@ -176,7 +176,7 @@ export const openRoles: Role[] = [
   },
 ]
 
-const departments = [
+export const departments = [
   { id: "all", label: "ALL ROLES", count: 7 },
 
   { id: "operations", label: "OPERATIONS & FIELD", count: 2 },

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 
-export default function LandingVideoSection({ onNavigate }: {
+export default function WorkplaceVideoSection({ onNavigate }: {
   onNavigate?: (target: string) => void
 } = {}) {
   const videoRef = useRef<HTMLVideoElement>(null)

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { motion, AnimatePresence } from "framer-motion"
 
-import { gtcCommitments, stories, Role, openRoles } from "../data/careers"
+import { gtcCommitments, stories, Role, openRoles, departments } from "../data/careers"
 
 export default function CareersPage() {
   const [activeDept, setActiveDept] = useState<string>("all")

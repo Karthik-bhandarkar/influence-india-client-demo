@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 import gsap from "gsap"
 
-export default function InfinitySvg({
+export default function InfinityGraphic({
   className = "",
 }: {
   className?: string

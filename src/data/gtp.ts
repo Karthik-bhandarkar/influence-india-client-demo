@@ -282,7 +282,7 @@ export const footprints: Footprint[] = [
   },
 ]
 
-const categories = [
+export const categories = [
   { id: "all", label: "ALL 21 FOOTPRINTS", count: 21 },
 
   { id: "youth", label: "YOUTH & LIVELIHOOD", count: 5 },
@@ -294,7 +294,7 @@ const categories = [
   { id: "governance", label: "GOVERNANCE & GOALS", count: 6 },
 ]
 
-const smartStaffingPillars = [
+export const smartStaffingPillars = [
   {
     number: "01",
 

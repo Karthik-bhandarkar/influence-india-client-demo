@@ -153,7 +153,7 @@ const STAGES: WorkforceStage[] = [
   },
 ]
 
-export default function OrbitalWorkforceEngine() {
+export default function WorkforceOrbitSection() {
   const [activeStage, setActiveStage] = useState(0)
 
   const [isPaused, setIsPaused] = useState(false)
@@ -330,7 +330,7 @@ export default function OrbitalWorkforceEngine() {
         style={{
           display: "grid",
 
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
 
           gap: "3rem",
 
@@ -874,6 +874,8 @@ export default function OrbitalWorkforceEngine() {
               borderTop: "1px solid rgba(255, 255, 255, 0.1)",
 
               overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
             }}
           >
             {STAGES.map((s, idx) => (
