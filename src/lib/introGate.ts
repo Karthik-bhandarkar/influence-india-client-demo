@@ -23,11 +23,33 @@
  *    - Immediately skip intro if user prefers reduced motion.
  */
 
-export const INACTIVITY_THRESHOLD_MS = 3 * 60 * 60 * 1000; // 3 hours in ms
+export const PRODUCTION_INACTIVITY_THRESHOLD_MS = 3 * 60 * 60 * 1000; // 3 hours (10,800,000 ms)
+export const DEVELOPMENT_INACTIVITY_THRESHOLD_MS = 30 * 1000; // 30 seconds for dev testing
+
+export const PRODUCTION_THROTTLE_ACTIVITY_MS = 60 * 1000; // 1 minute in prod
+export const DEVELOPMENT_THROTTLE_ACTIVITY_MS = 5 * 1000; // 5 seconds in dev
+
+export function isDevEnvironment(): boolean {
+  return typeof import.meta !== "undefined" && Boolean(import.meta.env?.DEV);
+}
+
+export function getInactivityThresholdMs(): number {
+  return isDevEnvironment()
+    ? DEVELOPMENT_INACTIVITY_THRESHOLD_MS
+    : PRODUCTION_INACTIVITY_THRESHOLD_MS;
+}
+
+export function getThrottleActivityMs(): number {
+  return isDevEnvironment()
+    ? DEVELOPMENT_THROTTLE_ACTIVITY_MS
+    : PRODUCTION_THROTTLE_ACTIVITY_MS;
+}
+
+export const INACTIVITY_THRESHOLD_MS = getInactivityThresholdMs();
 export const COOKIE_NAME = "iis_last_activity_at";
 export const COOKIE_MAX_AGE_SEC = 30 * 24 * 60 * 60; // 30 days in seconds
 export const STORAGE_KEY = "iis_last_activity_at";
-export const THROTTLE_ACTIVITY_MS = 60 * 1000; // 1 minute throttle interval
+export const THROTTLE_ACTIVITY_MS = getThrottleActivityMs();
 
 export function getSavedActivityTimestamp(): number | null {
   if (typeof window === "undefined") return null;
@@ -108,6 +130,18 @@ export function shouldPlayIntro(
     return true;
   }
 
-  // 3+ hours elapsed since last activity
+  // Inactivity threshold elapsed since last activity (30s in dev, 3h in prod)
   return now - prevTs >= inactivityThresholdMs;
+}
+
+if (typeof window !== "undefined" && isDevEnvironment()) {
+  (window as any).__IIS_INTRO_GATE__ = {
+    isDev: true,
+    thresholdMs: INACTIVITY_THRESHOLD_MS,
+    devThresholdMs: DEVELOPMENT_INACTIVITY_THRESHOLD_MS,
+    prodThresholdMs: PRODUCTION_INACTIVITY_THRESHOLD_MS,
+    getSavedActivityTimestamp,
+    recordActivityTimestamp,
+    shouldPlayIntro,
+  };
 }
