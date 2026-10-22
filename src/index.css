@@ -5314,43 +5314,6 @@ h3 {
   text-transform: uppercase;
 }
 
-.landing-video-controls {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.video-ctrl-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 9999px;
-  background: rgba(13, 18, 12, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.video-ctrl-btn:hover {
-  background: var(--color-brand-strong, #3f6e14);
-  border-color: var(--color-brand-strong, #3f6e14);
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
 .landing-video-stats-overlay {
   position: absolute;
   bottom: 1.25rem;
@@ -5390,31 +5353,48 @@ h3 {
   color: rgba(255, 255, 255, 0.82);
 }
 
-@media (max-width: 640px) {
-  .landing-video-badge-top { display: none !important; }
-  .landing-video-controls {
-    top: 0.75rem;
-    right: 0.75rem;
-    gap: 0.35rem;
+@media (max-width: 768px) {
+  .landing-video-frame {
+    aspect-ratio: 4 / 3;
+    min-height: 320px;
+    border-radius: 1rem;
   }
-  .video-ctrl-btn {
-    padding: 0.35rem 0.65rem;
+  .landing-video-badge-top {
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.35rem 0.75rem;
     font-size: 0.62rem;
   }
   .landing-video-stats-overlay {
-    bottom: 0.75rem;
-    left: 0.75rem;
-    gap: 0.45rem;
+    bottom: 0.85rem;
+    left: 0.85rem;
+    right: 0.85rem;
+    gap: 0.5rem;
   }
   .video-stat-pill {
-    padding: 0.35rem 0.75rem;
-    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    gap: 0.45rem;
   }
   .video-stat-pill strong {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
   .video-stat-pill span {
-    font-size: 0.6rem;
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-video-frame {
+    aspect-ratio: 1 / 1;
+    min-height: 340px;
+    max-height: 440px;
+  }
+  .landing-video-stats-overlay {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
   }
 }
 
