@@ -203,7 +203,7 @@ export function FolderPeek({ card }: { card: FolderCardItem }) {
           {card.bgImage ? (
             <img
               src={card.bgImage}
-              alt=""
+              alt={card.title || "Influence India workforce operations"}
               decoding="async"
               loading="eager"
               className="pointer-events-none h-full w-full select-none object-cover"

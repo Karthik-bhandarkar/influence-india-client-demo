@@ -41,6 +41,7 @@ import FooterEnterprise from "./components/FooterEnterprise"
 
 import LenisSmoothScroll from "./components/LenisSmoothScroll"
 import { IISLogoLiquidIntro } from "./components/IISLogoLiquidIntro"
+import SeoMetadata from "./components/SeoMetadata"
 
 export type ActiveView = "home" | "about" | "gtp" | "systems" | "careers" | "resources" | "contact"
 
@@ -357,7 +358,7 @@ function Brand({
           src="/images/influence-india-logo.png"
           width="1600"
           height="1081"
-          alt="Influence India Services"
+          alt="Influence India Services Corporate Brand Logo"
         />
       </span>
     </a>
@@ -660,6 +661,9 @@ function Hero() {
 
           {/* Staggered Kinetic Headline */}
           <h1 id="hero-title">
+            <span className="sr-only">
+              Contract Staffing Company in Bengaluru, Managed Workforce Deployment &amp; OSTP Free Skill Training with Job Placement across India
+            </span>
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 style={{ display: "block" }}
@@ -1012,14 +1016,14 @@ function Services({ onNavigate }: { onNavigate?: (target: string) => void }) {
 
   return (
     <section
-      id="what-we-do"
+      id="services"
       ref={ref}
       className={`services-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="services-title"
     >
-      <span id="services" className="sr-only" aria-hidden="true" />
+      <span id="what-we-do" className="sr-only" aria-hidden="true" />
       <div className="container">
         <div className="services-header-row">
           <div>
@@ -1101,6 +1105,7 @@ function Reliability() {
 
   return (
     <section
+      id="dos-reliability"
       className={`section reliability-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
@@ -1181,6 +1186,7 @@ function PricingDisruption() {
 
   return (
     <section
+      id="single-vendor-advantage"
       ref={ref}
       className={`section pricing-section editorial-reveal ${
         inView ? "is-revealed" : ""
@@ -1246,20 +1252,21 @@ function SkillTraining() {
 
   return (
     <section
-      id="careers"
+      id="ostp-skill-training"
       ref={ref}
       className={`section careers-section editorial-reveal ${
         inView ? "is-revealed" : ""
       }`}
       aria-labelledby="training-title"
     >
+      <span id="careers" className="sr-only" aria-hidden="true" />
       <div className="container">
         <SectionLabel number="07">SKILL TRAINING</SectionLabel>
         <div className="careers-grid">
           <div className="careers-photo">
             <img
               src="/images/team-training.jpg"
-              alt="Workplace group presentation and training session"
+              alt="Aspirants undergoing practical OSTP onsite skill training and assessment before deployment"
               width="1200"
               height="800"
               loading="lazy"
@@ -1307,6 +1314,7 @@ function WhyUs() {
 
   return (
     <section
+      id="sectors"
       ref={ref}
       className={`section why-us-section editorial-reveal ${
         inView ? "is-revealed" : ""
@@ -1383,10 +1391,11 @@ function Faq() {
 
   return (
     <section
-      id="resources"
+      id="faq"
       className="section faq-section"
       aria-labelledby="faq-title"
     >
+      <span id="resources" className="sr-only" aria-hidden="true" />
       <div className="container faq-layout">
         <div className="faq-aside">
           <SectionLabel number="10">08 QUESTIONS</SectionLabel>
@@ -1779,6 +1788,7 @@ export default function App() {
 
   return (
     <>
+      <SeoMetadata activeView={view} />
       <IISLogoLiquidIntro />
       {/* Lenis Luxury Inertial Smooth Momentum Scroll */}
       <LenisSmoothScroll />

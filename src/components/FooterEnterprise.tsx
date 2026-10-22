@@ -367,7 +367,7 @@ export default function FooterEnterprise({
           </div>
 
           {/* COLUMN 5: Corporate Office */}
-          <div className="flex flex-col">
+          <div id="bengaluru-hq" className="flex flex-col">
             <div className="h-[1px] w-6 bg-[#b06741]" />
             <h4 className="mt-3.5 text-[9.5px] font-bold uppercase tracking-[0.38em] text-[#0e2119]">
               Corporate Office

@@ -44,7 +44,7 @@ function AboutHero({ onNavigate }: { onNavigate?: (target: string) => void }) {
       <div className="about-hero-bg-layer" aria-hidden="true">
         <img
           src="/images/about-hero-dark-bg.jpg"
-          alt=""
+          alt="Influence India Services workforce command operations in Bengaluru"
           className="about-hero-bg-img"
         />
         <video
